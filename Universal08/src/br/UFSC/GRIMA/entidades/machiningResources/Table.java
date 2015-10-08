@@ -1,0 +1,9 @@
+package br.UFSC.GRIMA.entidades.machiningResources;
+
+public class Table extends WorkpieceHandlingDevice{
+
+	public Table(String itsId) {
+		super(itsId);
+	}
+
+}
