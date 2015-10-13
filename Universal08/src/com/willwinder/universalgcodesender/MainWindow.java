@@ -26,6 +26,7 @@
 package com.willwinder.universalgcodesender;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FileDialog;
 import java.awt.KeyEventDispatcher;
@@ -58,8 +59,12 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
+import javax.swing.JTree;
+import javax.swing.SwingWorker;
 import javax.swing.Timer;
 import javax.swing.text.DefaultCaret;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeSelectionModel;
 import javax.vecmath.Point3d;
 
 import com.willwinder.universalgcodesender.i18n.Localization;
@@ -74,6 +79,8 @@ import com.willwinder.universalgcodesender.uielements.StepSizeSpinnerModel;
 import com.willwinder.universalgcodesender.visualizer.VisualizerWindow;
 
 import br.UFSC.GRIMA.acceptance.STEP_NCReader;
+import br.UFSC.GRIMA.cad.Generate3Dview;
+import br.UFSC.GRIMA.cad.visual.Progress3D;
 import br.UFSC.GRIMA.cam.GenerateGenericGCode;
 import br.UFSC.GRIMA.integracao.ProjectReader;
 import br.UFSC.GRIMA.util.projeto.Projeto;
@@ -94,6 +101,8 @@ implements KeyListener, ControllerListener, MainWindowAPI {
     public Projeto projeto;
 	public Vector workingsteps;
 	public String gCodeString;
+	private JTree workingstepsTree;
+	private JTree workplanTree;
     
     
     
@@ -123,6 +132,9 @@ implements KeyListener, ControllerListener, MainWindowAPI {
         scrollWindowCheckBox = new javax.swing.JCheckBox();
         bottomTabbedPane = new javax.swing.JTabbedPane();
         jScrollPane3 = new javax.swing.JScrollPane();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        scrollPaneWsTree = new javax.swing.JScrollPane();
+        scrollPaneWsTree2 = new javax.swing.JScrollPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         consoleTextArea = new javax.swing.JTextArea();
         stepCodeTextArea = new JTextArea();
@@ -268,6 +280,9 @@ implements KeyListener, ControllerListener, MainWindowAPI {
         stepCodeTextArea.setRows(5);
         
         jScrollPane3.setViewportView(stepCodeTextArea);
+        jScrollPane4.setViewportView(scrollPaneWsTree);
+        jScrollPane4.setViewportView(scrollPaneWsTree2);
+        
         
         controlContextTabbedPane.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         controlContextTabbedPane.setMinimumSize(new java.awt.Dimension(395, 175));
@@ -1565,7 +1580,72 @@ implements KeyListener, ControllerListener, MainWindowAPI {
 //            // Canceled file open.
 //        }
 //    }//GEN-LAST:event_browseButtonActionPerformed
+    /**
+     * By Igor B. --- Ding Ding sou foda.
+     */
 
+    public void gerar3D() {
+		
+		final Progress3D p3D = new Progress3D(this);
+
+		p3D.setVisible(true);
+
+		SwingWorker worker = new SwingWorker() 
+		{
+			@Override
+			protected Object doInBackground() throws Exception 
+			{
+				Generate3Dview parent = new Generate3Dview(projeto);
+				parent.setVisible(true);
+				bottomTabbedPane.addTab("3D Model", parent);
+				return null;
+			}
+			@Override
+			protected void done()
+			{
+				p3D.dispose();
+				consoleTextArea.setText(consoleTextArea.getText() + "\n 3D Model generate with sucess!");
+			}
+		};
+		worker.execute();
+	}
+    
+    /**
+     * By Igor B. --- Sou foda ding ding.
+     * 
+     */
+    public void atualizarArvoreCAPP() 
+	{
+		DefaultMutableTreeNode nodoPrincipal = new DefaultMutableTreeNode
+		("Roughing & Finishing Workingsteps");
+		
+		DefaultMutableTreeNode nodoPrincipalWorkplan = new DefaultMutableTreeNode
+		("Main Workplan");
+		
+//		DefaultMutableTreeNode nodosSetups = this.projeto.getNodosSetups(nodoPrincipal);
+//		
+//		nodoPrincipal.add(nodosSetups);
+		
+		this.projeto.getNodosSetups(nodoPrincipal, false);
+		this.projeto.getNodosSetups(nodoPrincipalWorkplan, true);
+
+		this.workingstepsTree = new JTree(nodoPrincipal);
+		this.workplanTree = new JTree(nodoPrincipalWorkplan);
+		
+		this.workingstepsTree.getSelectionModel().setSelectionMode(
+				TreeSelectionModel.CONTIGUOUS_TREE_SELECTION);
+		this.workplanTree.getSelectionModel().setSelectionMode(
+				TreeSelectionModel.CONTIGUOUS_TREE_SELECTION);
+		
+		scrollPaneWsTree.setViewportView(workingstepsTree);
+		scrollPaneWsTree2.setViewportView(workplanTree);
+		
+		scrollPaneWsTree.revalidate();
+		scrollPaneWsTree2.revalidate();
+	}
+    
+    
+    
     /**
      * by Jc --- Explicit in the name
      * @param evt
@@ -1620,6 +1700,8 @@ implements KeyListener, ControllerListener, MainWindowAPI {
    			this.projeto.getDadosDeProjeto().setUserName(userNameAtual);
    			this.workingsteps = stepNcReader.getAllWorkingSteps();
    			bottomTabbedPane.addTab("STEP-NCCODE", jScrollPane3);
+   			bottomTabbedPane.addTab("Workplan", jScrollPane4);
+   			
    	        
 //   	        File fileTmp = new File("C:/repositories.tmp/" + "PROJECT_GIACOMET");
    			
@@ -1673,6 +1755,8 @@ implements KeyListener, ControllerListener, MainWindowAPI {
    								e.printStackTrace();
    							}
    	        this.consoleTextArea.setText(this.consoleTextArea.getText() + "\n" + filePath + "\t opened with success!");
+   	        this.atualizarArvoreCAPP();
+   	        this.gerar3D();
    		} catch (SdaiException e1)
    		{
    			e1.printStackTrace();
@@ -3048,6 +3132,9 @@ implements KeyListener, ControllerListener, MainWindowAPI {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane scrollPaneWsTree;
+    private javax.swing.JScrollPane scrollPaneWsTree2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.ButtonGroup jogUnitsGroup;
     private javax.swing.JPanel keyboardMovementPanel;

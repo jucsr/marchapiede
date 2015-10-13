@@ -1,0 +1,101 @@
+ISO-10303-21;
+HEADER;
+ /*GRIMA*/
+FILE_DESCRIPTION(
+/* description */ ('Descricao'),
+/* implementation_level */ '2;1');
+FILE_NAME(
+/* name */ ' ',
+/* time_stamp */ '2015-10-07T21:27:39',
+/* author */ ('Cassio'),
+/* organization */ ('UFSC'),
+/* preprocessor_version */ 'ST-GENERATOR 5.3',
+/* originating_system */ ' ',
+/* authorization */ ' ');
+FILE_SCHEMA(('COMBINED_SCHEMA'));
+ENDSEC;
+DATA;
+#1=PROJECT('novo projeto',#80,(#2),$,$,$);
+#2=WORKPIECE('workpiece',#7,50.0,$,$,#9,());
+#3=AXIS2_PLACEMENT_3D('workpiece placement',#4,#5,#6);
+#4=CARTESIAN_POINT('',(0.0,0.0,0.0));
+#5=DIRECTION('',(0.0,0.0,1.0));
+#6=DIRECTION('',(1.0,0.0,0.0));
+#7=MATERIAL('SAE 1020','ACO SEM LIGA',(#8));
+#8=NUMERIC_PARAMETER('Hardness',250.0,'HB');
+#9=BLOCK('piece',#3,90.0,90.0,60.0);
+#10=SETUP('setup',#16,#15,(#20));
+#11=AXIS2_PLACEMENT_3D('',#12,#13,#14);
+#12=CARTESIAN_POINT('',(0.0,0.0,85.0));
+#13=DIRECTION('',(0.0,0.0,1.0));
+#14=DIRECTION('',(1.0,0.0,0.0));
+#15=PLANE('security plane',#11);
+#16=AXIS2_PLACEMENT_3D('origin',#17,#18,#19);
+#17=CARTESIAN_POINT('',(0.0,0.0,0.0));
+#18=DIRECTION('',(0.0,0.0,1.0));
+#19=DIRECTION('',(1.0,0.0,0.0));
+#20=WORKPIECE_SETUP(#2,#21,$,$,());
+#21=AXIS2_PLACEMENT_3D('',#22,#23,#24);
+#22=CARTESIAN_POINT('',(0.0,0.0,0.0));
+#23=DIRECTION('',(0.0,0.0,1.0));
+#24=DIRECTION('',(1.0,0.0,0.0));
+#25=BOTTOM_AND_SIDE_ROUGH_MILLING($,$,'Bottom And Side Rough Milling',5.0,#33,#26,
+     #31,#32,$,#34,#36,#38,1.4000000000000001,10.5,0.0,0.0);
+#26=MILLING_CUTTING_TOOL('R215.36-14060-AC26L',#27,(#29),$,$,$);
+#27=ENDMILL(#28,4,.RIGHT.,$,61.0);
+#28=MILLING_TOOL_DIMENSION(14.0,0.0,0.0,26.0,0.0,0.0,0.0);
+#29=CUTTING_COMPONENT(83.0,#30,$,$,$);
+#30=MATERIAL('P','CARBIDE',());
+#31=MILLING_TECHNOLOGY(0.036,.TCP.,155.0,3524.1451684633967,$,.F.,.F.,.F.,$);
+#32=MILLING_MACHINE_FUNCTIONS(.T.,$,$,.T.,$,(),.T.,$,$,());
+#33=CARTESIAN_POINT('start point',(0.0,0.0,0.0));
+#34=PLUNGE_TOOLAXIS(#35);
+#35=DIRECTION('tool orientation',(0.0,0.0,-1.0));
+#36=PLUNGE_TOOLAXIS(#37);
+#37=DIRECTION('retract strategy direction',(0.0,0.0,-1.0));
+#38=CONTOUR_PARALLEL(3.5,.T.,.CCW.,.CONVENTIONAL.);
+#39=REGION_SURFACE_LIST('',#2,(#25,#62),#40,(#44));
+#40=AXIS2_PLACEMENT_3D(' placement',#41,#42,#43);
+#41=CARTESIAN_POINT('',(0.0,0.0,60.0));
+#42=DIRECTION('',(0.0,0.0,1.0));
+#43=DIRECTION('',(1.0,0.0,0.0));
+#44=BEZIER_SURFACE('surface - ',4,4,((#45,#46,#47,#48),(#49,#50,#51,#52),(#53,#54,
+     #55,#56),(#57,#58,#59,#60)),.UNSPECIFIED.,.F.,.F.,$);
+#45=CARTESIAN_POINT('control vertex ',(0.0,0.0,13.010438628126286));
+#46=CARTESIAN_POINT('control vertex ',(0.0,30.0,0.0));
+#47=CARTESIAN_POINT('control vertex ',(0.0,60.0,0.0));
+#48=CARTESIAN_POINT('control vertex ',(0.0,90.0,12.198871625994121));
+#49=CARTESIAN_POINT('control vertex ',(30.0,0.0,18.926246087997377));
+#50=CARTESIAN_POINT('control vertex ',(30.0,30.0,0.0));
+#51=CARTESIAN_POINT('control vertex ',(30.0,60.0,0.0));
+#52=CARTESIAN_POINT('control vertex ',(30.0,90.0,14.905077485982469));
+#53=CARTESIAN_POINT('control vertex ',(60.0,0.0,0.0));
+#54=CARTESIAN_POINT('control vertex ',(60.0,30.0,0.0));
+#55=CARTESIAN_POINT('control vertex ',(60.0,60.0,0.0));
+#56=CARTESIAN_POINT('control vertex ',(60.0,90.0,0.0));
+#57=CARTESIAN_POINT('control vertex ',(90.0,0.0,0.0));
+#58=CARTESIAN_POINT('control vertex ',(90.0,30.0,20.75719902029005));
+#59=CARTESIAN_POINT('control vertex ',(90.0,60.0,15.835199236697914));
+#60=CARTESIAN_POINT('control vertex ',(90.0,90.0,0.0));
+#61=MACHINING_WORKINGSTEP('WS Desbaste',#15,#39,#25,$);
+#62=FREEFORM_OPERATION($,$,'Free form Operation',5.0,$,#63,#68,#69,$,#70,#71,#74);
+#63=MILLING_CUTTING_TOOL('R216.42-14030-AC22P',#64,(#66),$,$,$);
+#64=BALL_ENDMILL(#65,4,.RIGHT.,$,52.0);
+#65=MILLING_TOOL_DIMENSION(14.0,0.0,0.0,22.0,7.0,7.0,0.0);
+#66=CUTTING_COMPONENT(83.0,#67,$,$,$);
+#67=MATERIAL('P','CARBIDE',());
+#68=MILLING_TECHNOLOGY(0.145,.TCP.,660.0,15006.037491521562,$,.F.,.F.,.F.,$);
+#69=MILLING_MACHINE_FUNCTIONS(.T.,$,$,.T.,$,(),.T.,$,$,());
+#70=PLUNGE_TOOLAXIS(#72);
+#71=PLUNGE_TOOLAXIS(#73);
+#72=DIRECTION('approach strategy direction',(0.0,0.0,1.0));
+#73=DIRECTION('retract strategy direction',(0.0,0.0,-1.0));
+#74=UV_STRATEGY(.ZIGZAG.,.CONVENTIONAL.,#75,$,#76,#77);
+#75=TOLERANCES(0.05,0.05);
+#76=DIRECTION('u direction',(1.0,0.0,0.0));
+#77=DIRECTION('v direction',(0.0,1.0,0.0));
+#78=MACHINING_WORKINGSTEP('WS Free Form',#15,#39,#62,$);
+#79=WORKPLAN('workplan setup XY',(#61,#78),$,#10,$);
+#80=WORKPLAN('Main workplan',(#79),$,$,$);
+ENDSEC;
+END-ISO-10303-21;
