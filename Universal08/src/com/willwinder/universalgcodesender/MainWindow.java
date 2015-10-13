@@ -1788,7 +1788,7 @@ implements KeyListener, ControllerListener, MainWindowAPI {
 		}
 		return ok;
 	}
-    
+    //Mudei pra mandar
     private void visualizeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizeButtonActionPerformed
         // Create new object if it is null.
         if (this.vw == null) {
