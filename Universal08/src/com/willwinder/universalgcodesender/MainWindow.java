@@ -103,6 +103,7 @@ implements KeyListener, ControllerListener, MainWindowAPI {
 	public String gCodeString;
 	private JTree workingstepsTree;
 	private JTree workplanTree;
+	private Generate3Dview parent;
     
     
     
@@ -133,6 +134,7 @@ implements KeyListener, ControllerListener, MainWindowAPI {
         bottomTabbedPane = new javax.swing.JTabbedPane();
         jScrollPane3 = new javax.swing.JScrollPane();
         jScrollPane4 = new javax.swing.JScrollPane();
+        jScrollPane5 = new javax.swing.JScrollPane();
         scrollPaneWsTree = new javax.swing.JScrollPane();
         scrollPaneWsTree2 = new javax.swing.JScrollPane();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -149,6 +151,7 @@ implements KeyListener, ControllerListener, MainWindowAPI {
         pauseButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
         visualizeButton = new javax.swing.JButton();
+        gerar3dButton = new javax.swing.JButton();
         browseButton = new javax.swing.JButton();
         fileTextField = new javax.swing.JTextField();
         fileLabel = new javax.swing.JLabel();
@@ -352,6 +355,14 @@ implements KeyListener, ControllerListener, MainWindowAPI {
         visualizeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 visualizeButtonActionPerformed(evt);
+            }
+        });
+        
+        gerar3dButton.setText("Visualize");
+        gerar3dButton.setEnabled(false);
+        gerar3dButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gerar3dActionPerformed(evt);
             }
         });
 
@@ -1595,9 +1606,10 @@ implements KeyListener, ControllerListener, MainWindowAPI {
 			@Override
 			protected Object doInBackground() throws Exception 
 			{
-				Generate3Dview parent = new Generate3Dview(projeto);
+				parent = new Generate3Dview(projeto);
 				parent.setVisible(true);
-				bottomTabbedPane.addTab("3D Model", parent);
+				
+				//bottomTabbedPane.addTab("3D Model", parent);
 				return null;
 			}
 			@Override
@@ -1605,6 +1617,7 @@ implements KeyListener, ControllerListener, MainWindowAPI {
 			{
 				p3D.dispose();
 				consoleTextArea.setText(consoleTextArea.getText() + "\n 3D Model generate with sucess!");
+				//bottomTabbedPane.addTab("3D Model", parent);
 			}
 		};
 		worker.execute();
@@ -1679,6 +1692,8 @@ implements KeyListener, ControllerListener, MainWindowAPI {
 
    		STEP_NCReader stepNcReader;
    		
+   		
+   		
    		try 
    		{
 
@@ -1701,6 +1716,7 @@ implements KeyListener, ControllerListener, MainWindowAPI {
    			this.workingsteps = stepNcReader.getAllWorkingSteps();
    			bottomTabbedPane.addTab("STEP-NCCODE", jScrollPane3);
    			bottomTabbedPane.addTab("Workplan", jScrollPane4);
+   			//bottomTabbedPane.addTab("3D Model", parent);
    			
    	        
 //   	        File fileTmp = new File("C:/repositories.tmp/" + "PROJECT_GIACOMET");
@@ -3133,6 +3149,7 @@ implements KeyListener, ControllerListener, MainWindowAPI {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane scrollPaneWsTree;
     private javax.swing.JScrollPane scrollPaneWsTree2;
     private javax.swing.JTabbedPane jTabbedPane1;
@@ -3187,6 +3204,7 @@ implements KeyListener, ControllerListener, MainWindowAPI {
     private javax.swing.JMenuItem stopPendantServerButton;
     private javax.swing.JButton toggleCheckMode;
     private javax.swing.JButton visualizeButton;
+    private javax.swing.JButton gerar3dButton;
     private javax.swing.JLabel workPositionLabel;
     private javax.swing.JLabel workPositionXLabel;
     private javax.swing.JLabel workPositionXValueLabel;

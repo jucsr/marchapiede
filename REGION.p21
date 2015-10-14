@@ -95,7 +95,7 @@ DATA;
 #76=DIRECTION('u direction',(1.0,0.0,0.0));
 #77=DIRECTION('v direction',(0.0,1.0,0.0));
 #78=MACHINING_WORKINGSTEP('WS Free Form',#15,#39,#62,$);
-#79=WORKPLAN('workplan setup XY',(#61,#78),$,#10,$);
+#79=WORKPLAN('workplan setup XY',(#78),$,#10,$);
 #80=WORKPLAN('Main workplan',(#79),$,$,$);
 ENDSEC;
 END-ISO-10303-21;
