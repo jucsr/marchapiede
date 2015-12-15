@@ -1,0 +1,117 @@
+ISO-10303-21;
+HEADER;
+ /*GRIMA*/
+FILE_DESCRIPTION(
+/* description */ (''),
+/* implementation_level */ '2;1');
+FILE_NAME(
+/* name */ ' ',
+/* time_stamp */ '2015-12-14T14:46:58',
+/* author */ ('Cassio'),
+/* organization */ (''),
+/* preprocessor_version */ 'ST-GENERATOR 5.3',
+/* originating_system */ ' ',
+/* authorization */ ' ');
+FILE_SCHEMA(('COMBINED_SCHEMA'));
+ENDSEC;
+DATA;
+#1=PROJECT('novo projeto',#95,(#2),$,$,$);
+#2=WORKPIECE('workpiece',#7,50.0,$,$,#9,());
+#3=AXIS2_PLACEMENT_3D('workpiece placement',#4,#5,#6);
+#4=CARTESIAN_POINT('',(0.0,0.0,0.0));
+#5=DIRECTION('',(0.0,0.0,1.0));
+#6=DIRECTION('',(1.0,0.0,0.0));
+#7=MATERIAL('SAE 1020','ACO SEM LIGA',(#8));
+#8=NUMERIC_PARAMETER('Hardness',250.0,'HB');
+#9=BLOCK('piece',#3,90.0,90.0,60.0);
+#10=SETUP('setup',#16,#15,(#20));
+#11=AXIS2_PLACEMENT_3D('',#12,#13,#14);
+#12=CARTESIAN_POINT('',(0.0,0.0,85.0));
+#13=DIRECTION('',(0.0,0.0,1.0));
+#14=DIRECTION('',(1.0,0.0,0.0));
+#15=PLANE('security plane',#11);
+#16=AXIS2_PLACEMENT_3D('origin',#17,#18,#19);
+#17=CARTESIAN_POINT('',(0.0,0.0,0.0));
+#18=DIRECTION('',(0.0,0.0,1.0));
+#19=DIRECTION('',(1.0,0.0,0.0));
+#20=WORKPIECE_SETUP(#2,#21,$,$,());
+#21=AXIS2_PLACEMENT_3D('',#22,#23,#24);
+#22=CARTESIAN_POINT('',(0.0,0.0,0.0));
+#23=DIRECTION('',(0.0,0.0,1.0));
+#24=DIRECTION('',(1.0,0.0,0.0));
+#25=BOTTOM_AND_SIDE_ROUGH_MILLING($,$,'Bottom And Side Rough Milling',5.0,#33,#26,
+     #31,#32,$,#34,#36,#38,2.0,15.0,0.0,0.0);
+#26=MILLING_CUTTING_TOOL('R216.34-20050-AK38H',#27,(#29),$,$,$);
+#27=FACEMILL(#28,2,.RIGHT.,$,79.0);
+#28=MILLING_TOOL_DIMENSION(20.0,0.0,0.0,38.0,0.0,0.0,0.0);
+#29=CUTTING_COMPONENT(125.0,#30,$,$,$);
+#30=MATERIAL('P','CARBIDE',());
+#31=MILLING_TECHNOLOGY(0.073,.TCP.,145.0,2307.7466748324823,$,.F.,.F.,.F.,$);
+#32=MILLING_MACHINE_FUNCTIONS(.T.,$,$,.T.,$,(),.T.,$,$,());
+#33=CARTESIAN_POINT('start point',(0.0,0.0,0.0));
+#34=PLUNGE_TOOLAXIS(#35);
+#35=DIRECTION('tool orientation',(0.0,0.0,-1.0));
+#36=PLUNGE_TOOLAXIS(#37);
+#37=DIRECTION('retract strategy direction',(0.0,0.0,-1.0));
+#38=BIDIRECTIONAL(5.0,.T.,$,$,$);
+#39=REGION_SURFACE_LIST('',#2,(#25,#62,#77),#40,(#44));
+#40=AXIS2_PLACEMENT_3D(' placement',#41,#42,#43);
+#41=CARTESIAN_POINT('',(0.0,0.0,60.0));
+#42=DIRECTION('',(0.0,0.0,1.0));
+#43=DIRECTION('',(1.0,0.0,0.0));
+#44=BEZIER_SURFACE('surface - ',4,4,((#45,#46,#47,#48),(#49,#50,#51,#52),(#53,#54,
+     #55,#56),(#57,#58,#59,#60)),.UNSPECIFIED.,.F.,.F.,$);
+#45=CARTESIAN_POINT('control vertex ',(0.0,0.0,6.212878613726303));
+#46=CARTESIAN_POINT('control vertex ',(0.0,30.0,13.022880244714038));
+#47=CARTESIAN_POINT('control vertex ',(0.0,60.0,21.544548606120212));
+#48=CARTESIAN_POINT('control vertex ',(0.0,90.0,7.672001462524777));
+#49=CARTESIAN_POINT('control vertex ',(30.0,0.0,9.881588198057766));
+#50=CARTESIAN_POINT('control vertex ',(30.0,30.0,0.0));
+#51=CARTESIAN_POINT('control vertex ',(30.0,60.0,18.736381794889812));
+#52=CARTESIAN_POINT('control vertex ',(30.0,90.0,11.09492359576354));
+#53=CARTESIAN_POINT('control vertex ',(60.0,0.0,3.089381052307735));
+#54=CARTESIAN_POINT('control vertex ',(60.0,30.0,2.9183354661452503));
+#55=CARTESIAN_POINT('control vertex ',(60.0,60.0,0.0));
+#56=CARTESIAN_POINT('control vertex ',(60.0,90.0,2.328282737432151));
+#57=CARTESIAN_POINT('control vertex ',(90.0,0.0,10.616922738191256));
+#58=CARTESIAN_POINT('control vertex ',(90.0,30.0,4.867010616430567));
+#59=CARTESIAN_POINT('control vertex ',(90.0,60.0,5.821993370360526));
+#60=CARTESIAN_POINT('control vertex ',(90.0,90.0,9.62581445361928));
+#61=MACHINING_WORKINGSTEP('WS Desbaste',#15,#39,#25,$);
+#62=BOTTOM_AND_SIDE_ROUGH_MILLING($,$,'Bottom And Side Rough Milling',5.0,#70,#63,
+     #68,#69,$,#71,#73,#75,2.0,15.0,0.0,0.0);
+#63=MILLING_CUTTING_TOOL('R215.38-20050-AC38H',#64,(#66),$,$,$);
+#64=ENDMILL(#65,2,.RIGHT.,$,79.0);
+#65=MILLING_TOOL_DIMENSION(20.0,0.0,0.0,38.0,0.0,0.0,0.0);
+#66=CUTTING_COMPONENT(104.0,#67,$,$,$);
+#67=MATERIAL('P','CARBIDE',());
+#68=MILLING_TECHNOLOGY(0.066,.TCP.,155.0,2466.9016179243777,$,.F.,.F.,.F.,$);
+#69=MILLING_MACHINE_FUNCTIONS(.T.,$,$,.T.,$,(),.T.,$,$,());
+#70=CARTESIAN_POINT('start point',(0.0,0.0,5.049708632423448));
+#71=PLUNGE_TOOLAXIS(#72);
+#72=DIRECTION('tool orientation',(0.0,0.0,-1.0));
+#73=PLUNGE_TOOLAXIS(#74);
+#74=DIRECTION('retract strategy direction',(0.0,0.0,-1.0));
+#75=CONTOUR_PARALLEL(5.0,.T.,.CCW.,.CLIMB.);
+#76=MACHINING_WORKINGSTEP('WS Desbaste',#15,#39,#62,$);
+#77=FREEFORM_OPERATION($,$,'Free form Operation',5.0,$,#78,#83,#84,$,#85,#86,#89);
+#78=MILLING_CUTTING_TOOL('R216.42-20030-AC32P',#79,(#81),$,$,$);
+#79=BALL_ENDMILL(#80,2,.LEFT.,$,68.0);
+#80=MILLING_TOOL_DIMENSION(20.0,0.0,0.0,32.0,10.0,10.0,0.0);
+#81=CUTTING_COMPONENT(104.0,#82,$,$,$);
+#82=MATERIAL('P','CARBIDE',());
+#83=MILLING_TECHNOLOGY(777.0,.TCP.,660.0,10504.0,$,.F.,.F.,.F.,$);
+#84=MILLING_MACHINE_FUNCTIONS(.T.,$,$,.T.,$,(),.T.,$,$,());
+#85=PLUNGE_TOOLAXIS(#87);
+#86=PLUNGE_TOOLAXIS(#88);
+#87=DIRECTION('approach strategy direction',(0.0,0.0,1.0));
+#88=DIRECTION('retract strategy direction',(0.0,0.0,-1.0));
+#89=UV_STRATEGY(.ZIGZAG.,.CONVENTIONAL.,#90,$,#91,#92);
+#90=TOLERANCES(0.05,0.05);
+#91=DIRECTION('u direction',(1.0,0.0,0.0));
+#92=DIRECTION('v direction',(0.0,1.0,0.0));
+#93=MACHINING_WORKINGSTEP('WS Free Form_WS Free Form',#15,#39,#77,$);
+#94=WORKPLAN('workplan setup XY',(#93),$,#10,$);
+#95=WORKPLAN('Main workplan',(#94),$,$,$);
+ENDSEC;
+END-ISO-10303-21;
