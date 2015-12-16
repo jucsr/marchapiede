@@ -169,6 +169,7 @@ public class ServerController extends MainWindowRemoteController {
 	}
 	
 	public static void preparar_recebimento() throws IOException{
+			commands.removeAll(commands);
 			BufferedReader entradaT = new BufferedReader(new InputStreamReader(client.getInputStream()));
 			while(!entradaT.ready());
 			String msgS = entradaT.readLine().toString();
@@ -305,6 +306,7 @@ public class ServerController extends MainWindowRemoteController {
     
 	 public static void sendButtonActionPerformed(List<String> commands){
 		 try {
+			 	controller.isReadyToStreamFile();
 	            if (true) {
 	                controller.preprocessAndAppendGcodeCommand("G90");
 	            }
