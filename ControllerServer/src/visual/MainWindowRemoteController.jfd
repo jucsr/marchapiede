@@ -8,112 +8,152 @@ new FormModel {
 			auxiliary() {
 				"JavaCodeGenerator.variableModifiers": 1
 			}
-			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridLayout ) {
-				"columns": 5
-				"rows": 5
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+				"$columnSpecs": "10, 0:1.0, 10"
+				"$rowSpecs": "10:1.0, 0:1.0, 0:1.0, 10"
+				"$alignTop": true
+				"$alignLeft": true
 			} ) {
 				name: "panel1"
-				add( new FormComponent( "javax.swing.JLabel" ) {
-					name: "label1"
-					"text": "Connection"
-					"font": new java.awt.Font( "Tahoma", 1, 14 )
-					"alignmentX": 50.0f
-				} )
-				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
-					"$columnSpecs": "default, labelcompgap, default:grow, labelcompgap, default, labelcompgap, default, labelcompgap, default"
-					"$rowSpecs": "default, linegap, default, linegap, default, linegap, default"
-				} ) {
-					name: "panel3"
-					add( new FormComponent( "javax.swing.JLabel" ) {
-						name: "label2"
-						"text": "PORT"
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridWidth": 2
-					} )
-					add( new FormComponent( "javax.swing.JComboBox" ) {
-						name: "commPortComboBox"
-						auxiliary() {
-							"JavaCodeGenerator.variableModifiers": 1
-							"JavaCodeGenerator.variableName": "commPortComboBox"
-						}
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 3
-					} )
-					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "refreshButton"
-						"text": "REFRESH"
-						auxiliary() {
-							"JavaCodeGenerator.variableModifiers": 1
-						}
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 5
-						"gridY": 1
-					} )
-					add( new FormComponent( "javax.swing.JLabel" ) {
-						name: "label3"
-						"text": "BAUD"
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridY": 3
-					} )
-					add( new FormComponent( "javax.swing.JComboBox" ) {
-						name: "comboBox2"
-						"toolTipText": "9600"
-						"model": new javax.swing.DefaultComboBoxModel {
-							selectedItem: "9600"
-							addElement( "9600" )
-						}
-						auxiliary() {
-							"JavaCodeGenerator.variableModifiers": 4
-							"JavaCodeGenerator.variableName": "baudComboBox"
-						}
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 3
-						"gridY": 3
-					} )
-					add( new FormComponent( "javax.swing.JButton" ) {
-						name: "openCloseButton"
-						"text": "open"
-						auxiliary() {
-							"JavaCodeGenerator.variableModifiers": 1
-						}
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 5
-						"gridY": 3
-					} )
-				} )
-				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class com.jgoodies.forms.layout.FormLayout ) {
-					"$columnSpecs": "default, labelcompgap, default:grow, labelcompgap, default:grow"
-					"$rowSpecs": "default, linegap, default"
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+					"$columnSpecs": "10:1.0, 0, 10:1.0"
+					"$rowSpecs": "0, 0, 0, 0, 10"
+					"$hGap": 5
+					"$vGap": 5
+					"$alignLeft": true
+					"$alignTop": true
 				} ) {
 					name: "panel4"
-					add( new FormComponent( "javax.swing.JLabel" ) {
-						name: "label4"
-						"text": "FirmWare"
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) )
-					add( new FormComponent( "javax.swing.JTextField" ) {
-						name: "firmWareTextField"
-						"text": "GRBL"
+					"border": new javax.swing.border.MatteBorder( 1, 1, 1, 1, sfield java.awt.Color black )
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+						"$columnSpecs": "0:1.0, 0, 0:1.0"
+						"$rowSpecs": "0, 0, 0"
+						"$hGap": 5
+						"$vGap": 5
+						"$alignLeft": true
+						"$alignTop": true
+					} ) {
+						name: "panel2"
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label1"
+							"text": "Connection"
+							"font": new java.awt.Font( "Gabriola", 1, 20 )
+							"alignmentX": 50.0f
+						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+							"gridx": 1
+							"gridy": 1
+						} )
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+						"gridx": 1
+					} )
+					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+						"$columnSpecs": "0, 4, 0:1.0, 4, 0"
+						"$rowSpecs": "center:0, center:5, center:0, center:5, center:0, center:5, center:0, center:5, center:0, center:5"
+						"$alignTop": true
+						"$alignLeft": true
+					} ) {
+						name: "panel3"
+						"border": new javax.swing.border.EtchedBorder( 1, null, null )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label2"
+							"text": "PORT"
+						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+							"gridy": 2
+							"gridwidth": 2
+						} )
+						add( new FormComponent( "javax.swing.JComboBox" ) {
+							name: "commPortComboBox"
+							auxiliary() {
+								"JavaCodeGenerator.variableModifiers": 1
+								"JavaCodeGenerator.variableName": "commPortComboBox"
+							}
+						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+							"gridx": 2
+							"gridy": 2
+						} )
+						add( new FormComponent( "javax.swing.JButton" ) {
+							name: "refreshButton"
+							"text": "REFRESH"
+							auxiliary() {
+								"JavaCodeGenerator.variableModifiers": 1
+							}
+						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+							"gridx": 4
+							"gridy": 2
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label3"
+							"text": "BAUD"
+						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+							"gridy": 4
+						} )
+						add( new FormComponent( "javax.swing.JComboBox" ) {
+							name: "comboBox2"
+							"toolTipText": "9600"
+							"model": new javax.swing.DefaultComboBoxModel {
+								selectedItem: "9600"
+								addElement( "9600" )
+								addElement( "19200" )
+								addElement( "38400" )
+								addElement( "57600" )
+								addElement( "115200" )
+							}
+							auxiliary() {
+								"JavaCodeGenerator.variableModifiers": 4
+								"JavaCodeGenerator.variableName": "baudComboBox"
+							}
+						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+							"gridx": 2
+							"gridy": 4
+						} )
+						add( new FormComponent( "javax.swing.JButton" ) {
+							name: "openCloseButton"
+							"text": "open"
+							auxiliary() {
+								"JavaCodeGenerator.variableModifiers": 1
+							}
+						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+							"gridx": 4
+							"gridy": 4
+						} )
+						add( new FormComponent( "javax.swing.JLabel" ) {
+							name: "label4"
+							"text": "FirmWare"
+						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+							"gridy": 6
+						} )
+						add( new FormComponent( "javax.swing.JTextField" ) {
+							name: "firmWareTextField"
+							"text": "GRBL"
+							auxiliary() {
+								"JavaCodeGenerator.variableModifiers": 1
+							}
+						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+							"gridx": 2
+							"gridy": 6
+						} )
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+						"gridx": 1
+						"gridy": 1
+					} )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "sendButton"
+						"text": "Send"
 						auxiliary() {
 							"JavaCodeGenerator.variableModifiers": 1
 						}
-					}, new FormLayoutConstraints( class com.jgoodies.forms.layout.CellConstraints ) {
-						"gridX": 3
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+						"gridy": 3
+						"gridx": 1
 					} )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+					"gridy": 1
+					"gridx": 1
 				} )
-				add( new FormComponent( "javax.swing.JButton" ) {
-					name: "sendButton"
-					"text": "ENVIAR!"
-					auxiliary() {
-						"JavaCodeGenerator.variableModifiers": 1
-					}
-				} )
-			} )
-			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridLayout ) ) {
-				name: "panel2"
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 395, 315 )
+			"size": new java.awt.Dimension( 460, 400 )
 		} )
 	}
 }
