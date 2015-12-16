@@ -30,7 +30,7 @@ import com.willwinder.universalgcodesender.types.GcodeCommand;
  */
 public class GcodeCommandCreator {
     protected int numCommands = 0;
-    protected int maxCommandLength = 60;
+    protected int maxCommandLength = 100;
     
     
     public GcodeCommandCreator() {
@@ -49,7 +49,7 @@ public class GcodeCommandCreator {
     }
 
     public void setMaxCommandLength(int maxCommandLength) {
-        this.maxCommandLength = maxCommandLength;
+        this.maxCommandLength = 100;
     }
 
     public int nextCommandNum() {
@@ -59,10 +59,10 @@ public class GcodeCommandCreator {
     public GcodeCommand createCommand(String commandString) throws Exception {
         GcodeCommand gc = new GcodeCommand(commandString, this.numCommands++);
         
-        if (gc.getCommandString().length() > this.maxCommandLength){// mudei, tem que mudar o settings! {
+        if (gc.getCommandString().length() > 100){// mudei, tem que mudar o settings! {
             throw new Exception(
                     String.format("Command #%d to long: (%d > %d) '%s'",
-                            this.numCommands, commandString.length(), maxCommandLength, commandString));
+                            this.numCommands, commandString.length(), 100 , commandString));
         }
         
         return gc;

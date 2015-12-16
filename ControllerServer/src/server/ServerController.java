@@ -110,26 +110,31 @@ public class ServerController extends MainWindowRemoteController {
 				System.out.println(msgS);
 				
 				if(msgS.equals("M")){
-					executaComandoManual(msgS);
+					autorizar_envio();
+					executaComandoManual();
 				}
 				else if(msgS.equals("X") | msgS.equals("Y") | msgS.equals("Z")){
+					autorizar_envio();
 					executaReset(msgS.toCharArray()[0]);
 				}
 				else if(msgS.equals("reset")){
+					autorizar_envio();
 					executaResetCordenadas();
 				}
 				else if(msgS.equals("resetTo")){
+					autorizar_envio();
 					executaResetToCordenadas();
 				}
 				else if(msgS.equals("soft")){
+					autorizar_envio();
 					executaSoftReset();
 				}
-				else if(msgS.equals("S")){
+				else if(msgS.equals("s")){
 					autorizar_envio();
 					preparar_recebimento();
 					sendButtonActionPerformed(commands);
 				}
-				autorizar_envio();
+				
 				
 				if(msgS.equals("exit")){
 					client.close();
@@ -264,8 +269,12 @@ public class ServerController extends MainWindowRemoteController {
 	    }	
 	
 	
-	public static void executaComandoManual(String comand) throws Exception{
-		controller.queueStringForComm(comand);
+	public static void executaComandoManual() throws Exception{
+		BufferedReader entradaT = new BufferedReader(new InputStreamReader(client.getInputStream()));
+		while(!entradaT.ready());
+		String msgS = entradaT.readLine().toString();
+		autorizar_envio();
+		controller.queueStringForComm(msgS);
 	}
 	public static void executaReset(char eixo) throws Exception{
 		controller.resetCoordinateToZero(eixo);
