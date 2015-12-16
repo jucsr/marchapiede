@@ -1757,7 +1757,7 @@ implements KeyListener, ControllerListener, MainWindowAPI {
     public  void resetZCoordinateButtonActionPerformed(){
         if(hasConnection){
         	try {
-				sendRemoteString("Y");
+				sendRemoteString("Z");
 			} 
         	catch(Exception e){
         		MainWindow.displayErrorDialog("Erro ao enviar comando remoto!");
