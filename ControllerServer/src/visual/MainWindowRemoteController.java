@@ -32,6 +32,7 @@ public class MainWindowRemoteController extends JFrame {
 
 		//======== this ========
 		setIconImage(new ImageIcon(getClass().getResource("/images/serverController.png")).getImage());
+		setTitle("Server Controller");
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new GridLayout());
 
@@ -41,14 +42,14 @@ public class MainWindowRemoteController extends JFrame {
 			((GridBagLayout)panel1.getLayout()).columnWidths = new int[] {10, 0, 10, 0};
 			((GridBagLayout)panel1.getLayout()).rowHeights = new int[] {10, 0, 0, 10, 0};
 			((GridBagLayout)panel1.getLayout()).columnWeights = new double[] {0.0, 1.0, 0.0, 1.0E-4};
-			((GridBagLayout)panel1.getLayout()).rowWeights = new double[] {1.0, 1.0, 1.0, 0.0, 1.0E-4};
+			((GridBagLayout)panel1.getLayout()).rowWeights = new double[] {0.0, 1.0, 0.0, 0.0, 1.0E-4};
 
 			//======== panel4 ========
 			{
 				panel4.setBorder(new MatteBorder(1, 1, 1, 1, Color.black));
 				panel4.setLayout(new GridBagLayout());
-				((GridBagLayout)panel4.getLayout()).columnWidths = new int[] {15, 0, 10, 0};
-				((GridBagLayout)panel4.getLayout()).rowHeights = new int[] {0, 0, 0, 0, 15, 5, 0};
+				((GridBagLayout)panel4.getLayout()).columnWidths = new int[] {15, 355, 10, 0};
+				((GridBagLayout)panel4.getLayout()).rowHeights = new int[] {0, 0, 0, 0, 105, 5, 0};
 				((GridBagLayout)panel4.getLayout()).columnWeights = new double[] {0.0, 1.0, 0.0, 1.0E-4};
 				((GridBagLayout)panel4.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0E-4};
 
@@ -78,7 +79,7 @@ public class MainWindowRemoteController extends JFrame {
 					panel3.setLayout(new GridBagLayout());
 					((GridBagLayout)panel3.getLayout()).columnWidths = new int[] {5, 0, 4, 0, 4, 0, 5, 0};
 					((GridBagLayout)panel3.getLayout()).rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
-					((GridBagLayout)panel3.getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0E-4};
+					((GridBagLayout)panel3.getLayout()).columnWeights = new double[] {0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0, 1.0E-4};
 					((GridBagLayout)panel3.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
 
 					//---- label2 ----

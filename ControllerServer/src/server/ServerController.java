@@ -10,8 +10,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.io.PrintStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,25 +38,25 @@ import visual.MainWindowRemoteController;
 @SuppressWarnings("serial")
 public class ServerController extends MainWindowRemoteController {
 	
-	static ServerSocket server;
-	static Socket client;
-	public static AbstractController controller;
+	private ServerSocket server;
+	private Socket client;
+	public AbstractController controller;
 	private Settings settings;
 	
-	static int size;
+	private int size;
 	
-	public static ArrayList<String> commands = new ArrayList<String>();
+	public  ArrayList<String> commands = new ArrayList<String>();
 //	publi	c static Sender sending;
 	
 	public ServerController(int porta) throws IOException{
 		this.setVisible(true);
 		loadPortSelector();
+		textPane1.setText("Server Controller initialized with IP " + getMyIp() + " and port " + porta);
 		this.openCloseButton.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				opencloseButtonActionPerformed(e);
-				
 			}
 		});
 		this.refreshButton.addActionListener(new ActionListener() {
@@ -77,29 +79,40 @@ public class ServerController extends MainWindowRemoteController {
 		{
 				
 		 server = new ServerSocket(porta);
-		 System.out.println("Server disponível na porta: "+ porta);
+		 System.out.println("Server disponï¿½vel na porta: "+ porta);
 		}
 		catch(IOException e ){
 			e.printStackTrace();
 		}
 		
 	}
-	public static void conexao() throws Exception
+	public void conexao()
 	{
 		while(true){
-			client = server.accept();
-			System.out.println("Cliente conectado: "+ client.getInetAddress().getHostAddress());
-			PrintStream saida = new PrintStream(client.getOutputStream());
-			saida.flush();
-			saida.println("Conectado!");
+			try {
+				client = server.accept();
+				System.out.println("Cliente conectado: "+ client.getInetAddress().getHostAddress());
+				PrintStream saida = new PrintStream(client.getOutputStream());
+				saida.flush();
+				saida.println("Connected!");
+				textPane1.setText(textPane1.getText() + "\nConection with remote client: " +client.getInetAddress().getHostAddress() );
+			} catch (IOException e) {
+				e.printStackTrace();
+	            textPane1.setText(textPane1.getText() + "\nDisconnected from remote client");
+			}
 			//saida.close();
 			//client.close();
-			recebimento();
 	        
+			try {
+				recebimento();
+			} catch (Exception e) {
+				e.printStackTrace();
+	            textPane1.setText(textPane1.getText() + "\nDisconnected from remote client");
+			}
 		}
 	}
 	
-	public static void recebimento() throws Exception
+	public void recebimento() throws Exception
 	{
 		while(true){
 			//client = server.accept();
@@ -144,31 +157,31 @@ public class ServerController extends MainWindowRemoteController {
 //			if(!client.isConnected()){
 //				client.close();
 //				entradaS.close();
-//				System.out.println("saí");
+//				System.out.println("saï¿½");
 //				break;
 //			}
 		}
 	}
 	
-	private static void executaSoftReset() throws Exception {
+	private void executaSoftReset() throws Exception {
 		controller.issueSoftReset();
 	}
-	private static void executaResetToCordenadas() throws Exception {
+	private void executaResetToCordenadas() throws Exception {
         controller.returnToHome();
         // The return to home command uses G91 to lift the tool.
         //G91Mode = true;
 		
 	}
-	private static void executaResetCordenadas() throws Exception {
+	private void executaResetCordenadas() throws Exception {
 		controller.resetCoordinatesToZero();
 	}
-	public static void autorizar_envio() throws IOException{
+	public void autorizar_envio() throws IOException{
 		PrintStream saida = new PrintStream(client.getOutputStream());
 		saida.flush();
 		saida.println("ok");
 	}
 	
-	public static void preparar_recebimento() throws IOException{
+	public void preparar_recebimento() throws IOException{
 			commands.removeAll(commands);
 			BufferedReader entradaT = new BufferedReader(new InputStreamReader(client.getInputStream()));
 			while(!entradaT.ready());
@@ -202,11 +215,11 @@ public class ServerController extends MainWindowRemoteController {
 	}
 		private boolean openCommConnection() {
 	        boolean connected = false;
-	        try {	     
+	        try {
 	            String port = commPortComboBox.getSelectedItem().toString();
 	            int portRate = Integer.parseInt(baudComboBox.getSelectedItem().toString());
 	            connected = controller.openCommPort(port, portRate);
-
+	            textPane1.setText(textPane1.getText() + "\nConnected with device on port " + port + " with success!");
 	        } catch (PortInUseException e) {
 	            
 	            
@@ -222,8 +235,10 @@ public class ServerController extends MainWindowRemoteController {
 	                    .append(String.format(Localization.getString("mainWindow.error.rxtxMac2"), "\"/var/lock\""))
 	                    .append("\n     sudo mkdir /var/lock")
 	                    .append("\n     sudo chmod 777 /var/lock");
+	            textPane1.setText(textPane1.getText() + "\nOpening error");
 	        }catch (Exception e) {
-	            e.printStackTrace();	  	                 
+	            e.printStackTrace();	  
+	            textPane1.setText(textPane1.getText() + "\nOpening error");
 	        }
 	        return connected;
 	    }
@@ -232,6 +247,7 @@ public class ServerController extends MainWindowRemoteController {
 	    	this.openCloseButton.setText("open");
 	        this.controller.closeCommPort();
 	        this.controller = null;
+            textPane1.setText(textPane1.getText() + "\nConnection with device closed");
 	    }
 		
 		private void applySettingsToController(AbstractController controller) {
@@ -270,14 +286,14 @@ public class ServerController extends MainWindowRemoteController {
 	    }	
 	
 	
-	public static void executaComandoManual() throws Exception{
+	public void executaComandoManual() throws Exception{
 		BufferedReader entradaT = new BufferedReader(new InputStreamReader(client.getInputStream()));
 		while(!entradaT.ready());
 		String msgS = entradaT.readLine().toString();
 		autorizar_envio();
 		controller.queueStringForComm(msgS);
 	}
-	public static void executaReset(char eixo) throws Exception{
+	public void executaReset(char eixo) throws Exception{
 		controller.resetCoordinateToZero(eixo);
 	}
 	
@@ -304,7 +320,7 @@ public class ServerController extends MainWindowRemoteController {
     }
     
     
-	 public static void sendButtonActionPerformed(List<String> commands){
+	 public void sendButtonActionPerformed(List<String> commands){
 		 try {
 			 	controller.isReadyToStreamFile();
 	            if (true) {
@@ -320,14 +336,28 @@ public class ServerController extends MainWindowRemoteController {
 	           
 	        }
  	}
-	
+	/**
+	 *  By Jc
+	 *  pega o IP local
+	 * @return
+	 */
+	 public String getMyIp()
+	{
+		String myIp;
+		InetAddress ia = null;  
+	   	try {  
+	   	    ia = InetAddress.getLocalHost();  
+	   	} catch (UnknownHostException e) 
+	   	{  
+	   	    e.printStackTrace();  
+	   	}  
+	   	myIp = ia.getHostAddress();
+	   	return myIp;
+	}
 	
 	public static void main(String[] args) throws Exception 
 	{
 		ServerController server = new ServerController(12346);
-		conexao();
-		
-
+		server.conexao();
 	}
-
 }

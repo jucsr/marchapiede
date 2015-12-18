@@ -6,19 +6,20 @@ new FormModel {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class java.awt.GridLayout ) ) {
 			name: "this"
 			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/images/serverController.png" )
+			"title": "Server Controller"
 			auxiliary() {
 				"JavaCodeGenerator.variableModifiers": 1
 			}
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 				"$columnSpecs": "10, 0:1.0, 10"
-				"$rowSpecs": "10:1.0, 0:1.0, 0:1.0, 10"
+				"$rowSpecs": "10, 0:1.0, 0, 10"
 				"$alignTop": true
 				"$alignLeft": true
 			} ) {
 				name: "panel1"
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
-					"$columnSpecs": "10, 0:1.0, 10"
-					"$rowSpecs": "0, 0, 0, 0, 10:1.0, 5"
+					"$columnSpecs": "10, 350:1.0, 10"
+					"$rowSpecs": "0, 0, 0, 0, 100:1.0, 5"
 					"$hGap": 5
 					"$vGap": 5
 					"$alignLeft": true
@@ -48,7 +49,7 @@ new FormModel {
 						"gridx": 1
 					} )
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
-						"$columnSpecs": "5, 0, 4, 0:1.0, 4, 0, 5"
+						"$columnSpecs": "5, 0:1.0, 4, 0:1.0, 4, 0:1.0, 5"
 						"$rowSpecs": "center:0, center:5, center:0, center:5, center:0, center:5, center:0, center:5, center:0, center:5"
 						"$alignTop": true
 						"$alignLeft": true
@@ -178,7 +179,7 @@ new FormModel {
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 460, 400 )
+			"size": new java.awt.Dimension( 465, 510 )
 		} )
 	}
 }
