@@ -27,8 +27,11 @@ public class MainWindowRemoteController extends JFrame {
 		label4 = new JLabel();
 		firmWareTextField = new JTextField();
 		sendButton = new JButton();
+		scrollPane1 = new JScrollPane();
+		textPane1 = new JTextPane();
 
 		//======== this ========
+		setIconImage(new ImageIcon(getClass().getResource("/images/serverController.png")).getImage());
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new GridLayout());
 
@@ -45,9 +48,9 @@ public class MainWindowRemoteController extends JFrame {
 				panel4.setBorder(new MatteBorder(1, 1, 1, 1, Color.black));
 				panel4.setLayout(new GridBagLayout());
 				((GridBagLayout)panel4.getLayout()).columnWidths = new int[] {15, 0, 10, 0};
-				((GridBagLayout)panel4.getLayout()).rowHeights = new int[] {0, 0, 0, 0, 10, 0};
-				((GridBagLayout)panel4.getLayout()).columnWeights = new double[] {1.0, 0.0, 1.0, 1.0E-4};
-				((GridBagLayout)panel4.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
+				((GridBagLayout)panel4.getLayout()).rowHeights = new int[] {0, 0, 0, 0, 15, 5, 0};
+				((GridBagLayout)panel4.getLayout()).columnWeights = new double[] {0.0, 1.0, 0.0, 1.0E-4};
+				((GridBagLayout)panel4.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0E-4};
 
 				//======== panel2 ========
 				{
@@ -73,29 +76,35 @@ public class MainWindowRemoteController extends JFrame {
 				{
 					panel3.setBorder(new EtchedBorder());
 					panel3.setLayout(new GridBagLayout());
-					((GridBagLayout)panel3.getLayout()).columnWidths = new int[] {0, 4, 0, 4, 0, 0};
+					((GridBagLayout)panel3.getLayout()).columnWidths = new int[] {5, 0, 4, 0, 4, 0, 5, 0};
 					((GridBagLayout)panel3.getLayout()).rowHeights = new int[] {0, 5, 0, 5, 0, 5, 0, 5, 0, 5, 0};
-					((GridBagLayout)panel3.getLayout()).columnWeights = new double[] {0.0, 0.0, 1.0, 0.0, 0.0, 1.0E-4};
+					((GridBagLayout)panel3.getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0E-4};
 					((GridBagLayout)panel3.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
 
 					//---- label2 ----
 					label2.setText("PORT");
-					panel3.add(label2, new GridBagConstraints(0, 2, 2, 1, 0.0, 0.0,
+					label2.setFont(new Font("Constantia", Font.BOLD, 12));
+					panel3.add(label2, new GridBagConstraints(1, 2, 2, 1, 0.0, 0.0,
 						GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 						new Insets(0, 0, 0, 0), 0, 0));
-					panel3.add(commPortComboBox, new GridBagConstraints(2, 2, 1, 1, 0.0, 0.0,
+
+					//---- commPortComboBox ----
+					commPortComboBox.setFont(new Font("Constantia", Font.BOLD, 12));
+					panel3.add(commPortComboBox, new GridBagConstraints(3, 2, 1, 1, 0.0, 0.0,
 						GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 						new Insets(0, 0, 0, 0), 0, 0));
 
 					//---- refreshButton ----
 					refreshButton.setText("REFRESH");
-					panel3.add(refreshButton, new GridBagConstraints(4, 2, 1, 1, 0.0, 0.0,
+					refreshButton.setFont(new Font("Constantia", Font.BOLD, 12));
+					panel3.add(refreshButton, new GridBagConstraints(5, 2, 1, 1, 0.0, 0.0,
 						GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 						new Insets(0, 0, 0, 0), 0, 0));
 
 					//---- label3 ----
 					label3.setText("BAUD");
-					panel3.add(label3, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
+					label3.setFont(new Font("Constantia", Font.BOLD, 12));
+					panel3.add(label3, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
 						GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 						new Insets(0, 0, 0, 0), 0, 0));
 
@@ -108,25 +117,29 @@ public class MainWindowRemoteController extends JFrame {
 						"57600",
 						"115200"
 					}));
-					panel3.add(baudComboBox, new GridBagConstraints(2, 4, 1, 1, 0.0, 0.0,
+					baudComboBox.setFont(new Font("Constantia", Font.BOLD, 12));
+					panel3.add(baudComboBox, new GridBagConstraints(3, 4, 1, 1, 0.0, 0.0,
 						GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 						new Insets(0, 0, 0, 0), 0, 0));
 
 					//---- openCloseButton ----
 					openCloseButton.setText("open");
-					panel3.add(openCloseButton, new GridBagConstraints(4, 4, 1, 1, 0.0, 0.0,
+					openCloseButton.setFont(new Font("Constantia", Font.BOLD, 12));
+					panel3.add(openCloseButton, new GridBagConstraints(5, 4, 1, 1, 0.0, 0.0,
 						GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 						new Insets(0, 0, 0, 0), 0, 0));
 
 					//---- label4 ----
 					label4.setText("FirmWare");
-					panel3.add(label4, new GridBagConstraints(0, 6, 1, 1, 0.0, 0.0,
+					label4.setFont(new Font("Constantia", Font.BOLD, 12));
+					panel3.add(label4, new GridBagConstraints(1, 6, 1, 1, 0.0, 0.0,
 						GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 						new Insets(0, 0, 0, 0), 0, 0));
 
 					//---- firmWareTextField ----
 					firmWareTextField.setText("GRBL");
-					panel3.add(firmWareTextField, new GridBagConstraints(2, 6, 1, 1, 0.0, 0.0,
+					firmWareTextField.setFont(new Font("Constantia", Font.BOLD, 12));
+					panel3.add(firmWareTextField, new GridBagConstraints(3, 6, 1, 1, 0.0, 0.0,
 						GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 						new Insets(0, 0, 0, 0), 0, 0));
 				}
@@ -136,7 +149,16 @@ public class MainWindowRemoteController extends JFrame {
 
 				//---- sendButton ----
 				sendButton.setText("Send");
+				sendButton.setFont(new Font("Constantia", Font.BOLD, 12));
 				panel4.add(sendButton, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0,
+					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+					new Insets(0, 0, 5, 5), 0, 0));
+
+				//======== scrollPane1 ========
+				{
+					scrollPane1.setViewportView(textPane1);
+				}
+				panel4.add(scrollPane1, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
 					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
 					new Insets(0, 0, 5, 5), 0, 0));
 			}
@@ -165,5 +187,7 @@ public class MainWindowRemoteController extends JFrame {
 	private JLabel label4;
 	public JTextField firmWareTextField;
 	public JButton sendButton;
+	private JScrollPane scrollPane1;
+	public JTextPane textPane1;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables
 }
