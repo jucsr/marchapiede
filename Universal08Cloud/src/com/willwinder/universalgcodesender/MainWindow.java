@@ -121,7 +121,7 @@ implements KeyListener, ControllerListener, MainWindowAPI {
 	public String gCodeString;
 	private JTree workingstepsTree;
 	private JTree workplanTree;
-	Generate3Dview parent;
+	private Generate3Dview parent;
 	private Boolean isTheFirst = true;
 	public String ip;
 	public int port;
@@ -278,59 +278,53 @@ implements KeyListener, ControllerListener, MainWindowAPI {
         jMenuItem1.setText("jMenuItem1");
 
         jMenuItem3.setText("jMenuItem3");
-
+        firmwareComboBox.setVisible(false);
+        
         jMenuItem4.setText("jMenuItem4");
         label3 = new JLabel();
+        this.setIconImage(new ImageIcon(getClass().getResource("/images/controllerIcon.png")).getImage());
 
-        this.addWindowListener(new WindowListener() {
-			
+        this.addWindowListener(new WindowListener()
+        {
 			@Override
-			public void windowOpened(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
+			public void windowOpened(WindowEvent e) 
+			{
 			}
-			
 			@Override
-			public void windowIconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
+			public void windowIconified(WindowEvent e)
+			{
 			}
-			
 			@Override
-			public void windowDeiconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
+			public void windowDeiconified(WindowEvent e) 
+			{
 			}
-			
 			@Override
-			public void windowDeactivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
+			public void windowDeactivated(WindowEvent e) 
+			{
 			}
-			
 			@Override
-			public void windowClosing(WindowEvent e) {
-				// TODO Auto-generated method stub
-				if (hasConnection){
-					try {
+			public void windowClosing(WindowEvent e)
+			{
+				if (hasConnection)
+				{
+					try 
+					{
 						remoteDisconnect();					    
 						setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
+					} catch (IOException e1) 
+					{
 						e1.printStackTrace();
 					}
 				}
 			}
 			
 			@Override
-			public void windowClosed(WindowEvent e) {
-			
+			public void windowClosed(WindowEvent e)
+			{
 			}
-			
 			@Override
-			public void windowActivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
+			public void windowActivated(WindowEvent e)
+			{
 			}
 		});
         setMinimumSize(new java.awt.Dimension(640, 520));
@@ -1230,6 +1224,7 @@ implements KeyListener, ControllerListener, MainWindowAPI {
         portLabel.setText("Port:");
 
         firmwareLabel.setText("Firmware:");
+        firmwareLabel.setVisible(false);
 
         firmwareComboBox.setEditable(true);
 
@@ -1880,14 +1875,16 @@ implements KeyListener, ControllerListener, MainWindowAPI {
 		client = new Socket(ip,port);
 		BufferedReader entrada = new BufferedReader(new InputStreamReader(client.getInputStream()));
 		String msg = entrada.readLine().toString();
-		JOptionPane.showMessageDialog(null,"Data recebida do servidor: " + msg.toString());
+//		JOptionPane.showMessageDialog(null,"Data recebida do servidor: " + msg.toString());
+        this.consoleTextArea.setText(consoleTextArea.getText() + "\n Response from server: " + msg.toString().toUpperCase());
+
 		//entrada.close();
 		//client.close();
 		hasConnection = true;
 		this.updateControlsForState(ControlState.COMM_REMOTE_IDLE);
 		}
 		catch(IOException e){
-			JOptionPane.showMessageDialog(null,"Sem conex�o com o Servidor!");
+			JOptionPane.showMessageDialog(null,"No server available");
 			hasConnection = false;
 		}
     	
@@ -2739,6 +2736,8 @@ implements KeyListener, ControllerListener, MainWindowAPI {
         this.setTitle(Localization.getString("title") + " (" 
                 + Localization.getString("version") + " " + VERSION + ")");
         
+        this.setTitle("ST-Controller");
+        
         // Command History
         this.manualCommandHistory = new ArrayList<String>();
         this.commandTextField.addKeyListener(this);
@@ -3002,6 +3001,7 @@ implements KeyListener, ControllerListener, MainWindowAPI {
     		this.commandTextField.setEnabled(isOpen);
     		this.remoteConnectButton.setText("Disconnect");
     		this.label3.setIcon(new ImageIcon(getClass().getResource("/images/connection1.png")));
+            this.consoleTextArea.setText(consoleTextArea.getText() + "\n Connected with remote server with success!");
     		this.opencloseButton.setEnabled(!isOpen);
     	}
     	else if(!hasConnection){
@@ -3021,7 +3021,7 @@ implements KeyListener, ControllerListener, MainWindowAPI {
 	            this.opencloseButton.setText(Localization.getString("open"));
 	            this.remoteConnectButton.setText("Connect");
 	            this.label3.setIcon(new ImageIcon(getClass().getResource("/images/connection.png")));
-	            
+	            this.consoleTextArea.setText(consoleTextArea.getText() + "\n Disconected from remote server!");
 	        }
     	}
     }
