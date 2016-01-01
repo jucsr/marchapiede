@@ -84,7 +84,7 @@ public class ServerController extends MainWindowRemoteController {
 		catch(IOException e ){
 			e.printStackTrace();
 		}
-		
+		this.setDefaultCloseOperation(ServerController.EXIT_ON_CLOSE); 
 	}
 	public void conexao()
 	{
