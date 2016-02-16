@@ -13,7 +13,7 @@ new FormModel {
 				"border": new javax.swing.border.EmptyBorder( 12, 12, 12, 12 )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 					"$columnSpecs": "100:1.0"
-					"$rowSpecs": "0, 0"
+					"$rowSpecs": "0, 0:1.0"
 					"$hGap": 5
 					"$vGap": 5
 					"$alignLeft": true
@@ -27,29 +27,13 @@ new FormModel {
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 						"$columnSpecs": "40, 0:1.0"
-						"$rowSpecs": "0, 0, 0"
+						"$rowSpecs": "0:1.0, 0, 0:0.5, 0, 0:1.0"
 						"$hGap": 5
 						"$vGap": 5
 						"$alignLeft": true
 						"$alignTop": true
 					} ) {
 						name: "panel1"
-						add( new FormComponent( "javax.swing.JLabel" ) {
-							name: "label2"
-							"text": "Name:"
-							"horizontalAlignment": 4
-							"font": #Font0
-						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
-						add( new FormComponent( "javax.swing.JTextField" ) {
-							name: "textFieldName"
-							"text": "MT Connect"
-							"font": #Font0
-							auxiliary() {
-								"JavaCodeGenerator.variableModifiers": 4
-							}
-						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-							"gridx": 1
-						} )
 						add( new FormComponent( "javax.swing.JLabel" ) {
 							name: "label1"
 							"text": "Set IP address or web address:"
@@ -74,7 +58,7 @@ new FormModel {
 							"text": "Set IP address for Stream Camera:"
 							"font": #Font0
 						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-							"gridy": 2
+							"gridy": 3
 						} )
 						add( new FormComponent( "javax.swing.JTextField" ) {
 							name: "textFieldName2"
@@ -84,7 +68,7 @@ new FormModel {
 							}
 						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 							"gridx": 1
-							"gridy": 2
+							"gridy": 3
 						} )
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 						"gridy": 1

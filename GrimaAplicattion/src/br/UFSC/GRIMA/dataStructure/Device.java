@@ -44,14 +44,16 @@ public class Device implements ActionListener{
 		if(changeNameButton != null) {
 			if(e.getSource().equals(changeNameButton)) {
 				String name = nameTextField.getText();
-				if(agent.getDeviceByName(name) == null) {
+				if(name.equals(""))
+					JOptionPane.showMessageDialog(agent.getIoControl().getController().getMainInterface(), "Invalid name!!", "Error in Change", JOptionPane.ERROR_MESSAGE);
+				else if(agent.getDeviceByName(name) == null) {
 					setName(name);
+					agent.getIoControl().getController().getMainInterface().getViewDevicesEvents().setCameras();
 				}
 				else {
 					JOptionPane.showMessageDialog(agent.getIoControl().getController().getMainInterface(), "This name is already in use by another Device.", "Error in Change", JOptionPane.ERROR_MESSAGE);
 					nameTextField.setText(this.name);
 				}
-					
 			}
 		}
 	}

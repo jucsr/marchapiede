@@ -1,6 +1,7 @@
 package br.UFSC.GRIMA.IO;
 
 import java.awt.Dimension;
+import java.awt.Event;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -73,10 +74,24 @@ public class Camera implements ActionListener, StreamFrameListener {
 	public void actionPerformed(ActionEvent e) {
 		if (deviceCombobox != null) {
 			if(e.getSource().equals(deviceCombobox)) {
-				Device device = clientCamera.getIoControl().getController().getAllDevices().get(deviceCombobox.getSelectedIndex());
-				setDevice(device);
-				if(!device.getCameras().contains(this))
-					device.getCameras().add(this);
+				if(deviceCombobox.getSelectedIndex() > 0) {
+					Device device = clientCamera.getIoControl().getController().getAllDevices().get(deviceCombobox.getSelectedIndex() - 1);
+					if(getDevice() != null) {
+						if(device.getCameras().contains(this))
+							device.getCameras().remove(this);
+					}
+					setDevice(device);
+					if(!device.getCameras().contains(this))
+						device.getCameras().add(this);
+				}
+				else {
+					if(device != null) {
+						if(device.getCameras().contains(this))
+							device.getCameras().remove(this);
+						setDevice(null);
+					}
+				}
+				clientCamera.getIoControl().getController().getMainInterface().getViewDevicesEvents().setDevices();
 			}
 		}
 		if(viewButton != null) {

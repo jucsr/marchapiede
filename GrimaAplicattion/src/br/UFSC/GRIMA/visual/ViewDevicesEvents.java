@@ -40,6 +40,8 @@ public class ViewDevicesEvents extends ViewDevicesWindow implements ActionListen
 			}
 		    public void windowClosed(java.awt.event.WindowEvent windowEvent) {
 				mainInterface.setEnabled(true);
+				mainInterface.toFront();
+				mainInterface.setViewDevicesEvents(null);
 				ArrayList<Device> devices = mainInterface.getMainExecution().getAllDevices();
 				for (int i = 0; i < devices.size(); i++) {
 					devices.get(i).setChangeNameButton(null);
@@ -80,13 +82,6 @@ public class ViewDevicesEvents extends ViewDevicesWindow implements ActionListen
 		else if (e.getSource().equals(addCameraButton)) {
 			this.setEnabled(false);
 			new AddCameraEvents(this);
-		}
-		else if (e.getSource().getClass().equals(JComboBox.class)) { ////some of the comboboxes or device name buttons
-			System.out.println("Entrei");
-			setDevices();
-		}
-		else { ////// or device name buttons
-			setCameras();
 		}
 	}
 	public void setDevices() {
@@ -130,14 +125,13 @@ public class ViewDevicesEvents extends ViewDevicesWindow implements ActionListen
 			((GridBagLayout)nameContainer.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 1.0E-4};
 			nameContainer.add(deviceName, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
 					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-					new Insets(0, 0, 5, 5), 0, 0));
+					new Insets(0, 0, 0, 0), 0, 0));
 			nameContainer.add(changeName, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
 					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-					new Insets(0, 0, 5, 5), 0, 0));
+					new Insets(0, 0, 0, 0), 0, 0));
 			devices.get(line).setNameTextField(deviceName);
 			devices.get(line).setChangeNameButton(changeName);
 			changeName.addActionListener(devices.get(line));
-			changeName.addActionListener(this);
 			/////////////////////adding to device panel///////////////////////////////
 			devicesPanel.add(agentName, new GridBagConstraints(0, line + 1, 1, 1, 0.0, 0.0,
 					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -186,10 +180,11 @@ public class ViewDevicesEvents extends ViewDevicesWindow implements ActionListen
 			cameraName.setToolTipText(cameras.get(line).getName());
 			JComboBox<String> deviceCombobox = new JComboBox<String>();
 			ArrayList<Device>devices = mainInterface.getMainExecution().getAllDevices();
+			deviceCombobox.addItem(" ");
 			for(int i = 0; i < devices.size(); i++) 
 				deviceCombobox.addItem(devices.get(i).getName());
 			if(cameras.get(line).getDevice() != null) 
-				deviceCombobox.setSelectedIndex(devices.indexOf(cameras.get(line).getDevice()));
+				deviceCombobox.setSelectedIndex(devices.indexOf(cameras.get(line).getDevice()) + 1);
 			JButton viewButton = new JButton();
 			viewButton.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/viewIcon.png")));
 			cameraPanel.add(ipName, new GridBagConstraints(0, line + 1, 1, 1, 0.0, 0.0,
@@ -205,9 +200,9 @@ public class ViewDevicesEvents extends ViewDevicesWindow implements ActionListen
 					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
 					new Insets(0, 0, 5, 5), 0, 0));
 			cameras.get(line).setViewButton(viewButton);
+			cameras.get(line).setDeviceCombobox(deviceCombobox);
 			viewButton.addActionListener(cameras.get(line));
 			deviceCombobox.addActionListener(cameras.get(line));
-			deviceCombobox.addActionListener(this);
 		}
 		this.revalidate();
 		this.repaint();

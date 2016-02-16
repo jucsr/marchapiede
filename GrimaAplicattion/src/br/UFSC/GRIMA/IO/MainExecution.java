@@ -32,14 +32,12 @@ public class MainExecution extends JApplet{
 		setNewMonitoringPanelList(new ArrayList<Variable>());
 	}
 ////////////////////////////////////Methods/////////////////////////////////////////////////////////////
-	public String addAgent (String name, String ip) {
-		if (ioControl.getAgentByName(name) != null) 
-			return (new String("The name given is already in use in another Agent in the Application."));
+	public String addAgent (String ip) {
 		setAddProgress(5);
 		if (ioControl.getAgentByIP(ip) != null)
 			return (new String("The ip given is already in use in another Agent in the Application."));
 		setAddProgress(10);
-		return ioControl.addAgent(name, ip);
+		return ioControl.addAgent(ip);
 	}
 	public ArrayList<Device> getAllDevices() {
 		ArrayList<Device> devices = new ArrayList<Device>();

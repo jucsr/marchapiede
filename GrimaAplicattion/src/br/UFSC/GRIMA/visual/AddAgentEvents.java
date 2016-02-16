@@ -27,6 +27,7 @@ public class AddAgentEvents extends AddAgentWindow implements ActionListener {
 				viewDevicesEvents.setDevices();
 				viewDevicesEvents.setCameras();
 				viewDevicesEvents.setEnabled(true);
+				viewDevicesEvents.toFront();
 			}
 		});
 		this.setVisible(true);
@@ -39,7 +40,7 @@ public class AddAgentEvents extends AddAgentWindow implements ActionListener {
 			this.setEnabled(false);
 			WaitEvents waitEvents = new WaitEvents(this, "Creating new Agent.");
 			waitEvents.setVisible(true);
-			String conf = viewDevicesEvents.getMainInterface().getMainExecution().addAgent(textFieldName.getText(), textFieldIP.getText());
+			String conf = viewDevicesEvents.getMainInterface().getMainExecution().addAgent(textFieldIP.getText());
 			waitEvents.dispose();
 			if (conf == null)
 				this.dispose();

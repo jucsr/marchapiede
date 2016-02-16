@@ -63,6 +63,7 @@ public class CreatePanelEvents extends CreatePanelWindow implements ActionListen
 		    			variables.get(i).setCloseButton(null);
 		    	}
 				mainInterface.setEnabled(true);
+				mainInterface.toFront();
 				if (mainInterface.deviceInfoButton.isSelected()) {
 					mainInterface.destroyViewDevicesPanel();
 					mainInterface.setViewDevicesPanel();

@@ -28,8 +28,6 @@ public class AddAgentWindow extends JFrame {
 		contentPanel = new JPanel();
 		label4 = new JLabel();
 		panel1 = new JPanel();
-		label2 = new JLabel();
-		textFieldName = new JTextField();
 		label1 = new JLabel();
 		textFieldIP = new JTextField();
 		label3 = new JLabel();
@@ -57,7 +55,7 @@ public class AddAgentWindow extends JFrame {
 				((GridBagLayout)contentPanel.getLayout()).columnWidths = new int[] {100, 0};
 				((GridBagLayout)contentPanel.getLayout()).rowHeights = new int[] {0, 0, 0};
 				((GridBagLayout)contentPanel.getLayout()).columnWeights = new double[] {1.0, 1.0E-4};
-				((GridBagLayout)contentPanel.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0E-4};
+				((GridBagLayout)contentPanel.getLayout()).rowWeights = new double[] {0.0, 1.0, 1.0E-4};
 
 				//---- label4 ----
 				label4.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/logofinal.png")));
@@ -69,24 +67,9 @@ public class AddAgentWindow extends JFrame {
 				{
 					panel1.setLayout(new GridBagLayout());
 					((GridBagLayout)panel1.getLayout()).columnWidths = new int[] {45, 0, 0};
-					((GridBagLayout)panel1.getLayout()).rowHeights = new int[] {0, 0, 0, 0};
+					((GridBagLayout)panel1.getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0, 0};
 					((GridBagLayout)panel1.getLayout()).columnWeights = new double[] {0.0, 1.0, 1.0E-4};
-					((GridBagLayout)panel1.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 1.0E-4};
-
-					//---- label2 ----
-					label2.setText("Name:");
-					label2.setHorizontalAlignment(SwingConstants.RIGHT);
-					label2.setFont(new Font("Verdana", Font.PLAIN, 12));
-					panel1.add(label2, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-						GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-						new Insets(0, 0, 5, 5), 0, 0));
-
-					//---- textFieldName ----
-					textFieldName.setText("MT Connect");
-					textFieldName.setFont(new Font("Verdana", Font.PLAIN, 12));
-					panel1.add(textFieldName, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-						GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-						new Insets(0, 0, 5, 0), 0, 0));
+					((GridBagLayout)panel1.getLayout()).rowWeights = new double[] {1.0, 0.0, 0.5, 0.0, 1.0, 1.0E-4};
 
 					//---- label1 ----
 					label1.setText("Set IP address or web address:");
@@ -106,15 +89,15 @@ public class AddAgentWindow extends JFrame {
 					//---- label3 ----
 					label3.setText("Set IP address for Stream Camera:");
 					label3.setFont(new Font("Verdana", Font.PLAIN, 12));
-					panel1.add(label3, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
+					panel1.add(label3, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
 						GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-						new Insets(0, 0, 0, 5), 0, 0));
+						new Insets(0, 0, 5, 5), 0, 0));
 
 					//---- textFieldName2 ----
 					textFieldName2.setFont(new Font("Verdana", Font.PLAIN, 12));
-					panel1.add(textFieldName2, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0,
+					panel1.add(textFieldName2, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0,
 						GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-						new Insets(0, 0, 0, 0), 0, 0));
+						new Insets(0, 0, 5, 0), 0, 0));
 				}
 				contentPanel.add(panel1, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
 					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -156,8 +139,6 @@ public class AddAgentWindow extends JFrame {
 	private JPanel contentPanel;
 	private JLabel label4;
 	private JPanel panel1;
-	private JLabel label2;
-	protected JTextField textFieldName;
 	private JLabel label1;
 	protected JTextField textFieldIP;
 	private JLabel label3;

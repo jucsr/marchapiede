@@ -44,7 +44,7 @@ public class IOControl {
 		}
 		return null;
 	}
-	public String addAgent (String name, String ip) {
+	public String addAgent (String ip) {
 		MTConnectDevicesType probeObject = loadExecution.probeRequest(ip);
 		if (probeObject == null) 
 			return loadExecution.getLastError();
@@ -55,7 +55,7 @@ public class IOControl {
 				return loadExecution.getLastError();
 			else {
 				controller.setAddProgress(90);
-				agents.add(new Agent(currentObject, probeObject, name, ip, this));
+				agents.add(new Agent(currentObject, probeObject, currentObject.getHeader().getSender(), ip, this));
 				
 			}
 		}

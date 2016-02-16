@@ -38,6 +38,7 @@ public class MainInterface extends MainWindow implements ActionListener {
 	private MainExecution mainExecution;
 	private DeviceMonitoringPanelEvents deviceMonitoringPanelEvents;
 	private PanelMonitoringPanel panelMonitoringPanel;
+	private ViewDevicesEvents viewDevicesEvents;
 //////////////////////////Constructor///////////////////////////////////////////////////////////////////
 	public MainInterface(MainExecution mainExecution)	{
 		setMainExecution(mainExecution);
@@ -56,7 +57,7 @@ public class MainInterface extends MainWindow implements ActionListener {
 		// TODO Auto-generated method stub
 		if (e.getSource().equals(deviceConfigureButton)) {
 			this.setEnabled(false);
-			new ViewDevicesEvents(this);
+			setViewDevicesEvents(new ViewDevicesEvents(this));
 		}
 		if (e.getSource().equals(createPanelButton)) {
 			this.setEnabled(false);
@@ -576,5 +577,11 @@ public class MainInterface extends MainWindow implements ActionListener {
 	}
 	public void setPanelMonitoringPanel(PanelMonitoringPanel panelMonitoringPanel) {
 		this.panelMonitoringPanel = panelMonitoringPanel;
+	}
+	public ViewDevicesEvents getViewDevicesEvents() {
+		return viewDevicesEvents;
+	}
+	public void setViewDevicesEvents(ViewDevicesEvents viewDevicesEvents) {
+		this.viewDevicesEvents = viewDevicesEvents;
 	}
 }

@@ -24,6 +24,7 @@ public class AddCameraEvents extends AddCameraWindow implements ActionListener{
 				viewDevicesEvents.setDevices();
 				viewDevicesEvents.setCameras();
 				viewDevicesEvents.setEnabled(true);
+				viewDevicesEvents.toFront();
 			}
 		});
 		this.setVisible(true);
