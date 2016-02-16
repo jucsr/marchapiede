@@ -7,6 +7,7 @@ import br.UFSC.GRIMA.visual.MainInterface;
 public class ClientApplet extends JApplet
 {
 	public void init()
+	////////////////lll
 	{
 		new MainExecution();
 	}
