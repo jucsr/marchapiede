@@ -36,8 +36,13 @@ public class AddCameraEvents extends AddCameraWindow implements ActionListener{
 			this.setEnabled(false);
 			WaitEvents waitEvents = new WaitEvents(this, "Connecting to camera streams.");
 			waitEvents.setVisible(true);
-			if(!textFieldIP.getText().equals(""))
-				viewDevicesEvents.getMainInterface().getMainExecution().addClientCamera(textFieldIP.getText());
+			if(!textFieldIP.getText().equals("")) {
+				boolean sucess = viewDevicesEvents.getMainInterface().getMainExecution().addClientCamera(textFieldIP.getText());
+				if(sucess)
+					this.dispose();
+				else 
+					this.setEnabled(true);
+			}
 			else {
 				JOptionPane.showMessageDialog(this, "The ip field is empty, please insert a valid ip.", "Error", JOptionPane.ERROR_MESSAGE);
 				this.setEnabled(true);

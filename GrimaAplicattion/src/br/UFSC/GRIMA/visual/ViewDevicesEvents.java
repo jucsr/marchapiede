@@ -82,6 +82,7 @@ public class ViewDevicesEvents extends ViewDevicesWindow implements ActionListen
 			new AddCameraEvents(this);
 		}
 		else if (e.getSource().getClass().equals(JComboBox.class)) { ////some of the comboboxes or device name buttons
+			System.out.println("Entrei");
 			setDevices();
 		}
 		else { ////// or device name buttons
