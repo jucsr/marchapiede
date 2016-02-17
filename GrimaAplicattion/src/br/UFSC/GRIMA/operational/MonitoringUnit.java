@@ -30,6 +30,7 @@ import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYAreaRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.renderer.xy.XYStepAreaRenderer;
 import org.jfree.chart.renderer.xy.XYStepRenderer;
 import org.jfree.data.time.TimeSeriesCollection;
@@ -133,7 +134,11 @@ public class MonitoringUnit implements ActionListener{
 	public void refreshChart() {
 		if (this.panelType == '1') {
 			if(chartType.equals("LineChart")) {
-				chart = ChartFactory.createTimeSeriesChart(null, "time", "values", chartDataset, true, false, false);
+				DateAxis xAxis = new DateAxis("time");
+				ValueAxis yAxis = new NumberAxis("values");
+				XYItemRenderer renderer = new XYLineAndShapeRenderer(true, false);
+				XYPlot plot = new XYPlot(chartDataset, xAxis, yAxis, renderer);
+				setChart(new JFreeChart(null, new Font("Tahoma", 0, 18), plot, true));
 			}
 			else if (chartType.equals("AreaChart")) {
 				DateAxis xAxis = new DateAxis("time");

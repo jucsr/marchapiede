@@ -9,10 +9,10 @@ import br.UFSC.GRIMA.IO.Agent;
 import br.UFSC.GRIMA.IO.ClientCamera;
 
 public class AddCameraEvents extends AddCameraWindow implements ActionListener{
-	private ViewDevicesEvents viewDevicesEvents;
+	private MainInterface mainInterface;
 ///////////////////constructor//////////////////////////////////////
 	public AddCameraEvents (ViewDevicesEvents viewDevicesEvents) {
-		this.viewDevicesEvents = viewDevicesEvents;
+		setMainInterface(viewDevicesEvents.getMainInterface());
 		this.okButton.addActionListener(this);
 		this.cancelButton.addActionListener(this);
 		this.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -29,6 +29,37 @@ public class AddCameraEvents extends AddCameraWindow implements ActionListener{
 		});
 		this.setVisible(true);
 	}
+	public AddCameraEvents(MainInterface mainInterface) {
+		setMainInterface(mainInterface);
+		this.okButton.addActionListener(this);
+		this.cancelButton.addActionListener(this);
+		this.addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				windowClosed(windowEvent);
+			}
+		    public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+				if (mainInterface.deviceInfoButton.isSelected()) {
+					mainInterface.destroyViewDevicesPanel();
+					mainInterface.setViewDevicesPanel();
+					mainInterface.deviceInfoButton.setSelected(true);
+				}
+				else if (mainInterface.deviceMonitoringButton.isSelected()) {
+					mainInterface.destroyDeviceMonitoringPanel();
+					mainInterface.setDeviceMonitoringPanel();
+					mainInterface.deviceMonitoringButton.setSelected(true);
+				}
+				else if (mainInterface.panelMonitoringButton.isSelected()) {
+					mainInterface.destroyPanelMonitoringLayout();
+					mainInterface.setPanelMonitoringLayout();
+					mainInterface.panelMonitoringButton.setSelected(true);
+				}
+				mainInterface.setEnabled(true);
+				mainInterface.toFront();
+			}
+		});
+		this.setVisible(true);
+	}
 //////////////////////////methods/////////////////////////////////
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -38,7 +69,7 @@ public class AddCameraEvents extends AddCameraWindow implements ActionListener{
 			WaitEvents waitEvents = new WaitEvents(this, "Connecting to camera streams.");
 			waitEvents.setVisible(true);
 			if(!textFieldIP.getText().equals("")) {
-				boolean sucess = viewDevicesEvents.getMainInterface().getMainExecution().addClientCamera(textFieldIP.getText());
+				boolean sucess = mainInterface.getMainExecution().addClientCamera(textFieldIP.getText());
 				if(sucess)
 					this.dispose();
 				else 
@@ -55,12 +86,11 @@ public class AddCameraEvents extends AddCameraWindow implements ActionListener{
 		}
 	}
 /////////////////////////Getters and setters///////////////////////////
-	public ViewDevicesEvents getViewDevicesEvents() {
-		return viewDevicesEvents;
+	public MainInterface getMainInterface() {
+		return mainInterface;
 	}
-
-	public void setViewDevicesEvents(ViewDevicesEvents viewDevicesEvents) {
-		this.viewDevicesEvents = viewDevicesEvents;
+	public void setMainInterface(MainInterface mainInterface) {
+		this.mainInterface = mainInterface;
 	}
 	
 

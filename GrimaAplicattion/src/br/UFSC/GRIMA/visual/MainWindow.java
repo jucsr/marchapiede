@@ -19,28 +19,39 @@ public class MainWindow extends JFrame {
 		// JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
 		menuBar1 = new JMenuBar();
 		menu1 = new JMenu();
-		menuItem2 = new JMenuItem();
+		menuExit = new JMenuItem();
 		menu2 = new JMenu();
-		menuItem1 = new JMenuItem();
+		menuPreferences = new JMenuItem();
+		menuDeviceConfigure = new JMenuItem();
+		menuDatabase = new JMenuItem();
+		menu3 = new JMenu();
+		menuAgents = new JMenuItem();
+		menuAddAgent = new JMenuItem();
+		menu4 = new JMenu();
+		menuDeviceInfo = new JMenuItem();
+		menuDevices = new JMenu();
+		menu6 = new JMenu();
+		menuCameraInfo = new JMenuItem();
+		menuAddCamera = new JMenuItem();
+		menuView = new JMenu();
+		menu8 = new JMenu();
+		menuPanels = new JMenu();
+		menuViewPanels = new JMenuItem();
+		menuAddPanel = new JMenuItem();
+		menu5 = new JMenu();
+		menuAbout = new JMenuItem();
 		panel7 = new JPanel();
-		label1 = new JLabel();
 		panel2 = new JPanel();
-		panel3 = new JPanel();
-		button1 = new JButton();
-		deviceConfigureButton = new JButton();
-		button3 = new JButton();
 		panel4 = new JPanel();
 		panel5 = new JPanel();
-		label2 = new JLabel();
-		createPanelButton = new JButton();
 		deviceInfoButton = new JToggleButton();
 		deviceMonitoringButton = new JToggleButton();
 		panelMonitoringButton = new JToggleButton();
 		panel6 = new JPanel();
-		label3 = new JLabel();
-		mainAgentField = new JTextField();
 		label4 = new JLabel();
 		currentTimeField = new JTextField();
+		label1 = new JLabel();
+		loopTimeField = new JTextField();
 		splitPane1 = new JSplitPane();
 		scrollPane2 = new JScrollPane();
 		workSpace = new JPanel();
@@ -53,9 +64,9 @@ public class MainWindow extends JFrame {
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new GridBagLayout());
 		((GridBagLayout)contentPane.getLayout()).columnWidths = new int[] {0, 0};
-		((GridBagLayout)contentPane.getLayout()).rowHeights = new int[] {0, 0, 0, 0};
+		((GridBagLayout)contentPane.getLayout()).rowHeights = new int[] {0, 0, 0};
 		((GridBagLayout)contentPane.getLayout()).columnWeights = new double[] {1.0, 1.0E-4};
-		((GridBagLayout)contentPane.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0, 1.0E-4};
+		((GridBagLayout)contentPane.getLayout()).rowWeights = new double[] {0.0, 1.0, 1.0E-4};
 
 		//======== menuBar1 ========
 		{
@@ -65,82 +76,143 @@ public class MainWindow extends JFrame {
 				menu1.setText("File");
 				menu1.setFont(new Font("Verdana", Font.PLAIN, 12));
 
-				//---- menuItem2 ----
-				menuItem2.setText("exit");
-				menuItem2.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/process-stop.png")));
-				menuItem2.setFont(new Font("Verdana", Font.PLAIN, 12));
-				menu1.add(menuItem2);
+				//---- menuExit ----
+				menuExit.setText("exit");
+				menuExit.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/process-stop.png")));
+				menuExit.setFont(new Font("Verdana", Font.PLAIN, 12));
+				menu1.add(menuExit);
 			}
 			menuBar1.add(menu1);
 
 			//======== menu2 ========
 			{
-				menu2.setText("Help");
-				menu2.setFont(new Font("Verdana", Font.PLAIN, 12));
+				menu2.setText("Configure");
 
-				//---- menuItem1 ----
-				menuItem1.setText("About");
-				menuItem1.setIcon(null);
-				menuItem1.setFont(new Font("Verdana", Font.PLAIN, 12));
-				menu2.add(menuItem1);
+				//---- menuPreferences ----
+				menuPreferences.setText("Preferences");
+				menuPreferences.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/Gears-icon.png")));
+				menu2.add(menuPreferences);
+
+				//---- menuDeviceConfigure ----
+				menuDeviceConfigure.setText("Configure Imput Data");
+				menuDeviceConfigure.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/machineIcon.png")));
+				menu2.add(menuDeviceConfigure);
+
+				//---- menuDatabase ----
+				menuDatabase.setText("Configure Database");
+				menuDatabase.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/downloadIcon.png")));
+				menu2.add(menuDatabase);
 			}
 			menuBar1.add(menu2);
+
+			//======== menu3 ========
+			{
+				menu3.setText("Agent");
+
+				//---- menuAgents ----
+				menuAgents.setText("Agents info");
+				menuAgents.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/agentIcon.png")));
+				menu3.add(menuAgents);
+
+				//---- menuAddAgent ----
+				menuAddAgent.setText("Add Agent");
+				menuAddAgent.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/plusIcon.png")));
+				menu3.add(menuAddAgent);
+			}
+			menuBar1.add(menu3);
+
+			//======== menu4 ========
+			{
+				menu4.setText("Device");
+
+				//---- menuDeviceInfo ----
+				menuDeviceInfo.setText("Devices info");
+				menuDeviceInfo.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/machineIcon.png")));
+				menu4.add(menuDeviceInfo);
+
+				//======== menuDevices ========
+				{
+					menuDevices.setText("Monitor");
+					menuDevices.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/viewIcon.png")));
+				}
+				menu4.add(menuDevices);
+			}
+			menuBar1.add(menu4);
+
+			//======== menu6 ========
+			{
+				menu6.setText("Webcam");
+
+				//---- menuCameraInfo ----
+				menuCameraInfo.setText("Camera Info");
+				menuCameraInfo.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/cameraIcon.png")));
+				menu6.add(menuCameraInfo);
+
+				//---- menuAddCamera ----
+				menuAddCamera.setText("Add Camera");
+				menuAddCamera.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/plusIcon.png")));
+				menu6.add(menuAddCamera);
+
+				//======== menuView ========
+				{
+					menuView.setText("View");
+					menuView.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/viewIcon.png")));
+				}
+				menu6.add(menuView);
+			}
+			menuBar1.add(menu6);
+
+			//======== menu8 ========
+			{
+				menu8.setText("Panels");
+
+				//======== menuPanels ========
+				{
+					menuPanels.setText("Configure");
+					menuPanels.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/Gears-icon.png")));
+				}
+				menu8.add(menuPanels);
+
+				//---- menuViewPanels ----
+				menuViewPanels.setText("View Panels");
+				menuViewPanels.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/monitoringIcon.png")));
+				menu8.add(menuViewPanels);
+
+				//---- menuAddPanel ----
+				menuAddPanel.setText("Add Panel");
+				menuAddPanel.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/plusIcon.png")));
+				menu8.add(menuAddPanel);
+			}
+			menuBar1.add(menu8);
+
+			//======== menu5 ========
+			{
+				menu5.setText("Help");
+
+				//---- menuAbout ----
+				menuAbout.setText("About");
+				menuAbout.setActionCommand("About");
+				menu5.add(menuAbout);
+			}
+			menuBar1.add(menu5);
 		}
 		setJMenuBar(menuBar1);
 
 		//======== panel7 ========
 		{
 			panel7.setLayout(new GridBagLayout());
-			((GridBagLayout)panel7.getLayout()).columnWidths = new int[] {0, 0, 0};
-			((GridBagLayout)panel7.getLayout()).rowHeights = new int[] {0, 0, 0, 0};
-			((GridBagLayout)panel7.getLayout()).columnWeights = new double[] {0.0, 1.0, 1.0E-4};
-			((GridBagLayout)panel7.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 1.0E-4};
-
-			//---- label1 ----
-			label1.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/logofinal.png")));
-			panel7.add(label1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-				GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-				new Insets(0, 0, 5, 5), 0, 0));
+			((GridBagLayout)panel7.getLayout()).columnWidths = new int[] {0, 0};
+			((GridBagLayout)panel7.getLayout()).rowHeights = new int[] {0, 0};
+			((GridBagLayout)panel7.getLayout()).columnWeights = new double[] {1.0, 1.0E-4};
+			((GridBagLayout)panel7.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
 
 			//======== panel2 ========
 			{
 				panel2.setLayout(new GridBagLayout());
-				((GridBagLayout)panel2.getLayout()).columnWidths = new int[] {0, 0, 0};
-				((GridBagLayout)panel2.getLayout()).rowHeights = new int[] {0, 0, 0};
-				((GridBagLayout)panel2.getLayout()).columnWeights = new double[] {1.0, 0.0, 1.0E-4};
-				((GridBagLayout)panel2.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0E-4};
-
-				//======== panel3 ========
-				{
-					panel3.setLayout(new GridBagLayout());
-					((GridBagLayout)panel3.getLayout()).columnWidths = new int[] {0, 0, 0, 0};
-					((GridBagLayout)panel3.getLayout()).rowHeights = new int[] {0, 0};
-					((GridBagLayout)panel3.getLayout()).columnWeights = new double[] {1.0, 1.0, 0.0, 1.0E-4};
-					((GridBagLayout)panel3.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
-
-					//---- button1 ----
-					button1.setText("Properties");
-					button1.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/Gears-icon.png")));
-					panel3.add(button1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-						GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-						new Insets(0, 0, 0, 5), 0, 0));
-
-					//---- deviceConfigureButton ----
-					deviceConfigureButton.setText("Configure Devices");
-					deviceConfigureButton.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/machineIcon.png")));
-					panel3.add(deviceConfigureButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-						GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-						new Insets(0, 0, 0, 5), 0, 0));
-
-					//---- button3 ----
-					button3.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/iconInterrogacao.png")));
-					panel3.add(button3, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
-						GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-						new Insets(0, 0, 0, 0), 0, 0));
-				}
-				panel2.add(panel3, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-					new Insets(0, 0, 5, 5), 0, 0));
+				((GridBagLayout)panel2.getLayout()).columnWidths = new int[] {0, 0};
+				((GridBagLayout)panel2.getLayout()).rowHeights = new int[] {0, 0};
+				((GridBagLayout)panel2.getLayout()).columnWeights = new double[] {1.0, 1.0E-4};
+				((GridBagLayout)panel2.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
 
 				//======== panel4 ========
 				{
@@ -154,37 +226,25 @@ public class MainWindow extends JFrame {
 					{
 						panel5.setLayout(new GridBagLayout());
 						((GridBagLayout)panel5.getLayout()).columnWidths = new int[] {0, 0, 0, 0};
-						((GridBagLayout)panel5.getLayout()).rowHeights = new int[] {0, 0, 0};
+						((GridBagLayout)panel5.getLayout()).rowHeights = new int[] {0, 0};
 						((GridBagLayout)panel5.getLayout()).columnWeights = new double[] {1.0, 1.0, 1.0, 1.0E-4};
-						((GridBagLayout)panel5.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0E-4};
-
-						//---- label2 ----
-						label2.setText("Requests:");
-						panel5.add(label2, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-							GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-							new Insets(0, 0, 5, 5), 0, 0));
-
-						//---- createPanelButton ----
-						createPanelButton.setText("New Panel");
-						panel5.add(createPanelButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
-							GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-							new Insets(0, 0, 5, 0), 0, 0));
+						((GridBagLayout)panel5.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
 
 						//---- deviceInfoButton ----
 						deviceInfoButton.setText("Device Information");
-						panel5.add(deviceInfoButton, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+						panel5.add(deviceInfoButton, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
 							GridBagConstraints.CENTER, GridBagConstraints.BOTH,
 							new Insets(0, 0, 0, 5), 0, 0));
 
 						//---- deviceMonitoringButton ----
 						deviceMonitoringButton.setText("Device Monitoring");
-						panel5.add(deviceMonitoringButton, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
+						panel5.add(deviceMonitoringButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
 							GridBagConstraints.CENTER, GridBagConstraints.BOTH,
 							new Insets(0, 0, 0, 5), 0, 0));
 
 						//---- panelMonitoringButton ----
 						panelMonitoringButton.setText("Panel Monitoring");
-						panel5.add(panelMonitoringButton, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0,
+						panel5.add(panelMonitoringButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
 							GridBagConstraints.CENTER, GridBagConstraints.BOTH,
 							new Insets(0, 0, 0, 0), 0, 0));
 					}
@@ -200,21 +260,27 @@ public class MainWindow extends JFrame {
 						((GridBagLayout)panel6.getLayout()).columnWeights = new double[] {0.0, 1.0, 1.0E-4};
 						((GridBagLayout)panel6.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0E-4};
 
-						//---- label3 ----
-						label3.setText("Main Agent:");
-						panel6.add(label3, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+						//---- label4 ----
+						label4.setText("Reference Time:");
+						panel6.add(label4, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
 							GridBagConstraints.CENTER, GridBagConstraints.BOTH,
 							new Insets(0, 0, 5, 5), 0, 0));
-						panel6.add(mainAgentField, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+
+						//---- currentTimeField ----
+						currentTimeField.setEditable(false);
+						panel6.add(currentTimeField, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
 							GridBagConstraints.CENTER, GridBagConstraints.BOTH,
 							new Insets(0, 0, 5, 0), 0, 0));
 
-						//---- label4 ----
-						label4.setText("Reference Time:");
-						panel6.add(label4, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+						//---- label1 ----
+						label1.setText("Loop Time:");
+						panel6.add(label1, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
 							GridBagConstraints.CENTER, GridBagConstraints.BOTH,
 							new Insets(0, 0, 0, 5), 0, 0));
-						panel6.add(currentTimeField, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
+
+						//---- loopTimeField ----
+						loopTimeField.setEditable(false);
+						panel6.add(loopTimeField, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
 							GridBagConstraints.CENTER, GridBagConstraints.BOTH,
 							new Insets(0, 0, 0, 0), 0, 0));
 					}
@@ -222,15 +288,15 @@ public class MainWindow extends JFrame {
 						GridBagConstraints.CENTER, GridBagConstraints.BOTH,
 						new Insets(0, 0, 0, 0), 0, 0));
 				}
-				panel2.add(panel4, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+				panel2.add(panel4, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
 					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-					new Insets(0, 0, 0, 5), 0, 0));
+					new Insets(0, 0, 0, 0), 0, 0));
 			}
-			panel7.add(panel2, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+			panel7.add(panel2, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
 				GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-				new Insets(0, 0, 5, 0), 0, 0));
+				new Insets(0, 0, 0, 0), 0, 0));
 		}
-		contentPane.add(panel7, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+		contentPane.add(panel7, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
 			GridBagConstraints.CENTER, GridBagConstraints.BOTH,
 			new Insets(0, 0, 5, 0), 0, 0));
 
@@ -265,7 +331,7 @@ public class MainWindow extends JFrame {
 			}
 			splitPane1.setBottomComponent(scrollPane1);
 		}
-		contentPane.add(splitPane1, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0,
+		contentPane.add(splitPane1, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
 			GridBagConstraints.CENTER, GridBagConstraints.BOTH,
 			new Insets(0, 0, 0, 0), 0, 0));
 		setSize(815, 455);
@@ -276,28 +342,39 @@ public class MainWindow extends JFrame {
 	// JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
 	private JMenuBar menuBar1;
 	private JMenu menu1;
-	protected JMenuItem menuItem2;
+	protected JMenuItem menuExit;
 	private JMenu menu2;
-	protected JMenuItem menuItem1;
+	protected JMenuItem menuPreferences;
+	protected JMenuItem menuDeviceConfigure;
+	protected JMenuItem menuDatabase;
+	private JMenu menu3;
+	protected JMenuItem menuAgents;
+	protected JMenuItem menuAddAgent;
+	private JMenu menu4;
+	protected JMenuItem menuDeviceInfo;
+	public JMenu menuDevices;
+	private JMenu menu6;
+	protected JMenuItem menuCameraInfo;
+	protected JMenuItem menuAddCamera;
+	public JMenu menuView;
+	private JMenu menu8;
+	public JMenu menuPanels;
+	protected JMenuItem menuViewPanels;
+	protected JMenuItem menuAddPanel;
+	private JMenu menu5;
+	protected JMenuItem menuAbout;
 	private JPanel panel7;
-	private JLabel label1;
 	private JPanel panel2;
-	private JPanel panel3;
-	private JButton button1;
-	protected JButton deviceConfigureButton;
-	private JButton button3;
 	private JPanel panel4;
 	private JPanel panel5;
-	private JLabel label2;
-	protected JButton createPanelButton;
 	protected JToggleButton deviceInfoButton;
 	protected JToggleButton deviceMonitoringButton;
 	protected JToggleButton panelMonitoringButton;
 	private JPanel panel6;
-	private JLabel label3;
-	protected JTextField mainAgentField;
 	private JLabel label4;
 	protected JTextField currentTimeField;
+	private JLabel label1;
+	protected JTextField loopTimeField;
 	private JSplitPane splitPane1;
 	private JScrollPane scrollPane2;
 	protected JPanel workSpace;

@@ -171,7 +171,6 @@ public class VariableBuffer implements SeriesChangeListener, ActionListener {
 				if(!categoriesInVariable.contains(dataSerie.getValue(i)))
 					categoriesInVariable.add(dataSerie.getValue(i));
 			}
-			System.out.println("Category Identification: " + getCategoriesInVariable());
 			if(categoriesInVariable.size() < getCategoriesInVariable())
 				monitoringUnit.categoryRemove();
 			setCategoriesInVariable(categoriesInVariable.size());

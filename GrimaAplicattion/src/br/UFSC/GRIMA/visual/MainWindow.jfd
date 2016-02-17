@@ -5,7 +5,7 @@ new FormModel {
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class java.awt.GridBagLayout ) {
 			"$columnSpecs": "0:1.0"
-			"$rowSpecs": "0, 0, 0:1.0"
+			"$rowSpecs": "0, 0:1.0"
 			"$hGap": 5
 			"$vGap": 5
 			"$alignLeft": true
@@ -16,58 +16,23 @@ new FormModel {
 			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/br/UFSC/GRIMA/images/iconeLogo.png" )
 			"title": "Application (Main Window)"
 			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
-				"$columnSpecs": "0, 0:1.0"
-				"$rowSpecs": "0, 0, 0"
+				"$columnSpecs": "0:1.0"
+				"$rowSpecs": "0"
 				"$hGap": 5
 				"$vGap": 5
 				"$alignLeft": true
 				"$alignTop": true
 			} ) {
 				name: "panel7"
-				add( new FormComponent( "javax.swing.JLabel" ) {
-					name: "label1"
-					"icon": new com.jformdesigner.model.SwingIcon( 0, "/br/UFSC/GRIMA/images/logofinal.png" )
-				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
 				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
-					"$columnSpecs": "0:1.0, 0"
-					"$rowSpecs": "0, 0"
+					"$columnSpecs": "0:1.0"
+					"$rowSpecs": "0"
 					"$hGap": 5
 					"$vGap": 5
 					"$alignLeft": true
 					"$alignTop": true
 				} ) {
 					name: "panel2"
-					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
-						"$columnSpecs": "0:1.0, 0:1.0, 0"
-						"$rowSpecs": "0"
-						"$hGap": 5
-						"$vGap": 5
-						"$alignLeft": true
-						"$alignTop": true
-					} ) {
-						name: "panel3"
-						add( new FormComponent( "javax.swing.JButton" ) {
-							name: "button1"
-							"text": "Properties"
-							"icon": new com.jformdesigner.model.SwingIcon( 0, "/br/UFSC/GRIMA/images/Gears-icon.png" )
-						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
-						add( new FormComponent( "javax.swing.JButton" ) {
-							name: "deviceConfigureButton"
-							"text": "Configure Devices"
-							"icon": new com.jformdesigner.model.SwingIcon( 0, "/br/UFSC/GRIMA/images/machineIcon.png" )
-							auxiliary() {
-								"JavaCodeGenerator.variableModifiers": 4
-							}
-						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-							"gridx": 1
-						} )
-						add( new FormComponent( "javax.swing.JButton" ) {
-							name: "button3"
-							"icon": new com.jformdesigner.model.SwingIcon( 0, "/br/UFSC/GRIMA/images/iconInterrogacao.png" )
-						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-							"gridx": 2
-						} )
-					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 						"$columnSpecs": "0:1.0, 0:1.0"
 						"$rowSpecs": "0"
@@ -79,35 +44,20 @@ new FormModel {
 						name: "panel4"
 						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 							"$columnSpecs": "0:1.0, 0:1.0, 0:1.0"
-							"$rowSpecs": "0, 0"
+							"$rowSpecs": "0"
 							"$hGap": 5
 							"$vGap": 5
 							"$alignLeft": true
 							"$alignTop": true
 						} ) {
 							name: "panel5"
-							add( new FormComponent( "javax.swing.JLabel" ) {
-								name: "label2"
-								"text": "Requests:"
-							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
-							add( new FormComponent( "javax.swing.JButton" ) {
-								name: "createPanelButton"
-								"text": "New Panel"
-								auxiliary() {
-									"JavaCodeGenerator.variableModifiers": 4
-								}
-							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-								"gridx": 2
-							} )
 							add( new FormComponent( "javax.swing.JToggleButton" ) {
 								name: "deviceInfoButton"
 								"text": "Device Information"
 								auxiliary() {
 									"JavaCodeGenerator.variableModifiers": 4
 								}
-							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-								"gridy": 1
-							} )
+							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
 							add( new FormComponent( "javax.swing.JToggleButton" ) {
 								name: "deviceMonitoringButton"
 								"text": "Device Monitoring"
@@ -116,7 +66,6 @@ new FormModel {
 								}
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 								"gridx": 1
-								"gridy": 1
 							} )
 							add( new FormComponent( "javax.swing.JToggleButton" ) {
 								name: "panelMonitoringButton"
@@ -126,7 +75,6 @@ new FormModel {
 								}
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 								"gridx": 2
-								"gridy": 1
 							} )
 						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
 						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
@@ -139,11 +87,12 @@ new FormModel {
 						} ) {
 							name: "panel6"
 							add( new FormComponent( "javax.swing.JLabel" ) {
-								name: "label3"
-								"text": "Main Agent:"
+								name: "label4"
+								"text": "Reference Time:"
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
 							add( new FormComponent( "javax.swing.JTextField" ) {
-								name: "mainAgentField"
+								name: "currentTimeField"
+								"editable": false
 								auxiliary() {
 									"JavaCodeGenerator.variableModifiers": 4
 								}
@@ -151,32 +100,27 @@ new FormModel {
 								"gridx": 1
 							} )
 							add( new FormComponent( "javax.swing.JLabel" ) {
-								name: "label4"
-								"text": "Reference Time:"
+								name: "label1"
+								"text": "Loop Time:"
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 								"gridy": 1
 							} )
 							add( new FormComponent( "javax.swing.JTextField" ) {
-								name: "currentTimeField"
+								name: "loopTimeField"
+								"editable": false
 								auxiliary() {
 									"JavaCodeGenerator.variableModifiers": 4
 								}
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-								"gridy": 1
 								"gridx": 1
+								"gridy": 1
 							} )
 						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 							"gridx": 1
 						} )
-					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-						"gridy": 1
-					} )
-				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-					"gridx": 1
-				} )
-			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-				"gridy": 1
-			} )
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
 			add( new FormContainer( "javax.swing.JSplitPane", new FormLayoutManager( class javax.swing.JSplitPane ) ) {
 				name: "splitPane1"
 				"orientation": 0
@@ -214,7 +158,7 @@ new FormModel {
 					"value": "right"
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-				"gridy": 2
+				"gridy": 1
 			} )
 			menuBar: new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {
 				name: "menuBar1"
@@ -223,7 +167,7 @@ new FormModel {
 					"text": "File"
 					"font": &Font0 new java.awt.Font( "Verdana", 0, 12 )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
-						name: "menuItem2"
+						name: "menuExit"
 						"text": "exit"
 						"icon": new com.jformdesigner.model.SwingIcon( 0, "/br/UFSC/GRIMA/images/process-stop.png" )
 						"font": #Font0
@@ -234,13 +178,135 @@ new FormModel {
 				} )
 				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
 					name: "menu2"
-					"text": "Help"
-					"font": #Font0
+					"text": "Configure"
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
-						name: "menuItem1"
+						name: "menuPreferences"
+						"text": "Preferences"
+						"icon": new com.jformdesigner.model.SwingIcon( 0, "/br/UFSC/GRIMA/images/Gears-icon.png" )
+						auxiliary() {
+							"JavaCodeGenerator.variableModifiers": 4
+						}
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "menuDeviceConfigure"
+						"text": "Configure Imput Data"
+						"icon": new com.jformdesigner.model.SwingIcon( 0, "/br/UFSC/GRIMA/images/machineIcon.png" )
+						auxiliary() {
+							"JavaCodeGenerator.variableModifiers": 4
+						}
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "menuDatabase"
+						"text": "Configure Database"
+						"icon": new com.jformdesigner.model.SwingIcon( 0, "/br/UFSC/GRIMA/images/downloadIcon.png" )
+						auxiliary() {
+							"JavaCodeGenerator.variableModifiers": 4
+						}
+					} )
+				} )
+				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+					name: "menu3"
+					"text": "Agent"
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "menuAgents"
+						"text": "Agents info"
+						"icon": new com.jformdesigner.model.SwingIcon( 0, "/br/UFSC/GRIMA/images/agentIcon.png" )
+						auxiliary() {
+							"JavaCodeGenerator.variableModifiers": 4
+						}
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "menuAddAgent"
+						"text": "Add Agent"
+						"icon": new com.jformdesigner.model.SwingIcon( 0, "/br/UFSC/GRIMA/images/plusIcon.png" )
+						auxiliary() {
+							"JavaCodeGenerator.variableModifiers": 4
+						}
+					} )
+				} )
+				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+					name: "menu4"
+					"text": "Device"
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "menuDeviceInfo"
+						"text": "Devices info"
+						"icon": new com.jformdesigner.model.SwingIcon( 0, "/br/UFSC/GRIMA/images/machineIcon.png" )
+						auxiliary() {
+							"JavaCodeGenerator.variableModifiers": 4
+						}
+					} )
+					add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+						name: "menuDevices"
+						"text": "Monitor"
+						"icon": new com.jformdesigner.model.SwingIcon( 0, "/br/UFSC/GRIMA/images/viewIcon.png" )
+						auxiliary() {
+							"JavaCodeGenerator.variableModifiers": 1
+						}
+					} )
+				} )
+				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+					name: "menu6"
+					"text": "Webcam"
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "menuCameraInfo"
+						"text": "Camera Info"
+						"icon": new com.jformdesigner.model.SwingIcon( 0, "/br/UFSC/GRIMA/images/cameraIcon.png" )
+						auxiliary() {
+							"JavaCodeGenerator.variableModifiers": 4
+						}
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "menuAddCamera"
+						"text": "Add Camera"
+						"icon": new com.jformdesigner.model.SwingIcon( 0, "/br/UFSC/GRIMA/images/plusIcon.png" )
+						auxiliary() {
+							"JavaCodeGenerator.variableModifiers": 4
+						}
+					} )
+					add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+						name: "menuView"
+						"text": "View"
+						"icon": new com.jformdesigner.model.SwingIcon( 0, "/br/UFSC/GRIMA/images/viewIcon.png" )
+						auxiliary() {
+							"JavaCodeGenerator.variableModifiers": 1
+						}
+					} )
+				} )
+				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+					name: "menu8"
+					"text": "Panels"
+					add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+						name: "menuPanels"
+						"text": "Configure"
+						"icon": new com.jformdesigner.model.SwingIcon( 0, "/br/UFSC/GRIMA/images/Gears-icon.png" )
+						auxiliary() {
+							"JavaCodeGenerator.variableModifiers": 1
+						}
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "menuViewPanels"
+						"text": "View Panels"
+						"icon": new com.jformdesigner.model.SwingIcon( 0, "/br/UFSC/GRIMA/images/monitoringIcon.png" )
+						auxiliary() {
+							"JavaCodeGenerator.variableModifiers": 4
+						}
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "menuAddPanel"
+						"text": "Add Panel"
+						"icon": new com.jformdesigner.model.SwingIcon( 0, "/br/UFSC/GRIMA/images/plusIcon.png" )
+						auxiliary() {
+							"JavaCodeGenerator.variableModifiers": 4
+						}
+					} )
+				} )
+				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+					name: "menu5"
+					"text": "Help"
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "menuAbout"
 						"text": "About"
-						"icon": sfield com.jformdesigner.model.FormObject NULL_VALUE
-						"font": #Font0
+						"actionCommand": "About"
 						auxiliary() {
 							"JavaCodeGenerator.variableModifiers": 4
 						}

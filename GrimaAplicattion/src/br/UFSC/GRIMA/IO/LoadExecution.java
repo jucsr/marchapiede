@@ -397,7 +397,9 @@ public class LoadExecution implements Runnable {
 					}
 				}
 			}
-			if ((getLoopTime() - System.currentTimeMillis()) < 200) {
+			long loop = System.currentTimeMillis() - getLoopTime();
+			ioControl.getController().getMainInterface().setLoopTime(loop);
+			if (loop < 200) {
 				try {
 					Thread.sleep(200);
 				} catch (InterruptedException e) {

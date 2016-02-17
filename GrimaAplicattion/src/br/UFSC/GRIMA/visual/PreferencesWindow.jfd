@@ -1,0 +1,498 @@
+JFDML JFormDesigner: "5.2.0.3.124" Java: "1.8.0_51" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+			name: "this"
+			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/br/UFSC/GRIMA/images/iconeLogo.png" )
+			"title": "Set Preferences"
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.BorderLayout ) ) {
+				name: "dialogPane"
+				"border": new javax.swing.border.EmptyBorder( 12, 12, 12, 12 )
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+					"$columnSpecs": "0:1.0"
+					"$rowSpecs": "0:1.0"
+					"$hGap": 5
+					"$vGap": 5
+					"$alignLeft": true
+					"$alignTop": true
+				} ) {
+					name: "contentPanel"
+					add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+						name: "scrollPane1"
+						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+							"$columnSpecs": "0:1.0"
+							"$rowSpecs": "0, 0, 0"
+							"$hGap": 5
+							"$vGap": 5
+							"$alignLeft": true
+							"$alignTop": true
+						} ) {
+							name: "panel3"
+							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+								"$columnSpecs": "0:1.0"
+								"$rowSpecs": "0, 0, 0"
+								"$hGap": 5
+								"$vGap": 5
+								"$alignLeft": true
+								"$alignTop": true
+							} ) {
+								name: "panel1"
+								"border": new javax.swing.border.TitledBorder( "Database Info" )
+								add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+									"$columnSpecs": "0, 0:1.0"
+									"$rowSpecs": "0"
+									"$hGap": 5
+									"$vGap": 5
+									"$alignLeft": true
+									"$alignTop": true
+								} ) {
+									name: "panel2"
+									add( new FormComponent( "javax.swing.JButton" ) {
+										name: "setDatabaseButton"
+										"text": "Set Database"
+										"icon": new com.jformdesigner.model.SwingIcon( 0, "/br/UFSC/GRIMA/images/downloadIcon.png" )
+										auxiliary() {
+											"JavaCodeGenerator.variableModifiers": 4
+										}
+									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+								add( new FormComponent( "javax.swing.JCheckBox" ) {
+									name: "checkBox1"
+									"text": "Autosave Monitored Variables"
+									"selected": true
+								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+									"gridy": 1
+								} )
+								add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+									"$columnSpecs": "0, 0:1.0"
+									"$rowSpecs": "0, 0, 0, 0"
+									"$hGap": 5
+									"$vGap": 5
+									"$alignLeft": true
+									"$alignTop": true
+								} ) {
+									name: "panel4"
+									add( new FormComponent( "javax.swing.JLabel" ) {
+										name: "label1"
+										"text": "User:"
+									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+									add( new FormComponent( "javax.swing.JTextField" ) {
+										name: "dataBaseUserField"
+										"editable": false
+										auxiliary() {
+											"JavaCodeGenerator.variableModifiers": 4
+										}
+									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+										"gridx": 1
+									} )
+									add( new FormComponent( "javax.swing.JLabel" ) {
+										name: "label2"
+										"text": "Senha:"
+									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+										"gridy": 1
+									} )
+									add( new FormComponent( "javax.swing.JTextField" ) {
+										name: "dataBaseSenhaField"
+										"editable": false
+										auxiliary() {
+											"JavaCodeGenerator.variableModifiers": 4
+										}
+									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+										"gridx": 1
+										"gridy": 1
+									} )
+									add( new FormComponent( "javax.swing.JLabel" ) {
+										name: "label3"
+										"text": "ip:"
+									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+										"gridy": 2
+									} )
+									add( new FormComponent( "javax.swing.JTextField" ) {
+										name: "dataBaseIPField"
+										"editable": false
+										auxiliary() {
+											"JavaCodeGenerator.variableModifiers": 4
+										}
+									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+										"gridy": 2
+										"gridx": 1
+									} )
+									add( new FormComponent( "javax.swing.JLabel" ) {
+										name: "label4"
+										"text": "Folder:"
+									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+										"gridy": 3
+									} )
+									add( new FormComponent( "javax.swing.JTextField" ) {
+										name: "dataBaseFolderField"
+										"editable": false
+										auxiliary() {
+											"JavaCodeGenerator.variableModifiers": 4
+										}
+									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+										"gridy": 3
+										"gridx": 1
+									} )
+								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+									"gridy": 2
+								} )
+							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+								"$columnSpecs": "0:1.0"
+								"$rowSpecs": "0, 0, 0, 0"
+								"$hGap": 5
+								"$vGap": 5
+								"$alignLeft": true
+								"$alignTop": true
+							} ) {
+								name: "panel5"
+								"border": new javax.swing.border.TitledBorder( "Time Information" )
+								add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+									"$columnSpecs": "0, 0:1.0"
+									"$rowSpecs": "0, 0"
+									"$hGap": 5
+									"$vGap": 5
+									"$alignLeft": true
+									"$alignTop": true
+								} ) {
+									name: "panel6"
+									add( new FormComponent( "javax.swing.JLabel" ) {
+										name: "label5"
+										"text": "Last Time Registered:"
+									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+									add( new FormComponent( "javax.swing.JTextField" ) {
+										name: "textField2"
+										"editable": false
+									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+										"gridx": 1
+									} )
+									add( new FormComponent( "javax.swing.JLabel" ) {
+										name: "label6"
+										"text": "Last Loop Time:"
+									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+										"gridy": 1
+									} )
+									add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+										"$columnSpecs": "0:1.0, 0, 0:1.0"
+										"$rowSpecs": "0"
+										"$hGap": 5
+										"$vGap": 5
+										"$alignLeft": true
+										"$alignTop": true
+									} ) {
+										name: "panel8"
+										add( new FormComponent( "javax.swing.JTextField" ) {
+											name: "textField3"
+											"editable": false
+										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+										add( new FormComponent( "javax.swing.JLabel" ) {
+											name: "label11"
+											"text": "Milliseconds"
+										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+											"gridx": 1
+										} )
+									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+										"gridx": 1
+										"gridy": 1
+									} )
+								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+								add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+									"$columnSpecs": "0:1.0, 0:1.0"
+									"$rowSpecs": "0"
+									"$hGap": 5
+									"$vGap": 5
+									"$alignLeft": true
+									"$alignTop": true
+								} ) {
+									name: "panel9"
+									add( new FormComponent( "javax.swing.JRadioButton" ) {
+										name: "radioGeneral"
+										"text": "General Time Range"
+										"$buttonGroup": new FormReference( "buttonGroup1" )
+										"selected": true
+									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+									add( new FormComponent( "javax.swing.JRadioButton" ) {
+										name: "radioSplitted"
+										"text": "Splitted Time Range"
+										"$buttonGroup": new FormReference( "buttonGroup1" )
+									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+										"gridx": 1
+									} )
+								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+									"gridy": 1
+								} )
+								add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+									"$columnSpecs": "0, 0:1.0"
+									"$rowSpecs": "0"
+									"$hGap": 5
+									"$vGap": 5
+									"$alignLeft": true
+									"$alignTop": true
+								} ) {
+									name: "generalTimeRangePanel"
+									auxiliary() {
+										"JavaCodeGenerator.variableModifiers": 4
+									}
+									add( new FormComponent( "javax.swing.JLabel" ) {
+										name: "label7"
+										"text": "General Default Time Range: "
+									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+									add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+										"$columnSpecs": "0:1.0, 0, 0:1.0, 0, 0:1.0, 0, 0"
+										"$rowSpecs": "0"
+										"$hGap": 5
+										"$vGap": 5
+										"$alignLeft": true
+										"$alignTop": true
+									} ) {
+										name: "panel7"
+										add( new FormComponent( "javax.swing.JTextField" ) {
+											name: "textField4"
+										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+										add( new FormComponent( "javax.swing.JLabel" ) {
+											name: "label8"
+											"text": "h:  "
+										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+											"gridx": 1
+										} )
+										add( new FormComponent( "javax.swing.JTextField" ) {
+											name: "textField5"
+										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+											"gridx": 2
+										} )
+										add( new FormComponent( "javax.swing.JLabel" ) {
+											name: "label9"
+											"text": "min:   "
+										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+											"gridx": 3
+										} )
+										add( new FormComponent( "javax.swing.JTextField" ) {
+											name: "textField6"
+										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+											"gridx": 4
+										} )
+										add( new FormComponent( "javax.swing.JLabel" ) {
+											name: "label10"
+											"text": "seg "
+										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+											"gridx": 5
+										} )
+										add( new FormComponent( "javax.swing.JButton" ) {
+											name: "setTimeRangeButton"
+											"text": "Apply"
+											"icon": &SwingIcon0 new com.jformdesigner.model.SwingIcon( 0, "/br/UFSC/GRIMA/images/changeIcon.gif" )
+											auxiliary() {
+												"JavaCodeGenerator.variableModifiers": 4
+											}
+										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+											"gridx": 6
+										} )
+									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+										"gridx": 1
+									} )
+								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+									"gridy": 2
+								} )
+								add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+									"$columnSpecs": "0:1.0"
+									"$rowSpecs": "0, 0"
+									"$hGap": 5
+									"$vGap": 5
+									"$alignLeft": true
+									"$alignTop": true
+								} ) {
+									name: "splitTimeRangePanel"
+									"visible": false
+									auxiliary() {
+										"JavaCodeGenerator.variableModifiers": 4
+									}
+									add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+										"$columnSpecs": "0, 0:1.0"
+										"$rowSpecs": "0"
+										"$hGap": 5
+										"$vGap": 5
+										"$alignLeft": true
+										"$alignTop": true
+									} ) {
+										name: "numericTimeRangePanel"
+										auxiliary() {
+											"JavaCodeGenerator.variableModifiers": 4
+										}
+										add( new FormComponent( "javax.swing.JLabel" ) {
+											name: "label12"
+											"text": "Numeric Default Time Range: "
+										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+										add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+											"$columnSpecs": "0:1.0, 0, 0:1.0, 0, 0:1.0, 0, 0"
+											"$rowSpecs": "0"
+											"$hGap": 5
+											"$vGap": 5
+											"$alignLeft": true
+											"$alignTop": true
+										} ) {
+											name: "panel11"
+											add( new FormComponent( "javax.swing.JTextField" ) {
+												name: "textField7"
+											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+											add( new FormComponent( "javax.swing.JLabel" ) {
+												name: "label13"
+												"text": "h:  "
+											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+												"gridx": 1
+											} )
+											add( new FormComponent( "javax.swing.JTextField" ) {
+												name: "textField8"
+											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+												"gridx": 2
+											} )
+											add( new FormComponent( "javax.swing.JLabel" ) {
+												name: "label14"
+												"text": "min:   "
+											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+												"gridx": 3
+											} )
+											add( new FormComponent( "javax.swing.JTextField" ) {
+												name: "textField9"
+											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+												"gridx": 4
+											} )
+											add( new FormComponent( "javax.swing.JLabel" ) {
+												name: "label15"
+												"text": "seg "
+											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+												"gridx": 5
+											} )
+											add( new FormComponent( "javax.swing.JButton" ) {
+												name: "setTimeRangeButton2"
+												"text": "Apply"
+												"icon": #SwingIcon0
+												auxiliary() {
+													"JavaCodeGenerator.variableModifiers": 4
+												}
+											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+												"gridx": 6
+											} )
+										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+											"gridx": 1
+										} )
+									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+									add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+										"$columnSpecs": "0, 0:1.0"
+										"$rowSpecs": "0"
+										"$hGap": 5
+										"$vGap": 5
+										"$alignLeft": true
+										"$alignTop": true
+									} ) {
+										name: "categoricTimeRangePanel3"
+										auxiliary() {
+											"JavaCodeGenerator.variableModifiers": 4
+										}
+										add( new FormComponent( "javax.swing.JLabel" ) {
+											name: "label16"
+											"text": "Categoric Default Time Range: "
+										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+										add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+											"$columnSpecs": "0:1.0, 0, 0:1.0, 0, 0:1.0, 0, 0"
+											"$rowSpecs": "0"
+											"$hGap": 5
+											"$vGap": 5
+											"$alignLeft": true
+											"$alignTop": true
+										} ) {
+											name: "panel12"
+											add( new FormComponent( "javax.swing.JTextField" ) {
+												name: "textField10"
+											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+											add( new FormComponent( "javax.swing.JLabel" ) {
+												name: "label17"
+												"text": "h:  "
+											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+												"gridx": 1
+											} )
+											add( new FormComponent( "javax.swing.JTextField" ) {
+												name: "textField11"
+											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+												"gridx": 2
+											} )
+											add( new FormComponent( "javax.swing.JLabel" ) {
+												name: "label18"
+												"text": "min:   "
+											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+												"gridx": 3
+											} )
+											add( new FormComponent( "javax.swing.JTextField" ) {
+												name: "textField12"
+											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+												"gridx": 4
+											} )
+											add( new FormComponent( "javax.swing.JLabel" ) {
+												name: "label19"
+												"text": "seg "
+											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+												"gridx": 5
+											} )
+											add( new FormComponent( "javax.swing.JButton" ) {
+												name: "setTimeRangeButton3"
+												"text": "Apply"
+												"icon": #SwingIcon0
+												auxiliary() {
+													"JavaCodeGenerator.variableModifiers": 4
+												}
+											}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+												"gridx": 6
+											} )
+										}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+											"gridx": 1
+										} )
+									}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+										"gridy": 1
+									} )
+								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+									"gridy": 3
+								} )
+							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+								"gridy": 1
+							} )
+						} )
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+				}, new FormLayoutConstraints( class java.lang.String ) {
+					"value": "Center"
+				} )
+				add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+					"$columnSpecs": "0:1.0, 80"
+					"$rowSpecs": "0"
+					"$hGap": 5
+					"$vGap": 5
+				} ) {
+					name: "buttonBar"
+					"border": new javax.swing.border.EmptyBorder( 12, 0, 0, 0 )
+					add( new FormComponent( "javax.swing.JButton" ) {
+						name: "okButton"
+						"text": "OK"
+						auxiliary() {
+							"JavaCodeGenerator.variableModifiers": 4
+						}
+					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+						"gridx": 1
+						"gridy": 0
+					} )
+				}, new FormLayoutConstraints( class java.lang.String ) {
+					"value": "South"
+				} )
+			}, new FormLayoutConstraints( class java.lang.String ) {
+				"value": "Center"
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 575, 510 )
+		} )
+		add( new FormNonVisual( "javax.swing.ButtonGroup" ) {
+			name: "buttonGroup1"
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 560 )
+		} )
+	}
+}

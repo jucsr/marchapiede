@@ -62,9 +62,6 @@ public class ViewDevicesEvents extends ViewDevicesWindow implements ActionListen
 					mainInterface.setPanelMonitoringLayout();
 					mainInterface.panelMonitoringButton.setSelected(true);
 				}
-				if (!devices.isEmpty()) {
-					mainInterface.mainAgentField.setText(devices.get(0).getAgent().getAgentName());
-				}
 			}
 		});
 		setDevices();

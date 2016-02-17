@@ -8,6 +8,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
@@ -42,24 +44,58 @@ public class MainInterface extends MainWindow implements ActionListener {
 //////////////////////////Constructor///////////////////////////////////////////////////////////////////
 	public MainInterface(MainExecution mainExecution)	{
 		setMainExecution(mainExecution);
-		deviceConfigureButton.addActionListener(this);
+		menuExit.addActionListener(this);
+		menuPreferences.addActionListener(this);
+		menuDeviceConfigure.addActionListener(this);
+		menuDatabase.addActionListener(this);
+		menuAgents.addActionListener(this);
+		menuAddAgent.addActionListener(this);
+		menuDeviceInfo.addActionListener(this);
+		menuCameraInfo.addActionListener(this);
+		menuAddCamera.addActionListener(this);
+		menuViewPanels.addActionListener(this);
+		menuAddPanel.addActionListener(this);
+		menuAbout.addActionListener(this);
 		deviceInfoButton.addActionListener(this);
 		deviceMonitoringButton.addActionListener(this);
 		panelMonitoringButton.addActionListener(this);
-		createPanelButton.addActionListener(this);
-		mainAgentField.setEditable(false);
 		currentTimeField.setEditable(false);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
 	}
 //////////////////////////Methods///////////////////////////////////////////////////////////////////////
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if (e.getSource().equals(deviceConfigureButton)) {
+		if (e.getSource().equals(menuExit)) 
+			this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+		else if (e.getSource().equals(menuPreferences)) {
+//			this.setEnabled(false);
+			///////////fazer Preferences Window
+			new PreferencesEvents();
+		}
+		else if (e.getSource().equals(menuDeviceConfigure) || e.getSource().equals(menuDeviceInfo) || e.getSource().equals(menuCameraInfo)) {
 			this.setEnabled(false);
 			setViewDevicesEvents(new ViewDevicesEvents(this));
 		}
-		if (e.getSource().equals(createPanelButton)) {
+		else if (e.getSource().equals(menuDatabase)) {
+			/////////////fazer configure Database
+		}
+		else if (e.getSource().equals(menuAgents)) {
+			/////////////fazer janela view Agents
+		}
+		else if (e.getSource().equals(menuAddAgent)) {
+			this.setEnabled(false);
+			new AddAgentEvents(this);
+		}
+		else if (e.getSource().equals(menuAddCamera)) {
+			this.setEnabled(false);
+			new AddCameraEvents(this);
+		}
+		else if (e.getSource().equals(menuViewPanels)) {
+			panelMonitoringButton.doClick();//////////////////ficar de baga
+		}
+		else if (e.getSource().equals(menuAddPanel)) {
 			this.setEnabled(false);
 			if (deviceInfoButton.isSelected())
 				new CreatePanelEvents(this, (ArrayList<Variable>) mainExecution.getNewMonitoringPanelList().clone());
@@ -67,6 +103,31 @@ public class MainInterface extends MainWindow implements ActionListener {
 				new CreatePanelEvents(this, (ArrayList<Variable>) mainExecution.getDeviceMonitoringSystem().getSelectedVariables().clone());
 			else
 				new CreatePanelEvents(this, null);
+		}
+		else if (e.getSource().equals(menuAbout)) {
+			this.setEnabled(false);
+			AboutWindow aboutWindow = new AboutWindow(this);
+			aboutWindow.okButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					aboutWindow.dispose();
+				}
+			});
+			MainInterface mainInterface = this;
+			aboutWindow.addWindowListener(new java.awt.event.WindowAdapter() {
+				@Override
+				public void windowClosing(WindowEvent e) {
+					windowClosed(e);
+				}
+				@Override
+				public void windowClosed(WindowEvent e) {
+					mainInterface.setEnabled(true);
+					mainInterface.toFront();
+				}
+			});
+			aboutWindow.setVisible(true);
+			System.out.println("cheogu");
 		}
 		if (e.getSource().equals(deviceInfoButton) || e.getSource().equals(deviceMonitoringButton) || e.getSource().equals(panelMonitoringButton)) {
 			if(!((JToggleButton) e.getSource()).isSelected()) {
@@ -259,7 +320,7 @@ public class MainInterface extends MainWindow implements ActionListener {
 			monitoringPanel.setBorder(new TitledBorder(mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).getName()));
 			monitoringPanel.setLayout(new GridBagLayout());
 			((GridBagLayout)monitoringPanel.getLayout()).columnWidths = new int[] {0, 0, 0};
-			((GridBagLayout)monitoringPanel.getLayout()).rowHeights = new int[] {0, 0, 0};
+			((GridBagLayout)monitoringPanel.getLayout()).rowHeights = new int[] {0, 0, 300};
 			((GridBagLayout)monitoringPanel.getLayout()).columnWeights = new double[] {0.0, 1.0E-4};
 			((GridBagLayout)monitoringPanel.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
 			monitoringPanel.setPreferredSize(new Dimension(400, (int) Math.round(monitoringPanel.getPreferredSize().getHeight())));
@@ -485,6 +546,9 @@ public class MainInterface extends MainWindow implements ActionListener {
 			mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).destroyPanelInstance();
 		workSpace.removeAll();
 		panelMonitoringButton.setSelected(false);
+	}
+	public void setLoopTime(Long millis) {
+		loopTimeField.setText(millis + " milliseconds");
 	}
 /////////////////////supportMethods///////////////////////////////////
 	

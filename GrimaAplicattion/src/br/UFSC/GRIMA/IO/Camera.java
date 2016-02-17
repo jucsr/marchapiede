@@ -77,8 +77,8 @@ public class Camera implements ActionListener, StreamFrameListener {
 				if(deviceCombobox.getSelectedIndex() > 0) {
 					Device device = clientCamera.getIoControl().getController().getAllDevices().get(deviceCombobox.getSelectedIndex() - 1);
 					if(getDevice() != null) {
-						if(device.getCameras().contains(this))
-							device.getCameras().remove(this);
+						if(getDevice().getCameras().contains(this))
+							getDevice().getCameras().remove(this);
 					}
 					setDevice(device);
 					if(!device.getCameras().contains(this))
