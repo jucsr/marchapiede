@@ -127,7 +127,7 @@ public class MainInterface extends MainWindow implements ActionListener {
 				}
 			});
 			aboutWindow.setVisible(true);
-			System.out.println("cheogu");
+//			System.out.println("cheogu");
 		}
 		if (e.getSource().equals(deviceInfoButton) || e.getSource().equals(deviceMonitoringButton) || e.getSource().equals(panelMonitoringButton)) {
 			if(!((JToggleButton) e.getSource()).isSelected()) {

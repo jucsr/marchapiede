@@ -71,30 +71,47 @@ public class AddAgentEvents extends AddAgentWindow implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().equals(okButton)) {
 			this.setEnabled(false);
+			
 			WaitEvents waitEvents = new WaitEvents(this, "Creating new Agent.");
 			waitEvents.setVisible(true);
-			String conf = mainInterface.getMainExecution().addAgent(textFieldIP.getText());
-			if (conf == null)
-				this.dispose();
-			else {
-				JOptionPane.showMessageDialog(this, conf, "Error in Agent", JOptionPane.ERROR_MESSAGE);
-				this.setEnabled(true);
-			}
-			if(!textFieldName2.getText().equals("")) {
-				MainExecution controller = mainInterface.getMainExecution();
-				boolean sucess = controller.addClientCamera(textFieldName2.getText());
-				if(sucess && (conf == null)) {
-					Agent lastAgent =  controller.getIoControl().getAgents().get(controller.getIoControl().getAgents().size() - 1);
-					if(lastAgent.getDevices().size() == 1) {
-						ClientCamera client = controller.getIoControl().getClientCameras().get(controller.getIoControl().getClientCameras().size() - 1);
-						for(int i = 0; i < client.getCameras().size(); i++) {
-							client.getCameras().get(i).setDevice(lastAgent.getDevices().get(0));
-							lastAgent.getDevices().get(0).getCameras().add(client.getCameras().get(i));
+			final AddAgentEvents addTmp = this;
+			
+			SwingWorker worker = new SwingWorker() 
+			{
+				@Override
+				protected Object doInBackground() throws Exception 
+				{
+					String conf = mainInterface.getMainExecution().addAgent(textFieldIP.getText());
+					if (conf == null)
+						dispose();
+					else {
+						JOptionPane.showMessageDialog(addTmp, conf, "Error in Agent", JOptionPane.ERROR_MESSAGE);
+						setEnabled(true);
+					}
+					if(!textFieldName2.getText().equals("")) {
+						MainExecution controller = mainInterface.getMainExecution();
+						boolean sucess = controller.addClientCamera(textFieldName2.getText());
+						if(sucess && (conf == null)) {
+							Agent lastAgent =  controller.getIoControl().getAgents().get(controller.getIoControl().getAgents().size() - 1);
+							if(lastAgent.getDevices().size() == 1) {
+								ClientCamera client = controller.getIoControl().getClientCameras().get(controller.getIoControl().getClientCameras().size() - 1);
+								for(int i = 0; i < client.getCameras().size(); i++) {
+									client.getCameras().get(i).setDevice(lastAgent.getDevices().get(0));
+									lastAgent.getDevices().get(0).getCameras().add(client.getCameras().get(i));
+								}
+							}
 						}
 					}
+					return null;
 				}
-			}
-			waitEvents.dispose();
+				protected void done()
+				{
+					waitEvents.dispose();
+				}
+			};
+			worker.execute();
+			
+			
 		}
 		else if (e.getSource().equals(cancelButton)) {
 			this.dispose();
