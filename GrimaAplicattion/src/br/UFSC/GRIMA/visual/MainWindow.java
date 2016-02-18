@@ -6,6 +6,7 @@ package br.UFSC.GRIMA.visual;
 
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.*;
 
 /**
  * @author Jc
@@ -87,20 +88,24 @@ public class MainWindow extends JFrame {
 			//======== menu2 ========
 			{
 				menu2.setText("Configure");
+				menu2.setFont(new Font("Dialog", Font.PLAIN, 12));
 
 				//---- menuPreferences ----
 				menuPreferences.setText("Preferences");
 				menuPreferences.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/Gears-icon.png")));
+				menuPreferences.setFont(new Font("Dialog", Font.PLAIN, 12));
 				menu2.add(menuPreferences);
 
 				//---- menuDeviceConfigure ----
 				menuDeviceConfigure.setText("Configure Imput Data");
 				menuDeviceConfigure.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/machineIcon.png")));
+				menuDeviceConfigure.setFont(new Font("Dialog", Font.PLAIN, 12));
 				menu2.add(menuDeviceConfigure);
 
 				//---- menuDatabase ----
 				menuDatabase.setText("Configure Database");
 				menuDatabase.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/downloadIcon.png")));
+				menuDatabase.setFont(new Font("Dialog", Font.PLAIN, 12));
 				menu2.add(menuDatabase);
 			}
 			menuBar1.add(menu2);
@@ -108,15 +113,18 @@ public class MainWindow extends JFrame {
 			//======== menu3 ========
 			{
 				menu3.setText("Agent");
+				menu3.setFont(new Font("Dialog", Font.PLAIN, 12));
 
 				//---- menuAgents ----
 				menuAgents.setText("Agents info");
 				menuAgents.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/agentIcon.png")));
+				menuAgents.setFont(new Font("Dialog", Font.PLAIN, 12));
 				menu3.add(menuAgents);
 
 				//---- menuAddAgent ----
 				menuAddAgent.setText("Add Agent");
 				menuAddAgent.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/plusIcon.png")));
+				menuAddAgent.setFont(new Font("Dialog", Font.PLAIN, 12));
 				menu3.add(menuAddAgent);
 			}
 			menuBar1.add(menu3);
@@ -124,16 +132,19 @@ public class MainWindow extends JFrame {
 			//======== menu4 ========
 			{
 				menu4.setText("Device");
+				menu4.setFont(new Font("Dialog", Font.PLAIN, 12));
 
 				//---- menuDeviceInfo ----
 				menuDeviceInfo.setText("Devices info");
 				menuDeviceInfo.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/machineIcon.png")));
+				menuDeviceInfo.setFont(new Font("Dialog", Font.PLAIN, 12));
 				menu4.add(menuDeviceInfo);
 
 				//======== menuDevices ========
 				{
 					menuDevices.setText("Monitor");
 					menuDevices.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/viewIcon.png")));
+					menuDevices.setFont(new Font("Dialog", Font.PLAIN, 12));
 				}
 				menu4.add(menuDevices);
 			}
@@ -142,21 +153,25 @@ public class MainWindow extends JFrame {
 			//======== menu6 ========
 			{
 				menu6.setText("Webcam");
+				menu6.setFont(new Font("Dialog", Font.PLAIN, 12));
 
 				//---- menuCameraInfo ----
 				menuCameraInfo.setText("Camera Info");
 				menuCameraInfo.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/cameraIcon.png")));
+				menuCameraInfo.setFont(new Font("Dialog", Font.PLAIN, 12));
 				menu6.add(menuCameraInfo);
 
 				//---- menuAddCamera ----
 				menuAddCamera.setText("Add Camera");
 				menuAddCamera.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/plusIcon.png")));
+				menuAddCamera.setFont(new Font("Dialog", Font.PLAIN, 12));
 				menu6.add(menuAddCamera);
 
 				//======== menuView ========
 				{
 					menuView.setText("View");
 					menuView.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/viewIcon.png")));
+					menuView.setFont(new Font("Dialog", Font.PLAIN, 12));
 				}
 				menu6.add(menuView);
 			}
@@ -165,22 +180,26 @@ public class MainWindow extends JFrame {
 			//======== menu8 ========
 			{
 				menu8.setText("Panels");
+				menu8.setFont(new Font("Dialog", Font.PLAIN, 12));
 
 				//======== menuPanels ========
 				{
 					menuPanels.setText("Configure");
 					menuPanels.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/Gears-icon.png")));
+					menuPanels.setFont(new Font("Dialog", Font.PLAIN, 12));
 				}
 				menu8.add(menuPanels);
 
 				//---- menuViewPanels ----
 				menuViewPanels.setText("View Panels");
 				menuViewPanels.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/monitoringIcon.png")));
+				menuViewPanels.setFont(new Font("Dialog", Font.PLAIN, 12));
 				menu8.add(menuViewPanels);
 
 				//---- menuAddPanel ----
 				menuAddPanel.setText("Add Panel");
 				menuAddPanel.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/plusIcon.png")));
+				menuAddPanel.setFont(new Font("Dialog", Font.PLAIN, 12));
 				menu8.add(menuAddPanel);
 			}
 			menuBar1.add(menu8);
@@ -188,10 +207,12 @@ public class MainWindow extends JFrame {
 			//======== menu5 ========
 			{
 				menu5.setText("Help");
+				menu5.setFont(new Font("Dialog", Font.PLAIN, 12));
 
 				//---- menuAbout ----
 				menuAbout.setText("About");
 				menuAbout.setActionCommand("About");
+				menuAbout.setFont(new Font("Dialog", Font.PLAIN, 12));
 				menu5.add(menuAbout);
 			}
 			menuBar1.add(menu5);
@@ -217,9 +238,9 @@ public class MainWindow extends JFrame {
 				//======== panel4 ========
 				{
 					panel4.setLayout(new GridBagLayout());
-					((GridBagLayout)panel4.getLayout()).columnWidths = new int[] {0, 0, 0};
+					((GridBagLayout)panel4.getLayout()).columnWidths = new int[] {6, 0, 0, 1, 0};
 					((GridBagLayout)panel4.getLayout()).rowHeights = new int[] {0, 0};
-					((GridBagLayout)panel4.getLayout()).columnWeights = new double[] {1.0, 1.0, 1.0E-4};
+					((GridBagLayout)panel4.getLayout()).columnWeights = new double[] {0.0, 1.0, 1.0, 0.0, 1.0E-4};
 					((GridBagLayout)panel4.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
 
 					//======== panel5 ========
@@ -248,7 +269,7 @@ public class MainWindow extends JFrame {
 							GridBagConstraints.CENTER, GridBagConstraints.BOTH,
 							new Insets(0, 0, 0, 0), 0, 0));
 					}
-					panel4.add(panel5, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+					panel4.add(panel5, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
 						GridBagConstraints.CENTER, GridBagConstraints.BOTH,
 						new Insets(0, 0, 0, 5), 0, 0));
 
@@ -284,9 +305,9 @@ public class MainWindow extends JFrame {
 							GridBagConstraints.CENTER, GridBagConstraints.BOTH,
 							new Insets(0, 0, 0, 0), 0, 0));
 					}
-					panel4.add(panel6, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+					panel4.add(panel6, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
 						GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-						new Insets(0, 0, 0, 0), 0, 0));
+						new Insets(0, 0, 0, 5), 0, 0));
 				}
 				panel2.add(panel4, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
 					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -304,6 +325,8 @@ public class MainWindow extends JFrame {
 		{
 			splitPane1.setOrientation(JSplitPane.VERTICAL_SPLIT);
 			splitPane1.setResizeWeight(0.8);
+			splitPane1.setOneTouchExpandable(true);
+			splitPane1.setBorder(new EtchedBorder());
 
 			//======== scrollPane2 ========
 			{
