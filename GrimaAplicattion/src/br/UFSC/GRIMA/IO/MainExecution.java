@@ -37,7 +37,9 @@ public class MainExecution extends JApplet{
 		if (ioControl.getAgentByIP(ip) != null)
 			return (new String("The ip given is already in use in another Agent in the Application."));
 		setAddProgress(10);
-		return ioControl.addAgent(ip);
+		String  str =  ioControl.addAgent(ip);
+		mainInterface.setMenuDeviceMonitor();
+		return str;
 	}
 	public ArrayList<Device> getAllDevices() {
 		ArrayList<Device> devices = new ArrayList<Device>();

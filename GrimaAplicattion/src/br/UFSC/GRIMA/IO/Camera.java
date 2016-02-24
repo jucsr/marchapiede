@@ -36,7 +36,6 @@ public class Camera implements ActionListener, StreamFrameListener {
 	private int port;
 	private Device device;
 	private ClientCamera clientCamera;
-	private JMenuItem menuItem;
 	private volatile long count = 0;
 	/////////viewDevicesComponents///////////
 	private JComboBox<String> deviceCombobox;
@@ -187,12 +186,6 @@ public class Camera implements ActionListener, StreamFrameListener {
 	}
 	public void setPort(int port) {
 		this.port = port;
-	}
-	public JMenuItem getMenuItem() {
-		return menuItem;
-	}
-	public void setMenuItem(JMenuItem menuItem) {
-		this.menuItem = menuItem;
 	}
 	public ClientCamera getClientCamera() {
 		return clientCamera;

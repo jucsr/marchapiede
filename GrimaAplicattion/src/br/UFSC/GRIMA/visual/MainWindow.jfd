@@ -1,4 +1,4 @@
-JFDML JFormDesigner: "5.2.0.3.124" Java: "1.8.0_73" encoding: "UTF-8"
+JFDML JFormDesigner: "5.2.0.3.124" Java: "1.8.0_51" encoding: "UTF-8"
 
 new FormModel {
 	contentType: "form/swing"
@@ -62,7 +62,7 @@ new FormModel {
 								name: "deviceMonitoringButton"
 								"text": "Device Monitoring"
 								auxiliary() {
-									"JavaCodeGenerator.variableModifiers": 4
+									"JavaCodeGenerator.variableModifiers": 1
 								}
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 								"gridx": 1
@@ -254,7 +254,7 @@ new FormModel {
 						"icon": new com.jformdesigner.model.SwingIcon( 0, "/br/UFSC/GRIMA/images/viewIcon.png" )
 						"font": #Font4
 						auxiliary() {
-							"JavaCodeGenerator.variableModifiers": 1
+							"JavaCodeGenerator.variableModifiers": 4
 						}
 					} )
 				} )
@@ -286,7 +286,7 @@ new FormModel {
 						"icon": new com.jformdesigner.model.SwingIcon( 0, "/br/UFSC/GRIMA/images/viewIcon.png" )
 						"font": #Font1
 						auxiliary() {
-							"JavaCodeGenerator.variableModifiers": 1
+							"JavaCodeGenerator.variableModifiers": 4
 						}
 					} )
 				} )
@@ -300,7 +300,7 @@ new FormModel {
 						"icon": new com.jformdesigner.model.SwingIcon( 0, "/br/UFSC/GRIMA/images/Gears-icon.png" )
 						"font": #Font1
 						auxiliary() {
-							"JavaCodeGenerator.variableModifiers": 1
+							"JavaCodeGenerator.variableModifiers": 4
 						}
 					} )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {

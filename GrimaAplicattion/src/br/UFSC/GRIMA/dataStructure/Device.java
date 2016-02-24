@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -24,6 +25,7 @@ public class Device implements ActionListener{
 ////////////////ConfigureDeviceComponents
 	private JButton changeNameButton;
 	private JTextField nameTextField;
+	private JMenuItem monitoringMenu;
 ///////////////////////Construtor/////////////////////////////////////////////////////
 	public Device(DeviceStreamType currentObject,DeviceType probeObject, int agentPosition, Agent agent) {
 		setName(currentObject.getName());
@@ -34,9 +36,7 @@ public class Device implements ActionListener{
 		setComponents(new ArrayList<Component>());
 		for (int i = 0; i < currentObject.getComponentStream().size(); i++) {
 			components.add(new Component(currentObject.getComponentStream().get(i), probeObject, i, this));
-			
 		}
-		
 	}
 ////////////////////////////////Methods/////////////////////////////////////////////////////
 	@Override
@@ -49,11 +49,18 @@ public class Device implements ActionListener{
 				else if(agent.getDeviceByName(name) == null) {
 					setName(name);
 					agent.getIoControl().getController().getMainInterface().getViewDevicesEvents().setCameras();
+					agent.getIoControl().getController().getMainInterface().setMenuDeviceMonitor();
 				}
 				else {
 					JOptionPane.showMessageDialog(agent.getIoControl().getController().getMainInterface(), "This name is already in use by another Device.", "Error in Change", JOptionPane.ERROR_MESSAGE);
 					nameTextField.setText(this.name);
 				}
+			}
+		}
+		if(monitoringMenu != null) {
+			if(e.getSource().equals(monitoringMenu)) {
+				agent.getIoControl().getController().getMainInterface().deviceMonitoringButton.doClick();
+				agent.getIoControl().getController().getMainInterface().getDeviceMonitoringPanelEvents().deviceComboBox.setSelectedIndex(agent.getIoControl().getController().getAllDevices().indexOf(this) + 1);
 			}
 		}
 	}
@@ -105,6 +112,12 @@ public class Device implements ActionListener{
 	}
 	public void setNameTextField(JTextField nameTextField) {
 		this.nameTextField = nameTextField;
+	}
+	public JMenuItem getMonitoringMenu() {
+		return monitoringMenu;
+	}
+	public void setMonitoringMenu(JMenuItem monitoringMenu) {
+		this.monitoringMenu = monitoringMenu;
 	}
 	
 }

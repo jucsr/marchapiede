@@ -205,7 +205,7 @@ public class DeviceMonitoringPanel extends JPanel {
 	private JPanel panel1;
 	private JPanel panel2;
 	private JLabel label1;
-	protected JComboBox<String> deviceComboBox;
+	public JComboBox<String> deviceComboBox;
 	private JLabel label2;
 	protected JComboBox<String> cameraComboBox;
 	public JToggleButton playPause;

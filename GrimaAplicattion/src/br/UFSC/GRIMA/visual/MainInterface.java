@@ -19,6 +19,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -30,6 +31,7 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.block.LineBorder;
 
 import br.UFSC.GRIMA.IO.Agent;
+import br.UFSC.GRIMA.IO.Camera;
 import br.UFSC.GRIMA.IO.MainExecution;
 import br.UFSC.GRIMA.dataStructure.Component;
 import br.UFSC.GRIMA.dataStructure.Device;
@@ -162,6 +164,27 @@ public class MainInterface extends MainWindow implements ActionListener {
 					setPanelMonitoringLayout();
 				}
 			}
+		}
+	}
+	public void setMenuDeviceMonitor() {
+		menuDevices.removeAll();
+		ArrayList<Device> devices = mainExecution.getAllDevices();
+		for(int i = 0; i < devices.size(); i++) {
+			JMenuItem deviceMenu = new JMenuItem(devices.get(i).getName());
+			devices.get(i).setMonitoringMenu(deviceMenu);
+			deviceMenu.addActionListener(devices.get(i));
+			menuDevices.add(deviceMenu);
+		}
+	}
+	public void setMenuViewCameras() {
+		menuView.removeAll();
+		ArrayList<Camera>cameras = mainExecution.getAllCameras();
+		for(int i = 0; i < cameras.size(); i++) {
+			JMenuItem cameraMenu = new JMenuItem(cameras.get(i).getCompactName());
+			cameraMenu.setToolTipText(cameras.get(i).getName());
+			cameras.get(i).setViewMenu(cameraMenu);
+			cameraMenu.addActionListener(cameras.get(i));
+			menuView.add(cameraMenu);
 		}
 	}
 	public void setViewDevicesPanel() {

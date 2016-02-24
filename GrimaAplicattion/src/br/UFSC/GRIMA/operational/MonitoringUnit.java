@@ -46,6 +46,8 @@ public class MonitoringUnit implements ActionListener{
 	private String chartType;
 	private ArrayList<Variable> variables;
 	private char panelType;
+	private int minimumWhidth;
+	private int minimumHeight;
 	///////////RunTimeCreateInformations//////////
 	private ArrayList<String> categoryStrings;
 	private ArrayList<VariableBuffer> variableBuffers;
@@ -71,6 +73,8 @@ public class MonitoringUnit implements ActionListener{
 		setChartType(chartType);
 		setVariables(variables);
 		setPanelType(panelType);
+		setMinimumWhidth(0);
+		setMinimumHeight(300);
 	}
 /////////////////////////////////Methods///////////////////////////////////////////////////////////////
 	@Override
@@ -350,5 +354,17 @@ public class MonitoringUnit implements ActionListener{
 	}
 	public void setPanelButton(JToggleButton panelButton) {
 		this.panelButton = panelButton;
+	}
+	public int getMinimumHeight() {
+		return minimumHeight;
+	}
+	public void setMinimumHeight(int minimumHeight) {
+		this.minimumHeight = minimumHeight;
+	}
+	public int getMinimumWhidth() {
+		return minimumWhidth;
+	}
+	public void setMinimumWhidth(int minimumWhidth) {
+		this.minimumWhidth = minimumWhidth;
 	}
 }

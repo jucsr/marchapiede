@@ -72,6 +72,7 @@ public class IOControl {
 			clientCameras.remove(clientCameras.size() - 1);
 			return false;
 		}
+		controller.getMainInterface().setMenuViewCameras();
 		return true;
 	}
 /////////////////////////////Getters and Setters////////////////////////////////////////////

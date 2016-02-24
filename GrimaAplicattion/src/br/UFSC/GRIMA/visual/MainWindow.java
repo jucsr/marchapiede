@@ -375,13 +375,13 @@ public class MainWindow extends JFrame {
 	protected JMenuItem menuAddAgent;
 	private JMenu menu4;
 	protected JMenuItem menuDeviceInfo;
-	public JMenu menuDevices;
+	protected JMenu menuDevices;
 	private JMenu menu6;
 	protected JMenuItem menuCameraInfo;
 	protected JMenuItem menuAddCamera;
-	public JMenu menuView;
+	protected JMenu menuView;
 	private JMenu menu8;
-	public JMenu menuPanels;
+	protected JMenu menuPanels;
 	protected JMenuItem menuViewPanels;
 	protected JMenuItem menuAddPanel;
 	private JMenu menu5;
@@ -391,7 +391,7 @@ public class MainWindow extends JFrame {
 	private JPanel panel4;
 	private JPanel panel5;
 	protected JToggleButton deviceInfoButton;
-	protected JToggleButton deviceMonitoringButton;
+	public JToggleButton deviceMonitoringButton;
 	protected JToggleButton panelMonitoringButton;
 	private JPanel panel6;
 	private JLabel label4;

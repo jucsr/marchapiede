@@ -43,7 +43,7 @@ new FormModel {
 							addElement( " " )
 						}
 						auxiliary() {
-							"JavaCodeGenerator.variableModifiers": 4
+							"JavaCodeGenerator.variableModifiers": 1
 						}
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
 						"gridx": 1

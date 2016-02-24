@@ -68,7 +68,7 @@ public class DeviceMonitoringPanelEvents extends DeviceMonitoringPanel implement
 				if(mainInterface.getMainExecution().getDeviceMonitoringSystem().getSelectedCamera().getVideoPanel() != null) 
 					mainInterface.getMainExecution().getDeviceMonitoringSystem().getSelectedCamera().destroyVideoPanel();
 			}
-			if(cameraComboBox.getSelectedIndex() != 0) 
+			if(cameraComboBox.getSelectedIndex() > 0) 
 				mainInterface.getMainExecution().getDeviceMonitoringSystem().setSelectedCamera(mainInterface.getMainExecution().getDeviceMonitoringSystem().getSelectedDevice().getCameras().get(cameraComboBox.getSelectedIndex() - 1), cameraPanel);
 			cameraPanel.repaint();
 		}
