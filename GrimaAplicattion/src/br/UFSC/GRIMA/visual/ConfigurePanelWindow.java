@@ -38,8 +38,12 @@ public class ConfigurePanelWindow extends JFrame {
 		panel4 = new JPanel();
 		label9 = new JLabel();
 		chartTypeCombobox = new JComboBox();
-		buttonBar = new JPanel();
+		panel1 = new JPanel();
+		minimizeButton = new JButton();
+		maximizeButton = new JButton();
 		removePanelButton = new JButton();
+		clonePanelButton = new JButton();
+		buttonBar = new JPanel();
 		okButton = new JButton();
 		cancelButton = new JButton();
 
@@ -58,9 +62,9 @@ public class ConfigurePanelWindow extends JFrame {
 			{
 				contentPanel.setLayout(new GridBagLayout());
 				((GridBagLayout)contentPanel.getLayout()).columnWidths = new int[] {0, 0};
-				((GridBagLayout)contentPanel.getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0};
+				((GridBagLayout)contentPanel.getLayout()).rowHeights = new int[] {0, 0, 0, 0, 0, 0};
 				((GridBagLayout)contentPanel.getLayout()).columnWeights = new double[] {1.0, 1.0E-4};
-				((GridBagLayout)contentPanel.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 1.0E-4};
+				((GridBagLayout)contentPanel.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
 
 				//======== panel3 ========
 				{
@@ -137,7 +141,7 @@ public class ConfigurePanelWindow extends JFrame {
 						new Insets(0, 0, 0, 5), 0, 0));
 
 					//---- label7 ----
-					label7.setText("x");
+					label7.setText("X");
 					panel2.add(label7, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
 						GridBagConstraints.CENTER, GridBagConstraints.BOTH,
 						new Insets(0, 0, 0, 5), 0, 0));
@@ -183,6 +187,43 @@ public class ConfigurePanelWindow extends JFrame {
 				}
 				contentPanel.add(panel4, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0,
 					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+					new Insets(0, 0, 5, 0), 0, 0));
+
+				//======== panel1 ========
+				{
+					panel1.setBorder(new TitledBorder("Panel Options"));
+					panel1.setLayout(new GridBagLayout());
+					((GridBagLayout)panel1.getLayout()).columnWidths = new int[] {0, 0, 0, 0};
+					((GridBagLayout)panel1.getLayout()).rowHeights = new int[] {0, 0, 0};
+					((GridBagLayout)panel1.getLayout()).columnWeights = new double[] {1.0, 1.0, 1.0, 1.0E-4};
+					((GridBagLayout)panel1.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0E-4};
+
+					//---- minimizeButton ----
+					minimizeButton.setText("Minimize");
+					panel1.add(minimizeButton, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+						GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+						new Insets(0, 0, 5, 5), 0, 0));
+
+					//---- maximizeButton ----
+					maximizeButton.setText("Maximize");
+					panel1.add(maximizeButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+						GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+						new Insets(0, 0, 5, 5), 0, 0));
+
+					//---- removePanelButton ----
+					removePanelButton.setText("Remove");
+					panel1.add(removePanelButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
+						GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+						new Insets(0, 0, 5, 0), 0, 0));
+
+					//---- clonePanelButton ----
+					clonePanelButton.setText("Clone Panel");
+					panel1.add(clonePanelButton, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
+						GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+						new Insets(0, 0, 0, 5), 0, 0));
+				}
+				contentPanel.add(panel1, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0,
+					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
 					new Insets(0, 0, 0, 0), 0, 0));
 			}
 			dialogPane.add(contentPanel, BorderLayout.CENTER);
@@ -191,31 +232,25 @@ public class ConfigurePanelWindow extends JFrame {
 			{
 				buttonBar.setBorder(new EmptyBorder(12, 0, 0, 0));
 				buttonBar.setLayout(new GridBagLayout());
-				((GridBagLayout)buttonBar.getLayout()).columnWidths = new int[] {0, 0, 85, 80};
-				((GridBagLayout)buttonBar.getLayout()).columnWeights = new double[] {1.0, 0.0, 0.0, 0.0};
-
-				//---- removePanelButton ----
-				removePanelButton.setText("Remove Panel");
-				buttonBar.add(removePanelButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-					new Insets(0, 0, 0, 5), 0, 0));
+				((GridBagLayout)buttonBar.getLayout()).columnWidths = new int[] {0, 85, 80};
+				((GridBagLayout)buttonBar.getLayout()).columnWeights = new double[] {1.0, 0.0, 0.0};
 
 				//---- okButton ----
 				okButton.setText("OK");
-				buttonBar.add(okButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
+				buttonBar.add(okButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
 					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
 					new Insets(0, 0, 0, 5), 0, 0));
 
 				//---- cancelButton ----
 				cancelButton.setText("Cancel");
-				buttonBar.add(cancelButton, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
+				buttonBar.add(cancelButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
 					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
 					new Insets(0, 0, 0, 0), 0, 0));
 			}
 			dialogPane.add(buttonBar, BorderLayout.SOUTH);
 		}
 		contentPane.add(dialogPane, BorderLayout.CENTER);
-		setSize(335, 300);
+		setSize(405, 300);
 		setLocationRelativeTo(getOwner());
 		// JFormDesigner - End of component initialization  //GEN-END:initComponents
 	}
@@ -241,8 +276,12 @@ public class ConfigurePanelWindow extends JFrame {
 	private JPanel panel4;
 	private JLabel label9;
 	protected JComboBox chartTypeCombobox;
-	private JPanel buttonBar;
+	private JPanel panel1;
+	protected JButton minimizeButton;
+	protected JButton maximizeButton;
 	protected JButton removePanelButton;
+	protected JButton clonePanelButton;
+	private JPanel buttonBar;
 	protected JButton okButton;
 	protected JButton cancelButton;
 	// JFormDesigner - End of variables declaration  //GEN-END:variables

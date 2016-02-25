@@ -294,6 +294,7 @@ public class CreatePanelEvents extends CreatePanelWindow implements ActionListen
 				}
 				if(sucess) {
 					mainInterface.getMainExecution().getPanelMonitoringSystem().getMonitoringUnits().add(new MonitoringUnit(nameField.getText(), mainInterface.getMainExecution().getPanelMonitoringSystem(), timeRange, (String) charTypeComboBox.getSelectedItem(), this.variables, variables.get(0).getType()));
+					mainInterface.setMenuConfigurePanel();
 					this.dispose();
 				}
 			}

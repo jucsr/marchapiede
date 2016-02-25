@@ -37,6 +37,7 @@ import br.UFSC.GRIMA.dataStructure.Component;
 import br.UFSC.GRIMA.dataStructure.Device;
 import br.UFSC.GRIMA.dataStructure.Variable;
 import br.UFSC.GRIMA.operational.DeviceMonitoringSystem;
+import br.UFSC.GRIMA.operational.MonitoringUnit;
 
 public class MainInterface extends MainWindow implements ActionListener {
 	private MainExecution mainExecution;
@@ -187,6 +188,16 @@ public class MainInterface extends MainWindow implements ActionListener {
 			menuView.add(cameraMenu);
 		}
 	}
+	public void setMenuConfigurePanel() {
+		menuPanels.removeAll();
+		ArrayList<MonitoringUnit> monitoringUnits = mainExecution.getPanelMonitoringSystem().getMonitoringUnits();
+		for(int i = 0; i < monitoringUnits.size(); i++) {
+			JMenuItem panelMenu = new JMenuItem(monitoringUnits.get(i).getName());
+			monitoringUnits.get(i).setMenuItem(panelMenu);
+			panelMenu.addActionListener(monitoringUnits.get(i));
+			menuPanels.add(panelMenu);
+		}
+	}
 	public void setViewDevicesPanel() {
 		ViewDevicesPanel viewDevicesPanel = new ViewDevicesPanel();
 		workSpace.add(viewDevicesPanel, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
@@ -331,6 +342,10 @@ public class MainInterface extends MainWindow implements ActionListener {
 		double[] buttonsLayout = new double[mainExecution.getPanelMonitoringSystem().getMonitoringUnits().size() + 1];
 		buttonsLayout[buttonsLayout.length - 1] = 1.0;
 		((GridBagLayout)panelMonitoringPanel.buttonPanel.getLayout()).rowWeights = buttonsLayout;
+		double[] panelLayout = new double[mainExecution.getPanelMonitoringSystem().getMonitoringUnits().size()];
+		for(int i = 0; i < panelLayout.length; i++)
+			panelLayout[i] = 1.0;
+		((GridBagLayout)panelMonitoringPanel.panelSupport.getLayout()).columnWeights = panelLayout;
 		for(int i = 0; i < mainExecution.getPanelMonitoringSystem().getMonitoringUnits().size(); i++) {
 			JToggleButton panelButton = new JToggleButton(mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).getName());
 			panelButton.setSelected(true);
@@ -343,10 +358,9 @@ public class MainInterface extends MainWindow implements ActionListener {
 			monitoringPanel.setBorder(new TitledBorder(mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).getName()));
 			monitoringPanel.setLayout(new GridBagLayout());
 			((GridBagLayout)monitoringPanel.getLayout()).columnWidths = new int[] {0, 0, 0};
-			((GridBagLayout)monitoringPanel.getLayout()).rowHeights = new int[] {0, 0, 300};
+			((GridBagLayout)monitoringPanel.getLayout()).rowHeights = new int[] {0, 0, 0};
 			((GridBagLayout)monitoringPanel.getLayout()).columnWeights = new double[] {0.0, 1.0E-4};
 			((GridBagLayout)monitoringPanel.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
-			monitoringPanel.setPreferredSize(new Dimension(400, (int) Math.round(monitoringPanel.getPreferredSize().getHeight())));
 			JLabel timeR = new JLabel("Time Range:");
 			JTextField timeName = new JTextField(mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).getTimeRange()[0] + "h: " + mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).getTimeRange()[1] + "m: " + mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).getTimeRange()[2] + "s");
 			timeName.setEditable(false);
@@ -440,7 +454,9 @@ public class MainInterface extends MainWindow implements ActionListener {
 				display.addActionListener(mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).getVariableBuffers().get(j));
 			}
 			mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).setPlayPause(playPause);
+			mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).setSettingButton(settings);
 			playPause.addActionListener(mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i));
+			settings.addActionListener(mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i));
 			JPanel calcPanel = new JPanel();
 			calcPanel.setLayout(new GridBagLayout());
 			((GridBagLayout)calcPanel.getLayout()).columnWidths = new int[] {0, 0};

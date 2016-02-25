@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 import br.UFSC.GRIMA.dataStructure.Device;
 import br.UFSC.GRIMA.operational.MonitoringUnit;
@@ -61,7 +62,11 @@ public class ConfigurePanelEvents extends ConfigurePanelWindow implements Action
 			model.addElement("AreaChart");
 		}
 		chartTypeCombobox.setModel(model);
+		chartTypeCombobox.setSelectedItem(monitoringUnit.getChartType());
+		minimizeButton.addActionListener(this);
+		maximizeButton.addActionListener(this);
 		removePanelButton.addActionListener(this);
+		clonePanelButton.addActionListener(this);
 		okButton.addActionListener(this);
 		cancelButton.addActionListener(this);
 		this.setVisible(true);
@@ -70,16 +75,59 @@ public class ConfigurePanelEvents extends ConfigurePanelWindow implements Action
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getSource().equals(removePanelButton)) {
+		if (e.getSource().equals(minimizeButton)) {
+			monitoringUnit.getPanelButton().setSelected(false);
+			if(monitoringUnit.getMonitoringPanel() != null)
+				monitoringUnit.setVisible(false);
+			monitoringUnit.setVisible(false);
+			this.dispose();
+		}
+		else if(e.getSource().equals(maximizeButton)) {
+			for(int i = 0; i < monitoringUnit.getPanelMonitoringSystem().getMonitoringUnits().size(); i++) {
+				 monitoringUnit.getPanelMonitoringSystem().getMonitoringUnits().get(i).getPanelButton().setSelected(false);
+				if(monitoringUnit.getPanelMonitoringSystem().getMonitoringUnits().get(i).getMonitoringPanel() != null)
+					monitoringUnit.getPanelMonitoringSystem().getMonitoringUnits().get(i).setVisible(false);
+				monitoringUnit.getPanelMonitoringSystem().getMonitoringUnits().get(i).setVisible(false);
+			}
+			monitoringUnit.getPanelButton().doClick();
+			this.dispose();
+		}
+		else if(e.getSource().equals(removePanelButton)) {
 			monitoringUnit.getPanelMonitoringSystem().getMonitoringUnits().remove(monitoringUnit);
+			this.dispose();
+		}
+		else if(e.getSource().equals(clonePanelButton)) {
+			String defaultName = null;
+			int i = 0;
+			while(defaultName == null) {
+				boolean create = true;
+				for (int j = 0; j < monitoringUnit.getPanelMonitoringSystem().getMonitoringUnits().size(); j++) {
+					if(monitoringUnit.getPanelMonitoringSystem().getMonitoringUnits().get(j).getName().equals( "Clone"+ i)) {
+						create = false;
+						break;
+					}
+				}
+				if (create) {
+					defaultName = ("Clone"+ i);
+				}
+				i++;
+			}
+			monitoringUnit.getPanelMonitoringSystem().getMonitoringUnits().add(new MonitoringUnit(defaultName, monitoringUnit.getPanelMonitoringSystem(), monitoringUnit.getTimeRange(), monitoringUnit.getChartType(), monitoringUnit.getVariables(), monitoringUnit.getPanelType()));
 			this.dispose();
 		}
 		else if(e.getSource().equals(cancelButton))
 			this.dispose();
 		else if(e.getSource().equals(okButton)) {
-//			int[] timeRange = new int{hourFiled.getValue(), minuteField.getValue(), secondField.getValue()};
-			monitoringUnit.setChartType((String)chartTypeCombobox.getSelectedItem());
-			
+			int[] timeRange = new int[]{(int)hourFiled.getValue(), (int)minuteField.getValue(), (int)secondField.getValue()};
+			if((timeRange[0] == 0) && (timeRange[1] == 0) && (timeRange[2] == 0)) 
+				JOptionPane.showMessageDialog(null, "The Time Range cannot be empty, insert a valid Time Range.", "Time Range Error", JOptionPane.ERROR_MESSAGE);
+			else {
+				monitoringUnit.setTimeRange(timeRange);
+				monitoringUnit.setChartType((String)chartTypeCombobox.getSelectedItem());
+				monitoringUnit.setMinimumHeight((int) heightField.getValue());
+				monitoringUnit.setMinimumWhidth((int) whidthField.getValue());
+				this.dispose();
+			}
 		}
 	}
 ///////////////////////////////Getters and Setters//////////////////////////////////////////

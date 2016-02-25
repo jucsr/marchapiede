@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -36,6 +37,7 @@ import org.jfree.chart.renderer.xy.XYStepRenderer;
 import org.jfree.data.time.TimeSeriesCollection;
 
 import br.UFSC.GRIMA.dataStructure.Variable;
+import br.UFSC.GRIMA.visual.ConfigurePanelEvents;
 import br.UFSC.GRIMA.visual.MainInterface;
 
 public class MonitoringUnit implements ActionListener{
@@ -48,6 +50,8 @@ public class MonitoringUnit implements ActionListener{
 	private char panelType;
 	private int minimumWhidth;
 	private int minimumHeight;
+	private boolean visible = true;
+	private JMenuItem menuItem;
 	///////////RunTimeCreateInformations//////////
 	private ArrayList<String> categoryStrings;
 	private ArrayList<VariableBuffer> variableBuffers;
@@ -58,6 +62,7 @@ public class MonitoringUnit implements ActionListener{
 	//////////////panel Components///////////////
 	private JToggleButton playPause;
 	private JToggleButton panelButton;
+	private JButton settingButton;
 	private JComboBox<String> calculateCombobox;
 	private JComboBox<String> calcTargetCombobox;
 	private JTextField calcResult;
@@ -73,7 +78,7 @@ public class MonitoringUnit implements ActionListener{
 		setChartType(chartType);
 		setVariables(variables);
 		setPanelType(panelType);
-		setMinimumWhidth(0);
+		setMinimumWhidth(400);
 		setMinimumHeight(300);
 	}
 /////////////////////////////////Methods///////////////////////////////////////////////////////////////
@@ -88,6 +93,11 @@ public class MonitoringUnit implements ActionListener{
 		}
 		else if(e.getSource().equals(panelButton)) {
 			monitoringPanel.setVisible(panelButton.isSelected());
+			setVisible(panelButton.isSelected());
+		}
+		else if(e.getSource().equals(menuItem)) {
+			panelMonitoringSystem.getController().getMainInterface().setEnabled(false);
+			new ConfigurePanelEvents(this);
 		}
 		if(calcTargetCombobox != null) {
 			if (e.getSource().equals(calcTargetCombobox)) {
@@ -112,7 +122,12 @@ public class MonitoringUnit implements ActionListener{
 				startPause.setSelected(false);
 			}
 		}
-		
+		if(settingButton != null) {
+			if(e.getSource().equals(settingButton)) {
+				panelMonitoringSystem.getController().getMainInterface().setEnabled(false);
+				new ConfigurePanelEvents(this);
+			}
+		}
 		
 		
 	}
@@ -134,6 +149,7 @@ public class MonitoringUnit implements ActionListener{
 			variableBuffers.add(new VariableBuffer(variables.get(i), this));
 			chartDataset.addSeries(variableBuffers.get(i).getDataSerie());
 		}
+		panelButton.setSelected(visible);
 	}
 	public void refreshChart() {
 		if (this.panelType == '1') {
@@ -163,6 +179,10 @@ public class MonitoringUnit implements ActionListener{
 				setChart(new JFreeChart(null, new Font("Tahoma", 0, 18), plot, true));
 			}
 		}
+		((GridBagLayout)monitoringPanel.getLayout()).rowHeights[2] = minimumHeight;
+		monitoringPanel.setPreferredSize(new Dimension(minimumWhidth,  (int) Math.round(monitoringPanel.getPreferredSize().getHeight())));
+		setVisible(visible);
+		monitoringPanel.setVisible(visible);
 		if (chartPanel != null) 
 			monitoringPanel.remove(chartPanel);
 		setChartPanel(new ChartPanel(chart));
@@ -366,5 +386,27 @@ public class MonitoringUnit implements ActionListener{
 	}
 	public void setMinimumWhidth(int minimumWhidth) {
 		this.minimumWhidth = minimumWhidth;
+	}
+	public JButton getSettingButton() {
+		return settingButton;
+	}
+	public void setSettingButton(JButton settingButton) {
+		this.settingButton = settingButton;
+	}
+	public boolean isVisible() {
+		return visible;
+	}
+	public void setVisible(boolean visible) {
+		if(visible)
+			((GridBagLayout)panelMonitoringSystem.getController().getMainInterface().getPanelMonitoringPanel().panelSupport.getLayout()).columnWeights[panelMonitoringSystem.getMonitoringUnits().indexOf(this)] = 1.0;
+		else
+			((GridBagLayout)panelMonitoringSystem.getController().getMainInterface().getPanelMonitoringPanel().panelSupport.getLayout()).columnWeights[panelMonitoringSystem.getMonitoringUnits().indexOf(this)] = 0.0;
+		this.visible = visible;
+	}
+	public JMenuItem getMenuItem() {
+		return menuItem;
+	}
+	public void setMenuItem(JMenuItem menuItem) {
+		this.menuItem = menuItem;
 	}
 }
