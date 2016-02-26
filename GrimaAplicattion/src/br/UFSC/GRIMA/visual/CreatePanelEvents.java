@@ -16,7 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import br.UFSC.GRIMA.dataStructure.*;
-import br.UFSC.GRIMA.operational.MonitoringUnit;
+import br.UFSC.GRIMA.operational.CategoryMonitoringUnit;
+import br.UFSC.GRIMA.operational.NumericMonitoringUnit;
 
 public class CreatePanelEvents extends CreatePanelWindow implements ActionListener{
 	private MainInterface mainInterface;
@@ -91,6 +92,7 @@ public class CreatePanelEvents extends CreatePanelWindow implements ActionListen
 		model.addElement("LineChart");
 		model.addElement("StepLineChart");
 		model.addElement("AreaChart");
+		model.addElement("2DLineChart");
 		///////////////////////////////////////////////////////////////
 		nameField.addActionListener(this);
 		charTypeComboBox.setModel(model);
@@ -225,7 +227,7 @@ public class CreatePanelEvents extends CreatePanelWindow implements ActionListen
 					JOptionPane.showMessageDialog(this, "The panel can only be created from categoric or numeric variables, any other type is not allowed.", "Error", JOptionPane.ERROR_MESSAGE);
 					sucess = false;
 				}
-				if ((charTypeComboBox.getSelectedItem().equals("LineChart")) || (charTypeComboBox.getSelectedItem().equals("AreaChart"))) {
+				if ((charTypeComboBox.getSelectedItem().equals("LineChart")) || (charTypeComboBox.getSelectedItem().equals("AreaChart")) || (charTypeComboBox.getSelectedItem().equals("2DLineChart"))) {
 					if(variables.get(0).getType() == 'c') {
 						JOptionPane.showMessageDialog(this, "You cannot use this type of chart for categoric variables, please select the StepLineChart chartType.", "Error", JOptionPane.ERROR_MESSAGE);
 						sucess = false;
@@ -238,7 +240,7 @@ public class CreatePanelEvents extends CreatePanelWindow implements ActionListen
 					}
 				}
 				else {
-					JOptionPane.showMessageDialog(this, "ChartType cannot be identificated by the application.", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, "ChartType cannot be identified by the application.", "Error", JOptionPane.ERROR_MESSAGE);
 					sucess = false;
 				}
 				int hour = 0;
@@ -293,7 +295,11 @@ public class CreatePanelEvents extends CreatePanelWindow implements ActionListen
 					}
 				}
 				if(sucess) {
-					mainInterface.getMainExecution().getPanelMonitoringSystem().getMonitoringUnits().add(new MonitoringUnit(nameField.getText(), mainInterface.getMainExecution().getPanelMonitoringSystem(), timeRange, (String) charTypeComboBox.getSelectedItem(), this.variables, variables.get(0).getType()));
+					if((charTypeComboBox.getSelectedItem().equals("LineChart")) || (charTypeComboBox.getSelectedItem().equals("AreaChart")))
+						mainInterface.getMainExecution().getPanelMonitoringSystem().getMonitoringUnits().add(new NumericMonitoringUnit(nameField.getText(), mainInterface.getMainExecution().getPanelMonitoringSystem(), timeRange, (String) charTypeComboBox.getSelectedItem(), this.variables, variables.get(0).getType()));
+					else if (charTypeComboBox.getSelectedItem().equals("StepLineChart")) 
+						mainInterface.getMainExecution().getPanelMonitoringSystem().getMonitoringUnits().add(new CategoryMonitoringUnit(nameField.getText(), mainInterface.getMainExecution().getPanelMonitoringSystem(), timeRange, (String) charTypeComboBox.getSelectedItem(), this.variables, variables.get(0).getType()));
+							
 					mainInterface.setMenuConfigurePanel();
 					this.dispose();
 				}

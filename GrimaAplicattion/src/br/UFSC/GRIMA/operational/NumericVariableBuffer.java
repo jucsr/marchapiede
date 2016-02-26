@@ -2,7 +2,6 @@ package br.UFSC.GRIMA.operational;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.swing.ImageIcon;
@@ -19,20 +18,19 @@ import org.jfree.data.time.TimeSeriesDataItem;
 
 import br.UFSC.GRIMA.dataStructure.Variable;
 
-public class VariableBuffer implements SeriesChangeListener, ActionListener {
+public class NumericVariableBuffer implements SeriesChangeListener, ActionListener {
 	private Variable variable;
-	private MonitoringUnit monitoringUnit;
+	private NumericMonitoringUnit numericMonitoringUnit;
 	private TimeSeries dataSerie;
-	private int categoriesInVariable;
 	private boolean inCalc;
 	//////////panelComponents
 	private JLabel typeLabel;
 	private JTextField valueTextField;
 	private JToggleButton displayButton;
-/////////////////////////////////////constructor///////////////////////////////////////////////////////////////////
-	public VariableBuffer(Variable variable, MonitoringUnit monitoringUnit) {
+/////////////////////////////////////////Constructor///////////////////////////////////////////////////////////////
+	public NumericVariableBuffer(Variable variable, NumericMonitoringUnit monitoringUnit) {
 		setVariable(variable);
-		setMonitoringUnit(monitoringUnit);
+		setNumericMonitoringUnit(monitoringUnit);
 		setInCalc(false);
 		monitoringUnit.getPanelMonitoringSystem().getController().getIoControl().getLoadExecution().addToVariableList(variable);
 		if (variable.getName() != null) 
@@ -42,13 +40,9 @@ public class VariableBuffer implements SeriesChangeListener, ActionListener {
 		dataSerie.setNotify(false);
 		for(int i = 0; i < variable.getDataSerie().getItemCount(); i++) 
 			dataSerie.addOrUpdate(variable.getDataSerie().getDataItem(i));
-		if(variable.getType() == 'c') {
-			for (int i = 0; i < dataSerie.getItemCount(); i++)
-				dataSerie.update(i, monitoringUnit.getCategoryStrings().indexOf(variable.getCategoryStrings().get(dataSerie.getValue(i).intValue())));
-		}
 		variable.getDataSerie().addChangeListener(this);
 	}
-/////////////////////////////////////Methods///////////////////////////////////////////////////////////////////////
+////////////////////////////////////////Methods/////////////////////////////////////////////////////////////////////
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -56,11 +50,12 @@ public class VariableBuffer implements SeriesChangeListener, ActionListener {
 			if (variable.getType() == 'i')
 				displayButton.setSelected(false);
 			else if (displayButton.isSelected())
-				monitoringUnit.getChartDataset().addSeries(dataSerie);
+				numericMonitoringUnit.getChartDataset().addSeries(dataSerie);
 			else
-				monitoringUnit.getChartDataset().removeSeries(dataSerie);
+				numericMonitoringUnit.getChartDataset().removeSeries(dataSerie);
 		}
 	}
+		
 	@Override
 	public void seriesChanged(SeriesChangeEvent e) {
 		if ((variable.getType() == 'i')&&(dataSerie != null)) 
@@ -68,28 +63,23 @@ public class VariableBuffer implements SeriesChangeListener, ActionListener {
 		if (!variable.getDataSerie().isEmpty()) {
 			if (variable.getType() != 'i') {
 				addToSerie(variable.getDataSerie().getDataItem(variable.getDataSerie().getItemCount() - 1));
-				if(isInCalc() && (monitoringUnit.getCalculateCombobox().getSelectedIndex() >= 0) && monitoringUnit.getStartPause().isSelected()) 
+				if(isInCalc() && (numericMonitoringUnit.getCalculateCombobox().getSelectedIndex() >= 0) && numericMonitoringUnit.getStartPause().isSelected()) 
 					updateCalculateField();
 			}
-			if (monitoringUnit.getPlayPause() != null) {
-				if(monitoringUnit.getPlayPause().isSelected())
+			if (numericMonitoringUnit.getPlayPause() != null) {
+				if(numericMonitoringUnit.getPlayPause().isSelected())
 					valueTextField.setText(variable.getLastValue());
 			}
 		}
 	}
 	public void addToSerie(TimeSeriesDataItem item) {
 		try {
-			if (variable.getType() == '1')
-				dataSerie.addOrUpdate((TimeSeriesDataItem)item.clone());
-			if (variable.getType() == 'c') {
-				TimeSeriesDataItem nItem = (TimeSeriesDataItem)item.clone();
-				dataSerie.addOrUpdate(nItem.getPeriod(), getCategoryPosition(variable.getCategoryStrings().get(nItem.getValue().intValue())));
-			}
+			dataSerie.addOrUpdate((TimeSeriesDataItem)item.clone());
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		///////////////Discart medium value/////////////////
+		//////////////Discart medium value/////////////////
 		TimeSeries serie = dataSerie;
 		if (serie.getItemCount() >= 3) {
 			if((serie.getValue(serie.getItemCount() - 1) == null)&&(serie.getValue(serie.getItemCount() - 2) == null)&&(serie.getValue(serie.getItemCount() - 3) == null))
@@ -102,9 +92,9 @@ public class VariableBuffer implements SeriesChangeListener, ActionListener {
 		//////////////discart old values////////////////////////
 		if (((variable.getType() == '1') || (variable.getType() == 'c')) && (serie.getItemCount() > 1)) {
 			XMLGregorianCalendar iniTime =(XMLGregorianCalendar) variable.getComponent().getDevice().getAgent().getCreationTime().clone();
-			int second = iniTime.getSecond() - monitoringUnit.getTimeRange()[2];
-			int minute = iniTime.getMinute() - monitoringUnit.getTimeRange()[1];
-			int hour = iniTime.getHour() - monitoringUnit.getTimeRange()[0];
+			int second = iniTime.getSecond() - numericMonitoringUnit.getTimeRange()[2];
+			int minute = iniTime.getMinute() - numericMonitoringUnit.getTimeRange()[1];
+			int hour = iniTime.getHour() - numericMonitoringUnit.getTimeRange()[0];
 			int day = iniTime.getDay();
 			int month = iniTime.getMonth();
 			int year = iniTime.getYear();
@@ -165,93 +155,84 @@ public class VariableBuffer implements SeriesChangeListener, ActionListener {
 				}
 			}
 		}
-		if(variable.getType() == 'c') {
-			ArrayList<Number> categoriesInVariable = new ArrayList<Number>();
-			for(int i = 0; i < dataSerie.getItemCount(); i++) {
-				if(!categoriesInVariable.contains(dataSerie.getValue(i)))
-					categoriesInVariable.add(dataSerie.getValue(i));
-			}
-			if(categoriesInVariable.size() < getCategoriesInVariable())
-				monitoringUnit.categoryRemove();
-			setCategoriesInVariable(categoriesInVariable.size());
-		}
 		dataSerie.setNotify(true);
 		dataSerie.setNotify(false);
 	}
 	public void updateCalculateField() {
 		Long dif = new Long(0);
-		if ((monitoringUnit.getCalculateCombobox().getSelectedItem().equals("Integrate")) || (monitoringUnit.getCalculateCombobox().getSelectedItem().equals("Derivate"))) {
-			if (monitoringUnit.getLastMillisecond() != 0)
-				dif =  dataSerie.getTimePeriod(dataSerie.getItemCount() - 1).getLastMillisecond() - monitoringUnit.getLastMillisecond();
-			monitoringUnit.setLastMillisecond(dataSerie.getTimePeriod(dataSerie.getItemCount() - 1).getLastMillisecond());
+		if ((numericMonitoringUnit.getCalculateCombobox().getSelectedItem().equals("Integrate")) || (numericMonitoringUnit.getCalculateCombobox().getSelectedItem().equals("Derivate"))) {
+			if (numericMonitoringUnit.getLastMillisecond() != 0)
+				dif =  dataSerie.getTimePeriod(dataSerie.getItemCount() - 1).getLastMillisecond() - numericMonitoringUnit.getLastMillisecond();
+			numericMonitoringUnit.setLastMillisecond(dataSerie.getTimePeriod(dataSerie.getItemCount() - 1).getLastMillisecond());
 		}
-		if (monitoringUnit.getCalculateCombobox().getSelectedItem().equals("Integrate")) {
+		if (numericMonitoringUnit.getCalculateCombobox().getSelectedItem().equals("Integrate")) {
 			try {
 				if(dif != 0) {
 					double deltat = dif.doubleValue()/1000.0; ///milliseconds to seconds
-					monitoringUnit.setResult(monitoringUnit.getResult() + dataSerie.getValue(dataSerie.getItemCount() - 1).doubleValue()*deltat);
-					if(monitoringUnit.getPlayPause().isSelected())
-						monitoringUnit.getCalcResult().setText("" + monitoringUnit.getResult());
+					numericMonitoringUnit.setResult(numericMonitoringUnit.getResult() + dataSerie.getValue(dataSerie.getItemCount() - 1).doubleValue()*deltat);
 				}
-			}catch(Exception e) {
+				if(numericMonitoringUnit.getPlayPause().isSelected())
+						numericMonitoringUnit.getCalcResult().setText("" + numericMonitoringUnit.getResult());
+				}
+			catch(Exception e) {
 				e.printStackTrace();
-				if(monitoringUnit.getPlayPause().isSelected())
-					monitoringUnit.getCalcResult().setText("Er");
+				if(numericMonitoringUnit.getPlayPause().isSelected())
+					numericMonitoringUnit.getCalcResult().setText("Er");
 			}
 		}
-		else if (monitoringUnit.getCalculateCombobox().getSelectedItem().equals("Derivate")) {
+		else if (numericMonitoringUnit.getCalculateCombobox().getSelectedItem().equals("Derivate")) {
 			try {
 				if(dif != 0 ){
 					double deltat = dif.doubleValue()/1000.0; ///milliseconds to seconds
-					monitoringUnit.setResult((dataSerie.getValue(dataSerie.getItemCount() - 1).doubleValue() - dataSerie.getValue(dataSerie.getItemCount() - 2).doubleValue())/deltat);
-					if(monitoringUnit.getPlayPause().isSelected())
-						monitoringUnit.getCalcResult().setText("" + monitoringUnit.getResult());
+					numericMonitoringUnit.setResult((dataSerie.getValue(dataSerie.getItemCount() - 1).doubleValue() - dataSerie.getValue(dataSerie.getItemCount() - 2).doubleValue())/deltat);
+					if(numericMonitoringUnit.getPlayPause().isSelected())
+						numericMonitoringUnit.getCalcResult().setText("" + numericMonitoringUnit.getResult());
 				}
 			}catch(Exception e) {
 				e.printStackTrace();
-				if(monitoringUnit.getPlayPause().isSelected())
-					monitoringUnit.getCalcResult().setText("Er");
+				if(numericMonitoringUnit.getPlayPause().isSelected())
+					numericMonitoringUnit.getCalcResult().setText("Er");
 			}
 		}
-		else if (monitoringUnit.getCalculateCombobox().getSelectedItem().equals("Maximum")) {
-			if(monitoringUnit.getPlayPause().isSelected())
-				monitoringUnit.getCalcResult().setText("" + dataSerie.getMaxY());
+		else if (numericMonitoringUnit.getCalculateCombobox().getSelectedItem().equals("Maximum")) {
+			if(numericMonitoringUnit.getPlayPause().isSelected())
+				numericMonitoringUnit.getCalcResult().setText("" + dataSerie.getMaxY());
 		}
-		else if (monitoringUnit.getCalculateCombobox().getSelectedItem().equals("Minimum")) {
-			if(monitoringUnit.getPlayPause().isSelected())
-				monitoringUnit.getCalcResult().setText("" + dataSerie.getMinY());
+		else if (numericMonitoringUnit.getCalculateCombobox().getSelectedItem().equals("Minimum")) {
+			if(numericMonitoringUnit.getPlayPause().isSelected())
+				numericMonitoringUnit.getCalcResult().setText("" + dataSerie.getMinY());
 		}
-		else if (monitoringUnit.getCalculateCombobox().getSelectedItem().equals("Average2")) {
+		else if (numericMonitoringUnit.getCalculateCombobox().getSelectedItem().equals("Average2")) {
 			Double res = calculateAverage(2);
 			if (res != null) {
-				if(monitoringUnit.getPlayPause().isSelected())
-					monitoringUnit.getCalcResult().setText(res.toString());
+				if(numericMonitoringUnit.getPlayPause().isSelected())
+					numericMonitoringUnit.getCalcResult().setText(res.toString());
 			}
 			else {
-				if(monitoringUnit.getPlayPause().isSelected())
-					monitoringUnit.getCalcResult().setText("Er");
+				if(numericMonitoringUnit.getPlayPause().isSelected())
+					numericMonitoringUnit.getCalcResult().setText("Er");
 			}
 		}
-		else if (monitoringUnit.getCalculateCombobox().getSelectedItem().equals("Average5")) {
+		else if (numericMonitoringUnit.getCalculateCombobox().getSelectedItem().equals("Average5")) {
 			Double res = calculateAverage(5);
 			if (res != null) {
-				if(monitoringUnit.getPlayPause().isSelected())
-					monitoringUnit.getCalcResult().setText(res.toString());
+				if(numericMonitoringUnit.getPlayPause().isSelected())
+					numericMonitoringUnit.getCalcResult().setText(res.toString());
 			}
 			else {
-				if(monitoringUnit.getPlayPause().isSelected())
-					monitoringUnit.getCalcResult().setText("Er");
+				if(numericMonitoringUnit.getPlayPause().isSelected())
+					numericMonitoringUnit.getCalcResult().setText("Er");
 			}
 		}
-		else if (monitoringUnit.getCalculateCombobox().getSelectedItem().equals("Average10")) {
+		else if (numericMonitoringUnit.getCalculateCombobox().getSelectedItem().equals("Average10")) {
 			Double res = calculateAverage(10);
 			if (res != null) {
-				if(monitoringUnit.getPlayPause().isSelected())
-					monitoringUnit.getCalcResult().setText(res.toString());
+				if(numericMonitoringUnit.getPlayPause().isSelected())
+					numericMonitoringUnit.getCalcResult().setText(res.toString());
 			}
 			else {
-				if(monitoringUnit.getPlayPause().isSelected())
-					monitoringUnit.getCalcResult().setText("Er");
+				if(numericMonitoringUnit.getPlayPause().isSelected())
+					numericMonitoringUnit.getCalcResult().setText("Er");
 			}
 		}
 	}
@@ -268,33 +249,14 @@ public class VariableBuffer implements SeriesChangeListener, ActionListener {
 		else
 			return null;
 	}
-	public int getCategoryPosition(String s) {
-		if (!monitoringUnit.getCategoryStrings().contains(s))
-			monitoringUnit.categoryAdd(s);
-		return monitoringUnit.getCategoryStrings().indexOf(s);
-	}
-	public void setNewCategoryData(int[] correction) {
-		if(variable.getType() != 'i') {
-			try {
-				for(int i = 0; i < dataSerie.getItemCount(); i++) {
-					dataSerie.update(i, (double) (dataSerie.getValue(i).intValue() - correction[dataSerie.getValue(i).intValue()]));
-				}
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
 	public void setVariableToIrregular() {
-		monitoringUnit.getChartDataset().removeSeries(dataSerie);
+		numericMonitoringUnit.getChartDataset().removeSeries(dataSerie);
 		dataSerie = null;
 		typeLabel.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/irregularTypeIcon.gif")));
 		typeLabel.setToolTipText("Irregular Variable Type: this variable show values that is neither numeric nor category variable Type.");
 		displayButton.setSelected(false);
-		if(monitoringUnit.getPanelType() == 'c')
-			monitoringUnit.categoryRemove();
 	}
 //////////////////////////////////////Getters and Setters////////////////////////////////////////////////////////
-
 	public TimeSeries getDataSerie() {
 		return dataSerie;
 	}
@@ -308,11 +270,11 @@ public class VariableBuffer implements SeriesChangeListener, ActionListener {
 	public void setVariable(Variable variable) {
 		this.variable = variable;
 	}
-	public MonitoringUnit getMonitoringUnit() {
-		return monitoringUnit;
+	public NumericMonitoringUnit getNumericMonitoringUnit() {
+		return numericMonitoringUnit;
 	}
-	public void setMonitoringUnit(MonitoringUnit monitoringUnit) {
-		this.monitoringUnit = monitoringUnit;
+	public void setNumericMonitoringUnit(NumericMonitoringUnit monitoringUnit) {
+		this.numericMonitoringUnit = monitoringUnit;
 	}
 	public JLabel getTypeLabel() {
 		return typeLabel;
@@ -342,11 +304,5 @@ public class VariableBuffer implements SeriesChangeListener, ActionListener {
 	}
 	public void setInCalc(boolean inCalc) {
 		this.inCalc = inCalc;
-	}
-	public int getCategoriesInVariable() {
-		return categoriesInVariable;
-	}
-	public void setCategoriesInVariable(int categoriesInVariable) {
-		this.categoriesInVariable = categoriesInVariable;
 	}
 }

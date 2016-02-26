@@ -1,42 +1,27 @@
 package br.UFSC.GRIMA.visual;
 
-import java.awt.BorderLayout;
-import java.awt.Checkbox;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.util.ArrayList;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.block.LineBorder;
 
 import br.UFSC.GRIMA.IO.Agent;
 import br.UFSC.GRIMA.IO.Camera;
 import br.UFSC.GRIMA.IO.MainExecution;
-import br.UFSC.GRIMA.dataStructure.Component;
 import br.UFSC.GRIMA.dataStructure.Device;
 import br.UFSC.GRIMA.dataStructure.Variable;
-import br.UFSC.GRIMA.operational.DeviceMonitoringSystem;
 import br.UFSC.GRIMA.operational.MonitoringUnit;
 
 public class MainInterface extends MainWindow implements ActionListener {
@@ -352,205 +337,12 @@ public class MainInterface extends MainWindow implements ActionListener {
 			panelMonitoringPanel.buttonPanel.add(panelButton, new GridBagConstraints(0, i, 1, 1, 0.0, 0.0,
 					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
 					new Insets(0, 0, 5, 5), 0, 0));
-			mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).setPanelButton(panelButton);
-			panelButton.addActionListener(mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i));
 			JPanel monitoringPanel = new JPanel();
-			monitoringPanel.setBorder(new TitledBorder(mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).getName()));
-			monitoringPanel.setLayout(new GridBagLayout());
-			((GridBagLayout)monitoringPanel.getLayout()).columnWidths = new int[] {0, 0, 0};
-			((GridBagLayout)monitoringPanel.getLayout()).rowHeights = new int[] {0, 0, 0};
-			((GridBagLayout)monitoringPanel.getLayout()).columnWeights = new double[] {0.0, 1.0E-4};
-			((GridBagLayout)monitoringPanel.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0E-4};
-			JLabel timeR = new JLabel("Time Range:");
-			JTextField timeName = new JTextField(mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).getTimeRange()[0] + "h: " + mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).getTimeRange()[1] + "m: " + mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).getTimeRange()[2] + "s");
-			timeName.setEditable(false);
-			JToggleButton playPause = new JToggleButton();
-			playPause.setSelected(true);
-			playPause.setIcon(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/pause.png")));
-			JButton settings = new JButton(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/Gears-icon.png")));
-			JLabel chartT = new JLabel("Chart Type: ");
-			JTextField chartName = new JTextField(mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).getChartType());
-			chartName.setEditable(false);
-			mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).initPanel(); //////////////////mudar o container posteriormente
-			mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).setMonitoringPanel(monitoringPanel);
+			mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).initPanel(monitoringPanel, panelButton); //////////////////mudar o container posteriormente
 			mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).refreshChart();
-			JPanel variables = new JPanel();
-			variables.setLayout(new GridBagLayout());
-			((GridBagLayout)variables.getLayout()).columnWidths = new int[] {0, 0};
-			((GridBagLayout)variables.getLayout()).rowHeights = new int[] {0, 0};
-			((GridBagLayout)variables.getLayout()).columnWeights = new double[] {1.0, 1.0, 1.0, 1.0, 1.0, 1.0E-4};
-			((GridBagLayout)variables.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
-			variables.setBorder(new TitledBorder(""));
-			JLabel typeField = new JLabel("Type ");
-			JLabel varField = new JLabel("Variable");
-			JLabel valueField = new JLabel("Value");
-			JLabel unitsField = new JLabel("Units");
-			JLabel displayField = new JLabel("Display");
-			variables.add(typeField, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-					new Insets(0, 0, 5, 5), 0, 0));
-			variables.add(varField, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-					new Insets(0, 0, 5, 5), 0, 0));
-			variables.add(valueField, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-					new Insets(0, 0, 5, 5), 0, 0));
-			variables.add(unitsField, new GridBagConstraints(4, 0, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-					new Insets(0, 0, 5, 5), 0, 0));
-			variables.add(displayField, new GridBagConstraints(5, 0, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-					new Insets(0, 0, 5, 5), 0, 0));
-			for(int j = 0; j < mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).getVariables().size(); j++) {
-				JLabel type = new JLabel();
-				if(mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).getVariables().get(j).getType() == '1') {
-					type = new JLabel(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/numberTypeIcon.png")));
-					type.setToolTipText("Numeric Variable Type: this variable shows its information through number values.");
-				}
-				else if(mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).getVariables().get(j).getType() == 'c') { 
-					type = new JLabel((new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/categoryTypeIcon.png"))));
-					type.setToolTipText("Category Variable Type: this variable shows its information through categories that describe some kind of information.");
-				}
-				else if(mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).getVariables().get(j).getType() == 'i') {
-					type = new JLabel(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/irregularTypeIcon.gif")));
-					type.setToolTipText("Irregular Variable Type: this variable shows values that is neither numeric nor category variable Type.");
-				}
-				else { 
-					type = new JLabel(new ImageIcon(getClass().getResource("/br/UFSC/GRIMA/images/nullTypeIcon.png")));
-					type.setToolTipText("Null Variable Type: this variable didn't show any register yet, so the application cannot identify its type.");
-				}
-				JLabel var;
-				if (mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).getVariables().get(j).getName() != null) 
-					var = new JLabel(mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).getVariables().get(j).getName());
-				else
-					var = new JLabel(mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).getVariables().get(j).getDataItemID());
-				JLabel twoPoints = new JLabel(":");
-				JTextField value = new JTextField();
-				value.setEditable(false);
-				JLabel units = new JLabel(mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).getVariables().get(j).getUnit());
-				JToggleButton display = new JToggleButton();
-				display.setSelected(true);
-				variables.add(type, new GridBagConstraints(0, j + 1, 1, 1, 0.0, 0.0,
-						GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-						new Insets(0, 0, 5, 5), 0, 0));
-				variables.add(var, new GridBagConstraints(1, j + 1, 1, 1, 0.0, 0.0,
-						GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-						new Insets(0, 0, 5, 5), 0, 0));
-				variables.add(twoPoints, new GridBagConstraints(2, j + 1, 1, 1, 0.0, 0.0,
-						GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-						new Insets(0, 0, 5, 5), 0, 0));
-				variables.add(value, new GridBagConstraints(3, j + 1, 1, 1, 0.0, 0.0,
-						GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-						new Insets(0, 0, 5, 5), 0, 0));
-				variables.add(units, new GridBagConstraints(4, j + 1, 1, 1, 0.0, 0.0,
-						GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-						new Insets(0, 0, 5, 5), 0, 0));
-				variables.add(display, new GridBagConstraints(5, j + 1, 1, 1, 0.0, 0.0,
-						GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-						new Insets(0, 0, 5, 5), 0, 0));
-				mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).getVariableBuffers().get(j).setTypeLabel(type);
-				mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).getVariableBuffers().get(j).setValueTextField(value);
-				mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).getVariableBuffers().get(j).setDisplayButton(display);
-				display.addActionListener(mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).getVariableBuffers().get(j));
-			}
-			mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).setPlayPause(playPause);
-			mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).setSettingButton(settings);
-			playPause.addActionListener(mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i));
-			settings.addActionListener(mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i));
-			JPanel calcPanel = new JPanel();
-			calcPanel.setLayout(new GridBagLayout());
-			((GridBagLayout)calcPanel.getLayout()).columnWidths = new int[] {0, 0};
-			((GridBagLayout)calcPanel.getLayout()).rowHeights = new int[] {0, 0};
-			((GridBagLayout)calcPanel.getLayout()).columnWeights = new double[] {0.0, 1.0E-4};
-			((GridBagLayout)calcPanel.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
-			JLabel calc = new JLabel("Calculate");
-			JLabel str = new JLabel("In"); 
-			JToggleButton start = new JToggleButton("Start");
-			JButton reset = new JButton("reset");
-			JComboBox<String> operationCombobox = new JComboBox<String>();
-			JComboBox<String> target = new JComboBox<String>();
-			
-			JLabel twoPoints = new JLabel(":");
-			JTextField field = new JTextField();
-			field.setEditable(false);
-			calcPanel.add(calc, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-					new Insets(0, 0, 5, 5), 0, 0));
-			calcPanel.add(str, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-					new Insets(0, 0, 5, 5), 0, 0));
-			calcPanel.add(start, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-					new Insets(0, 0, 5, 5), 0, 0));
-			calcPanel.add(reset, new GridBagConstraints(4, 0, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-					new Insets(0, 0, 5, 5), 0, 0));
-			calcPanel.add(operationCombobox, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-					new Insets(0, 0, 5, 5), 0, 0));
-			calcPanel.add(target, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-					new Insets(0, 0, 5, 5), 0, 0));
-			calcPanel.add(twoPoints, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-					new Insets(0, 0, 5, 5), 0, 0));
-			calcPanel.add(field, new GridBagConstraints(3, 1, 2, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-					new Insets(0, 0, 5, 5), 0, 0));
-			monitoringPanel.add(timeR, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-					new Insets(0, 0, 5, 5), 0, 0));
-			monitoringPanel.add(timeName, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-					new Insets(0, 0, 5, 5), 0, 0));
-			monitoringPanel.add(playPause, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-					new Insets(0, 0, 5, 5), 0, 0));
-			monitoringPanel.add(settings, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-					new Insets(0, 0, 5, 5), 0, 0));
-			monitoringPanel.add(chartT, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-					new Insets(0, 0, 5, 5), 0, 0));
-			monitoringPanel.add(chartName, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-					new Insets(0, 0, 5, 5), 0, 0));
-			monitoringPanel.add(variables, new GridBagConstraints(0, 3, 6, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-					new Insets(0, 0, 5, 5), 0, 0));
-			monitoringPanel.add(calcPanel, new GridBagConstraints(0, 4, 6, 1, 0.0, 0.0,
-					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-					new Insets(0, 0, 5, 5), 0, 0));
 			panelMonitoringPanel.panelSupport.add(monitoringPanel, new GridBagConstraints(i, 0, 1, 1, 0.0, 0.0,
 					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
 					new Insets(0, 0, 5, 5), 0, 0));
-			mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).setPlayPause(playPause);
-			////////calc Sets
-			operationCombobox.setModel(new DefaultComboBoxModel<String>());
-			operationCombobox.addItem("Integrate");
-			operationCombobox.addItem("Derivate");
-			operationCombobox.addItem("Maximum");
-			operationCombobox.addItem("Minimum");
-			operationCombobox.addItem("Average2");
-			operationCombobox.addItem("Average5");
-			operationCombobox.addItem("Average10");
-			target.setModel(new DefaultComboBoxModel<String>());
-			for(int j = 0; j < mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).getVariables().size(); j++) {
-				if (mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).getVariables().get(j).getName() != null)
-					target.addItem( mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).getVariables().get(j).getName());
-				else
-					target.addItem( mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).getVariables().get(j).getDataItemID());
-			}
-			mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).setCalculateCombobox(operationCombobox);
-			mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).setCalcTargetCombobox(target);
-			mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).setCalcResult(field);
-			mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).setStartPause(start);
-			mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i).setReset(reset);
-			target.setSelectedItem(0);
-			reset.addActionListener(mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i));
-			target.addActionListener(mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i));
-			operationCombobox.addActionListener(mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i));
-			start.addActionListener(mainExecution.getPanelMonitoringSystem().getMonitoringUnits().get(i));
 		}
 		revalidate();
 		repaint();

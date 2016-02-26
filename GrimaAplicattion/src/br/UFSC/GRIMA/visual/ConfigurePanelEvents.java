@@ -8,7 +8,9 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 import br.UFSC.GRIMA.dataStructure.Device;
+import br.UFSC.GRIMA.operational.CategoryMonitoringUnit;
 import br.UFSC.GRIMA.operational.MonitoringUnit;
+import br.UFSC.GRIMA.operational.NumericMonitoringUnit;
 
 public class ConfigurePanelEvents extends ConfigurePanelWindow implements ActionListener {
 	private MonitoringUnit monitoringUnit;
@@ -112,7 +114,10 @@ public class ConfigurePanelEvents extends ConfigurePanelWindow implements Action
 				}
 				i++;
 			}
-			monitoringUnit.getPanelMonitoringSystem().getMonitoringUnits().add(new MonitoringUnit(defaultName, monitoringUnit.getPanelMonitoringSystem(), monitoringUnit.getTimeRange(), monitoringUnit.getChartType(), monitoringUnit.getVariables(), monitoringUnit.getPanelType()));
+			if((monitoringUnit.getChartType().equals("LineChart")) || (monitoringUnit.getChartType().equals("AreaChart")))
+				monitoringUnit.getPanelMonitoringSystem().getMonitoringUnits().add(new NumericMonitoringUnit(defaultName, monitoringUnit.getPanelMonitoringSystem(), monitoringUnit.getTimeRange(), monitoringUnit.getChartType(), monitoringUnit.getVariables(), monitoringUnit.getPanelType()));
+			if(monitoringUnit.getChartType().equals("StepLineChart"))
+				monitoringUnit.getPanelMonitoringSystem().getMonitoringUnits().add(new CategoryMonitoringUnit(defaultName, monitoringUnit.getPanelMonitoringSystem(), monitoringUnit.getTimeRange(), monitoringUnit.getChartType(), monitoringUnit.getVariables(), monitoringUnit.getPanelType()));
 			this.dispose();
 		}
 		else if(e.getSource().equals(cancelButton))
