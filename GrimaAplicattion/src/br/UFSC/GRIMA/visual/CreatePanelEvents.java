@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import br.UFSC.GRIMA.dataStructure.*;
 import br.UFSC.GRIMA.operational.CategoryMonitoringUnit;
 import br.UFSC.GRIMA.operational.NumericMonitoringUnit;
+import br.UFSC.GRIMA.operational.TwoDMonitoringUnit;
 
 public class CreatePanelEvents extends CreatePanelWindow implements ActionListener{
 	private MainInterface mainInterface;
@@ -299,7 +300,8 @@ public class CreatePanelEvents extends CreatePanelWindow implements ActionListen
 						mainInterface.getMainExecution().getPanelMonitoringSystem().getMonitoringUnits().add(new NumericMonitoringUnit(nameField.getText(), mainInterface.getMainExecution().getPanelMonitoringSystem(), timeRange, (String) charTypeComboBox.getSelectedItem(), this.variables, variables.get(0).getType()));
 					else if (charTypeComboBox.getSelectedItem().equals("StepLineChart")) 
 						mainInterface.getMainExecution().getPanelMonitoringSystem().getMonitoringUnits().add(new CategoryMonitoringUnit(nameField.getText(), mainInterface.getMainExecution().getPanelMonitoringSystem(), timeRange, (String) charTypeComboBox.getSelectedItem(), this.variables, variables.get(0).getType()));
-							
+					else if (charTypeComboBox.getSelectedItem().equals("2DLineChart"))
+						mainInterface.getMainExecution().getPanelMonitoringSystem().getMonitoringUnits().add(new TwoDMonitoringUnit(nameField.getText(), mainInterface.getMainExecution().getPanelMonitoringSystem(), timeRange, (String) charTypeComboBox.getSelectedItem(), this.variables, variables.get(0).getType(), variables.get(0), variables.get(1)));
 					mainInterface.setMenuConfigurePanel();
 					this.dispose();
 				}
