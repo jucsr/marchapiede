@@ -21,6 +21,7 @@ public class VariableRegister implements SeriesChangeListener {
 	public VariableRegister(Variable variable, TwoDMonitoringUnit monitoringUnit, JLabel typeLabel, JTextField valueTextField) {
 		// TODO Auto-generated constructor stub
 		setVariable(variable);
+		monitoringUnit.getPanelMonitoringSystem().getController().getIoControl().getLoadExecution().addToVariableList(variable);
 		setTwoDMonitoringUnit(monitoringUnit);
 		setTypeLabel(typeLabel);
 		setValueTextField(valueTextField);

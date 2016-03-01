@@ -68,88 +68,84 @@ public class TwoDMonitoringUnit extends MonitoringUnit implements SeriesChangeLi
 		else if(e.getSource().equals(yAxis.getDataSerie())) {
 			if(xLoad != null) {
 				timeRegister.add(yAxis.getDataSerie().getTimePeriod((yAxis.getDataSerie().getItemCount() - 1)));
-				valueRegister.add(yAxis.getDataSerie().getValue(yAxis.getDataSerie().getItemCount() - 1), xLoad);
+				valueRegister.add(xLoad, yAxis.getDataSerie().getValue(yAxis.getDataSerie().getItemCount() - 1));
 				xLoad = null;
 			}
 			else 
 				yLoad = xAxis.getDataSerie().getValue(xAxis.getDataSerie().getItemCount() - 1).doubleValue();
 		}
-		System.out.println(valueRegister.getItemCount());
-//		if (((variable.getType() == '1') || (variable.getType() == 'c')) && (serie.getItemCount() > 1)) {
-//			XMLGregorianCalendar iniTime =(XMLGregorianCalendar) variable.getComponent().getDevice().getAgent().getCreationTime().clone();
-//			int second;
-//			int minute;
-//			int hour;
-//			if(numericMonitoringUnit != null) {
-//				second = iniTime.getSecond() - numericMonitoringUnit.getTimeRange()[2];
-//				minute = iniTime.getMinute() - numericMonitoringUnit.getTimeRange()[1];
-//				hour = iniTime.getHour() - numericMonitoringUnit.getTimeRange()[0];
-//			}
-//			else {
-//				second = iniTime.getSecond() - twoDMonitoringUnit.getTimeRange()[2];
-//				minute = iniTime.getMinute() - twoDMonitoringUnit.getTimeRange()[1];
-//				hour = iniTime.getHour() - twoDMonitoringUnit.getTimeRange()[0];
-//			}
-//			int day = iniTime.getDay();
-//			int month = iniTime.getMonth();
-//			int year = iniTime.getYear();
-//			if (second < 0) {
-//				second = second + 60;
-//				minute--;
-//			}
-//			if (minute < 0) {
-//				minute = minute + 60;
-//				hour--;
-//			}
-//			if (hour < 0) {
-//				hour = hour + 24;
-//				day--;
-//			}
-//			if (day < 1) {
-//				XMLGregorianCalendar correction = iniTime;
-//				try {
-//					correction.setMonth(iniTime.getMonth() - 1);
-//				}
-//				catch (IllegalArgumentException e) {
-//					correction.setYear(iniTime.getYear() - 1);
-//					correction.setMonth(1);
-//				}
-//				day = day + correction.toGregorianCalendar().getActualMaximum(Calendar.DAY_OF_MONTH);
-//				month--;
-//			}
-//			if (month < 1) {
-//				month = month + 12;
-//				year--;
-//			}
-//			iniTime.setTime(hour, minute, second);
-//			iniTime.setDay(day);
-//			iniTime.setMonth(month);
-//			iniTime.setYear(year);
-//			Millisecond inicialTime = new Millisecond(iniTime.toGregorianCalendar().getTime());
-//			for (int j = 0; j < serie.getItemCount() - 1;j++) {
-//				if (inicialTime.compareTo(serie.getTimePeriod(j)) <= 0) {
-//					break;
-//				}
-//				else if (inicialTime.compareTo(serie.getTimePeriod(j+1)) < 0) {
-//					if ((variable.getType() == '1') && (serie.getValue(j) != null) && (serie.getValue(j + 1) != null)) {
-//						//faz uma aproximacao linear em t0
-//						double y1 = serie.getValue(j).doubleValue();
-//						double y2 = serie.getValue(j+1).doubleValue();
-//						long x0 = inicialTime.getLastMillisecond();
-//						long x1 = serie.getTimePeriod(j).getLastMillisecond();
-//						long x2 = serie.getTimePeriod(j+1).getLastMillisecond();
-//						double a =  (double) ((y2 - y1 )/(x2 - x1));
-//						double b = (double) (y1 - a*x1);
-//						double yn = a*x0 + b;
-//						serie.addOrUpdate(inicialTime, yn);
-//					}
-//					else {
-//						serie.addOrUpdate(inicialTime, serie.getValue(j));
-//					}
-//					serie.delete(0, j);
-//				}
-//			}
-//		}
+		///////////////////////descarta valores intermediários//////////////////////////////////////////////
+		if (valueRegister.getItemCount() > 1) {
+			if((valueRegister.getDataItem(valueRegister.getItemCount() - 1) == null)) {
+				if (valueRegister.getDataItem(valueRegister.getItemCount() - 2) == null) {
+					valueRegister.remove(valueRegister.getItemCount() - 2);
+					timeRegister.remove(timeRegister.size() - 2);
+				}
+			}
+			else if(valueRegister.getDataItem(valueRegister.getItemCount() - 1).equals(valueRegister.getDataItem(valueRegister.getItemCount() - 2))) {
+				valueRegister.remove(valueRegister.getItemCount() - 2);
+				timeRegister.remove(timeRegister.size() - 2);
+			}
+		}
+		/////////////////////////discart old values//////////////////////////////////////////////////////////////////
+		
+		if (((xSelected.getType() == '1') && (ySelected.getType() == '1')) && (valueRegister.getItemCount() > 1)) {
+			XMLGregorianCalendar iniTime =(XMLGregorianCalendar) xSelected.getComponent().getDevice().getAgent().getCreationTime().clone();
+			int second;
+			int minute;
+			int hour;
+			second = iniTime.getSecond() - getTimeRange()[2];
+			minute = iniTime.getMinute() - getTimeRange()[1];
+			hour = iniTime.getHour() - getTimeRange()[0];
+			int day = iniTime.getDay();
+			int month = iniTime.getMonth();
+			int year = iniTime.getYear();
+			if (second < 0) {
+				second = second + 60;
+				minute--;
+			}
+			if (minute < 0) {
+				minute = minute + 60;
+				hour--;
+			}
+			if (hour < 0) {
+				hour = hour + 24;
+				day--;
+			}
+			if (day < 1) {
+				XMLGregorianCalendar correction = iniTime;
+				try {
+					correction.setMonth(iniTime.getMonth() - 1);
+				}
+				catch (IllegalArgumentException ex) {
+					correction.setYear(iniTime.getYear() - 1);
+					correction.setMonth(1);
+				}
+				day = day + correction.toGregorianCalendar().getActualMaximum(Calendar.DAY_OF_MONTH);
+				month--;
+			}
+			if (month < 1) {
+				month = month + 12;
+				year--;
+			}
+			iniTime.setTime(hour, minute, second);
+			iniTime.setDay(day);
+			iniTime.setMonth(month);
+			iniTime.setYear(year);
+			Millisecond inicialTime = new Millisecond(iniTime.toGregorianCalendar().getTime());
+			for (int j = 0; j < timeRegister.size() - 1;j++) {
+				if (inicialTime.compareTo(timeRegister.get(j)) <= 0) {
+					break;
+				}
+				else if (inicialTime.compareTo(timeRegister.get(j+1)) < 0) {
+					valueRegister.delete(0, j);
+					for(int i = 0; i <= j; i++)
+						timeRegister.remove(0);
+				}
+			}
+		}
+		if (valueRegister.getItemCount() > 1)
+			System.out.println("valores: " + valueRegister.getItemCount() + ", tempos: " + timeRegister.size());
 	}
 
 	@Override
@@ -161,7 +157,7 @@ public class TwoDMonitoringUnit extends MonitoringUnit implements SeriesChangeLi
 	@Override
 	public void freezeChart(boolean freeze) {
 		// TODO Auto-generated method stub
-		chart.setNotify(false);
+		chart.setNotify(freeze);
 	}
 
 	@Override
@@ -264,6 +260,7 @@ public class TwoDMonitoringUnit extends MonitoringUnit implements SeriesChangeLi
 			}
 			valueRegister.add(xSelected.getDataSerie().getValue(xIndex), ySelected.getDataSerie().getValue(yIndex));
 			while((xIndex < xSelected.getDataSerie().getItemCount()) && (yIndex < ySelected.getDataSerie().getItemCount())) {
+				System.out.println(valueRegister.getX(valueRegister.getItemCount() - 1) + ", " + valueRegister.getY(valueRegister.getItemCount() - 1));
 				int comp = ((Millisecond)(xSelected.getDataSerie().getTimePeriod(xIndex))).compareTo(ySelected.getDataSerie().getTimePeriod(yIndex));
 				if(comp == 0) {
 					timeRegister.add(xSelected.getDataSerie().getTimePeriod(xIndex));
