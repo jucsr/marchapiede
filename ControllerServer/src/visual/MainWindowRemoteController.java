@@ -133,6 +133,7 @@ public class MainWindowRemoteController extends JFrame {
 					//---- label4 ----
 					label4.setText("FirmWare");
 					label4.setFont(new Font("Constantia", Font.BOLD, 12));
+					label4.setVisible(false);
 					panel3.add(label4, new GridBagConstraints(1, 6, 1, 1, 0.0, 0.0,
 						GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 						new Insets(0, 0, 0, 0), 0, 0));
@@ -140,6 +141,7 @@ public class MainWindowRemoteController extends JFrame {
 					//---- firmWareTextField ----
 					firmWareTextField.setText("GRBL");
 					firmWareTextField.setFont(new Font("Constantia", Font.BOLD, 12));
+					firmWareTextField.setVisible(false);
 					panel3.add(firmWareTextField, new GridBagConstraints(3, 6, 1, 1, 0.0, 0.0,
 						GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL,
 						new Insets(0, 0, 0, 0), 0, 0));
@@ -157,6 +159,9 @@ public class MainWindowRemoteController extends JFrame {
 
 				//======== scrollPane1 ========
 				{
+
+					//---- textPane1 ----
+					textPane1.setFont(new Font("Geometr212 BkCn BT", Font.PLAIN, 12));
 					scrollPane1.setViewportView(textPane1);
 				}
 				panel4.add(scrollPane1, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0,
