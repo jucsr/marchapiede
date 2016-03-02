@@ -1902,6 +1902,20 @@ implements KeyListener, ControllerListener, MainWindowAPI {
 		//saidaC.close();
 		//client.close();
     }
+    
+    public void sendRemoteObject(Object obj) throws NumberFormatException, UnknownHostException, IOException
+    {
+    	//client = new Socket(ipRemoteTextField.getText(), Integer.parseInt(portRemoteTextField.getText()));
+		
+    	PrintStream saidaC = new PrintStream(client.getOutputStream());
+		saidaC.flush();
+		saidaC.println(obj);		
+		System.out.println(obj.toString());
+		while(!autotizacao_envio());
+		//saidaC.close();
+		//client.close();
+    }
+
     public boolean autotizacao_envio() throws IOException{
     	BufferedReader entrada = new BufferedReader(new InputStreamReader(client.getInputStream()));
 		while(!entrada.ready());
@@ -2253,7 +2267,8 @@ implements KeyListener, ControllerListener, MainWindowAPI {
 				e2.printStackTrace();
 			}
     		try {
-				sendRemoteString(String.valueOf(processedCommandLines.size()));
+    			Object obj = (Object)processedCommandLines;
+				sendRemoteObject(obj);
 			} catch (NumberFormatException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -2264,20 +2279,6 @@ implements KeyListener, ControllerListener, MainWindowAPI {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-    		for(int i = 0; i < processedCommandLines.size() ; i++){
-    			try {
-					sendRemoteString(processedCommandLines.get(i));
-				} catch (NumberFormatException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (UnknownHostException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-    		}
     	}
     	else{
     		
