@@ -17,13 +17,15 @@ public class VariableRegister implements SeriesChangeListener {
 	//////////panelComponents
 	private JLabel typeLabel;
 	private JTextField valueTextField;
+	private JLabel displayLabel;
 /////////////////////////////////////////Constructor////////////////////////////////////////////////////
-	public VariableRegister(Variable variable, TwoDMonitoringUnit monitoringUnit, JLabel typeLabel, JTextField valueTextField) {
+	public VariableRegister(Variable variable, TwoDMonitoringUnit monitoringUnit, JLabel typeLabel, JTextField valueTextField, JLabel displayLabel) {
 		// TODO Auto-generated constructor stub
 		setVariable(variable);
 		monitoringUnit.getPanelMonitoringSystem().getController().getIoControl().getLoadExecution().addToVariableList(variable);
 		setTwoDMonitoringUnit(monitoringUnit);
 		setTypeLabel(typeLabel);
+		setDisplayLabel(displayLabel);
 		setValueTextField(valueTextField);
 		setVarType(variable.getType());
 		variable.getDataSerie().addChangeListener(this);
@@ -74,6 +76,12 @@ public class VariableRegister implements SeriesChangeListener {
 	}
 	public void setVarType(char varType) {
 		this.varType = varType;
+	}
+	public JLabel getDisplayLabel() {
+		return displayLabel;
+	}
+	public void setDisplayLabel(JLabel displayLabel) {
+		this.displayLabel = displayLabel;
 	}
 	
 }

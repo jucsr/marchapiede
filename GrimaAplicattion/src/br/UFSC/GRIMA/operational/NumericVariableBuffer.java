@@ -28,6 +28,7 @@ public class NumericVariableBuffer implements SeriesChangeListener, ActionListen
 	private JLabel typeLabel;
 	private JTextField valueTextField;
 	private JToggleButton displayButton;
+	private JLabel displayLabel;
 /////////////////////////////////////////Constructor///////////////////////////////////////////////////////////////
 	public NumericVariableBuffer(Variable variable, NumericMonitoringUnit monitoringUnit) {
 		setVariable(variable);
@@ -349,5 +350,11 @@ public class NumericVariableBuffer implements SeriesChangeListener, ActionListen
 	}
 	public void setTwoDMonitoringUnit(TwoDMonitoringUnit twoDMonitoringUnit) {
 		this.twoDMonitoringUnit = twoDMonitoringUnit;
+	}
+	public JLabel getDisplayLabel() {
+		return displayLabel;
+	}
+	public void setDisplayLabel(JLabel displayLabel) {
+		this.displayLabel = displayLabel;
 	}
 }
