@@ -181,22 +181,27 @@ public class ServerController extends MainWindowRemoteController {
 		saida.println("ok");
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void preparar_recebimento() throws IOException{
 			commands.removeAll(commands);
-			BufferedReader entradaT = new BufferedReader(new InputStreamReader(client.getInputStream()));
-			while(!entradaT.ready());
-			String msgS = entradaT.readLine().toString();
-			size = Integer.parseInt(msgS);
+			//BufferedReader entradaT = new BufferedReader(new InputStreamReader(client.getInputStream()));
+			//while(!entradaT.ready());
+			//String msgS = entradaT.readLine().toString();
+			//size = Integer.parseInt(msgS);
+			//autorizar_envio();
+			//System.out.println(size);
+			BufferedReader entrada = new BufferedReader(new InputStreamReader(client.getInputStream()));
+			while(!entrada.ready());
+			Object obj = (Object)entrada.readLine();
 			autorizar_envio();
-			System.out.println(size);	
-			for(int i = 0 ; i < size ; i++){
-				BufferedReader entrada = new BufferedReader(new InputStreamReader(client.getInputStream()));
-				while(!entrada.ready());
-				String msg = entradaT.readLine().toString();
-				System.out.println(msg);
-				autorizar_envio();
-				commands.add(msg);
-			}	
+			String temp =  obj.toString();
+			temp = temp.substring(1,temp.length() - 1);
+			String [] tempList = temp.split(",");
+			for(int i = 0 ; i< tempList.length; i++)
+			{
+				commands.add(tempList[i]);
+				System.out.println(tempList[i]);
+			}
 	}
 	
 	private void opencloseButtonActionPerformed(java.awt.event.ActionEvent evt){
