@@ -74,7 +74,7 @@ public class TwoDMonitoringUnit extends MonitoringUnit implements SeriesChangeLi
 				xLoad = null;
 			}
 			else 
-				yLoad = xAxis.getDataSerie().getValue(xAxis.getDataSerie().getItemCount() - 1).doubleValue();
+				yLoad = yAxis.getDataSerie().getValue(yAxis.getDataSerie().getItemCount() - 1).doubleValue();
 		}
 		///////////////////////descarta valores intermediários//////////////////////////////////////////////
 		if (valueRegister.getItemCount() > 1) {
@@ -92,6 +92,7 @@ public class TwoDMonitoringUnit extends MonitoringUnit implements SeriesChangeLi
 		/////////////////////////discart old values//////////////////////////////////////////////////////////////////
 		
 		if (((xSelected.getType() == '1') && (ySelected.getType() == '1')) && (valueRegister.getItemCount() > 1)) {
+			System.out.println(valueRegister.getX(valueRegister.getItemCount() - 1) + ", " + valueRegister.getY(valueRegister.getItemCount() - 1));
 			XMLGregorianCalendar iniTime =(XMLGregorianCalendar) xSelected.getComponent().getDevice().getAgent().getCreationTime().clone();
 			int second;
 			int minute;
@@ -146,105 +147,32 @@ public class TwoDMonitoringUnit extends MonitoringUnit implements SeriesChangeLi
 				}
 			}
 		}
+		
 	}
 
 	@Override
 	public void actionPerformed2(ActionEvent e) {
 		// TODO Auto-generated method stub
-		xSelected.getDataSerie().removeChangeListener(xAxis);
-		ySelected.getDataSerie().removeChangeListener(yAxis);
-		JLabel typeLabel1;
-		JTextField valueTextField1;
-		JLabel displayLabel1;
-		JLabel typeLabel2;
-		JTextField valueTextField2;
-		JLabel displayLabel2;
-		if (e.getSource().equals(xCombobox)) {
-			if (xCombobox.getSelectedItem().equals(yComboBox.getSelectedItem())) {
-				if(xSelected.getName() != null)
-					yComboBox.setSelectedItem(xSelected.getName());
-				else
-					yComboBox.setSelectedItem(xSelected.getDataItemID());
-				typeLabel1 = xAxis.getTypeLabel();
-				valueTextField1 = xAxis.getValueTextField();
-				displayLabel1 = xAxis.getDisplayLabel();
-				typeLabel2 = yAxis.getTypeLabel();
-				valueTextField2 = yAxis.getValueTextField();
-				displayLabel2 = yAxis.getDisplayLabel();
-				Variable newX = ySelected;
-				setySelected(xSelected);
-				setxSelected(newX);
-				setxAxis(new NumericVariableBuffer(xSelected, this));
-				setyAxis(new NumericVariableBuffer(ySelected, this));
-				xAxis.setTypeLabel(typeLabel2);
-				xAxis.setValueTextField(valueTextField2);
-				xAxis.setDisplayLabel(displayLabel2);
-				yAxis.setTypeLabel(typeLabel1);
-				yAxis.setValueTextField(valueTextField1);
-				yAxis.setDisplayLabel(displayLabel1);
-			} else {
-				typeLabel1 = xAxis.getTypeLabel();
-				valueTextField1 = xAxis.getValueTextField();
-				displayLabel1 = xAxis.getDisplayLabel();
-				VariableRegister reg = getRegisterByName((String)xCombobox.getSelectedItem());
-				typeLabel2 = reg.getTypeLabel();
-				valueTextField2 = reg.getValueTextField();
-				displayLabel2 = reg.getDisplayLabel();
-				setxSelected(getVariableByName((String)xCombobox.getSelectedItem()));
-				variableRegisters.remove(reg);
-				variableRegisters.add(new VariableRegister(xAxis.getVariable(), this, typeLabel1, valueTextField1, displayLabel1));
-				setxAxis(new NumericVariableBuffer(xSelected, this));
-				xAxis.setTypeLabel(typeLabel2);
-				xAxis.setValueTextField(valueTextField2);
-				xAxis.setDisplayLabel(displayLabel2);
-			}
+		if(xSelected.equals(getVariableByName((String)xCombobox.getSelectedItem())) && ySelected.equals(getVariableByName((String)yComboBox.getSelectedItem())))
+			return;
+		else if(xSelected.equals(getVariableByName((String)yComboBox.getSelectedItem())) || ySelected.equals(getVariableByName((String)xCombobox.getSelectedItem()))) {
+			Variable newX = ySelected;
+			setySelected(xSelected);
+			setxSelected(newX);
 		}
-		if (e.getSource().equals(yComboBox)) {
-			if (xCombobox.getSelectedItem().equals(yComboBox.getSelectedItem())) {
-				if(xSelected.getName() != null)
-					xCombobox.setSelectedItem(xSelected.getName());
-				else
-					xCombobox.setSelectedItem(xSelected.getDataItemID());
-				typeLabel1 = xAxis.getTypeLabel();
-				valueTextField1 = xAxis.getValueTextField();
-				displayLabel1 = xAxis.getDisplayLabel();
-				typeLabel2 = yAxis.getTypeLabel();
-				valueTextField2 = yAxis.getValueTextField();
-				displayLabel2 = yAxis.getDisplayLabel();
-				Variable newX = ySelected;
-				setySelected(xSelected);
-				setxSelected(newX);
-				setxAxis(new NumericVariableBuffer(xSelected, this));
-				setyAxis(new NumericVariableBuffer(ySelected, this));
-				xAxis.setTypeLabel(typeLabel2);
-				xAxis.setValueTextField(valueTextField2);
-				xAxis.setDisplayLabel(displayLabel2);
-				yAxis.setTypeLabel(typeLabel1);
-				yAxis.setValueTextField(valueTextField1);
-				yAxis.setDisplayLabel(displayLabel1);
-			} 
-			else {
-				typeLabel1 = yAxis.getTypeLabel();
-				valueTextField1 = yAxis.getValueTextField();
-				displayLabel1 = yAxis.getDisplayLabel();
-				VariableRegister reg = getRegisterByName((String)yComboBox.getSelectedItem());
-				typeLabel2 = reg.getTypeLabel();
-				valueTextField2 = reg.getValueTextField();
-				displayLabel2 = reg.getDisplayLabel();
-				setxSelected(getVariableByName((String)yComboBox.getSelectedItem()));
-				variableRegisters.remove(reg);
-				variableRegisters.add(new VariableRegister(yAxis.getVariable(), this, typeLabel1, valueTextField1, displayLabel1));
-				setxAxis(new NumericVariableBuffer(ySelected, this));
-				yAxis.setTypeLabel(typeLabel2);
-				yAxis.setValueTextField(valueTextField2);
-				yAxis.setDisplayLabel(displayLabel2);
-			}
-		}
-		init2DSerie();
-		xSelected.getDataSerie().addChangeListener(xAxis);
-		ySelected.getDataSerie().addChangeListener(yAxis);
-		chartDataset.removeAllSeries();
-		chartDataset.addSeries(valueRegister);
+		else if(e.getSource().equals(xCombobox))
+			setxSelected(getVariableByName((String)xCombobox.getSelectedItem()));
+		else
+			setySelected(getVariableByName((String)yComboBox.getSelectedItem()));
+		JPanel monitoringPanel = getMonitoringPanel();
+		JToggleButton panelButton = getPanelButton();
+		monitoringPanel.removeAll();
+		
+		destroyPanelInstance();
+		initPanel(monitoringPanel, panelButton);
+		refreshChart();
+		getPanelMonitoringSystem().getController().getMainInterface().revalidate();
+		getPanelMonitoringSystem().getController().getMainInterface().repaint();
 	}
 	public Variable getVariableByName(String name) {
 		for(int i = 0; i < getVariables().size(); i++) {
@@ -253,13 +181,7 @@ public class TwoDMonitoringUnit extends MonitoringUnit implements SeriesChangeLi
 		}
 		return null;
 	}
-	public VariableRegister getRegisterByName(String name) {
-		for(int i = 0; i < variableRegisters.size(); i++) {
-			if(variableRegisters.get(i).getVariable().getName().equals(name) || variableRegisters.get(i).getVariable().getDataItemID().equals(name))
-				return variableRegisters.get(i);
-		}
-		return null;
-	}
+
 	@Override
 	public void freezeChart(boolean freeze) {
 		// TODO Auto-generated method stub
@@ -373,24 +295,19 @@ public class TwoDMonitoringUnit extends MonitoringUnit implements SeriesChangeLi
 				GridBagConstraints.CENTER, GridBagConstraints.BOTH,
 				new Insets(0, 0, 5, 5), 0, 0));
 	}
-	public void changeAxis() {
-		setxAxis(new NumericVariableBuffer(xSelected, this));
-		setxAxis(new NumericVariableBuffer(ySelected, this));
-		init2DSerie();
-		xSelected.getDataSerie().addChangeListener(xAxis);
-		ySelected.getDataSerie().addChangeListener(yAxis);
-		chartDataset.removeAllSeries();
-		chartDataset.addSeries(valueRegister);
-	}
 	@Override
 	public void destroyPanelInstance() {
 		// TODO Auto-generated method stub
 		try {
 			xSelected.getDataSerie().removeChangeListener(xAxis);
 			ySelected.getDataSerie().removeChangeListener(yAxis);
+			xAxis.getDataSerie().removeChangeListener(this);
+			yAxis.getDataSerie().removeChangeListener(this);
 			for(int i = 0; i < variableRegisters.size(); i++) 
 				variableRegisters.get(i).getVariable().getDataSerie().removeChangeListener(variableRegisters.get(i));
 		}catch(Exception e){}
+		setTimeRegister(null);
+		setValueRegister(null);
 		setVariableRegisters(null);
 		setChartPanel(null);
 		setChart(null);
@@ -401,6 +318,8 @@ public class TwoDMonitoringUnit extends MonitoringUnit implements SeriesChangeLi
 		setyAxis(null);
 		setxCombobox(null);
 		setyComboBox(null);
+		xLoad = null;
+		yLoad = null;
 	}
 	
 	public void init2DSerie() {
