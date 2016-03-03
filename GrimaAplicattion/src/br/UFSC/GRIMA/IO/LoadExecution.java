@@ -13,6 +13,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesDataItem;
 
 import br.UFSC.GRIMA.application.entities.devices.MTConnectDevicesType;
 import br.UFSC.GRIMA.application.entities.streams.MTConnectStreamsType;
@@ -233,26 +234,74 @@ public class LoadExecution implements Runnable {
 							time = currentObject.getStreams().getDeviceStream().get(devPosition).getComponentStream().get(comPosition).getCondition().getCondition().get(varPosition).getValue().getTimestamp();
 						}
 						time.setTimezone(currentObject.getHeader().getCreationTime().getTimezone());
-						Millisecond timestamp = new Millisecond(time.toGregorianCalendar().getTime());
+						XMLGregorianCalendar iniTime = (XMLGregorianCalendar) currentObject.getHeader().getCreationTime().clone();
+						int second = iniTime.getSecond() - variableList.get(i).getTimeRange()[2];
+						int minute = iniTime.getMinute() - variableList.get(i).getTimeRange()[1];
+						int hour = iniTime.getHour() - variableList.get(i).getTimeRange()[0];
+						int day = iniTime.getDay();
+						int month = iniTime.getMonth();
+						int year = iniTime.getYear();
+						if (second < 0) {
+							second = second + 60;
+							minute--;
+						}
+						if (minute < 0) {
+							minute = minute + 60;
+							hour--;
+						}
+						if (hour < 0) {
+							hour = hour + 24;
+							day--;
+						}
+						if (day < 1) {
+							XMLGregorianCalendar correction = iniTime;
+							try {
+								correction.setMonth(iniTime.getMonth() - 1);
+							}
+							catch (IllegalArgumentException e) {
+								correction.setYear(iniTime.getYear() - 1);
+								correction.setMonth(1);
+							}
+							day = day + correction.toGregorianCalendar().getActualMaximum(Calendar.DAY_OF_MONTH);
+							month--;
+						}
+						if (month < 1) {
+							month = month + 12;
+							year--;
+						}
+						Millisecond creationTime = new Millisecond(iniTime.toGregorianCalendar().getTime());    ////////////////////creationTime
+						iniTime.setTime(hour, minute, second);
+						iniTime.setDay(day);
+						iniTime.setMonth(month);
+						iniTime.setYear(year);
+						Millisecond inicialTime = new Millisecond(iniTime.toGregorianCalendar().getTime());     /////////////////////timeStamp init time value
+						Millisecond timestamp = new Millisecond(time.toGregorianCalendar().getTime());			/////////////////////register time value
+						boolean tolerable = (Math.abs(timestamp.getFirstMillisecond() - creationTime.getFirstMillisecond()) <= 1000);
 						if(variableList.get(i).getType() == 'n') {
 							if(!value.toUpperCase().equals("UNAVAILABLE")) {
 								variableList.get(i).typeIdentification(value);
 							}
 						}
-						if(variableList.get(i).getDataSerie().isEmpty())
-							timestamp = new Millisecond (currentObject.getHeader().getCreationTime().toGregorianCalendar().getTime());
 						if(variableList.get(i).getType() == '1') {
 							if(value.toUpperCase().equals("UNAVAILABLE")) {
-								variableList.get(i).getDataSerie().addOrUpdate(timestamp, null);
+								variableList.get(i).getDataSerie().addOrUpdate(creationTime, null);
 							}
 							else {
 								try {
 									double numValue = ((Double)(Double.parseDouble(value.replace(',', '.')))).doubleValue();
-									if(!variableList.get(i).getDataSerie().isEmpty()) {
-										if (variableList.get(i).getDataSerie().getValue(variableList.get(i).getDataSerie().getItemCount() - 1).equals(numValue)) 
-											timestamp = new Millisecond (currentObject.getHeader().getCreationTime().toGregorianCalendar().getTime());
+									if(variableList.get(i).getDataSerie().isEmpty()) {
+										if((timestamp.compareTo(inicialTime) > 0) && (timestamp.compareTo(creationTime) < 0))
+											variableList.get(i).getDataSerie().addOrUpdate(timestamp, numValue);
+										else if(timestamp.compareTo(inicialTime) < 0) {
+											variableList.get(i).getDataSerie().addOrUpdate(inicialTime, numValue);
+										}
+										variableList.get(i).getDataSerie().setNotify(true);
+										variableList.get(i).getDataSerie().setNotify(false);
 									}
-									variableList.get(i).getDataSerie().addOrUpdate(timestamp, numValue);
+									if(tolerable) 
+										variableList.get(i).getDataSerie().addOrUpdate(timestamp, numValue);
+									else
+										variableList.get(i).getDataSerie().addOrUpdate(creationTime, numValue);
 								}
 								catch (Exception e) {
 									variableList.get(i).setVariableToIrregular();
@@ -262,83 +311,53 @@ public class LoadExecution implements Runnable {
 						}
 						else if(variableList.get(i).getType() == 'c') {
 							if(value.toUpperCase().equals("UNAVAILABLE")) {
-								variableList.get(i).getDataSerie().addOrUpdate(timestamp, null);
+								variableList.get(i).getDataSerie().addOrUpdate(creationTime, null);
 							}
-							else if(!variableList.get(i).getDataSerie().isEmpty()) {
-								if (value.equals(variableList.get(i).getCategoryStrings().get((variableList.get(i).getDataSerie().getValue(variableList.get(i).getDataSerie().getItemCount() - 1).intValue()))));
-									timestamp = new Millisecond (currentObject.getHeader().getCreationTime().toGregorianCalendar().getTime());
-							}
-							variableList.get(i).getDataSerie().addOrUpdate(timestamp, variableList.get(i).getCategoryPosition(value));
-							if (variableList.get(i).getCategoryStrings().size() > 10) {
-								variableList.get(i).setVariableToIrregular();
+							else  {
+								if(variableList.get(i).getDataSerie().isEmpty()) {
+									if((timestamp.compareTo(inicialTime) > 0) && (timestamp.compareTo(creationTime) < 0))
+										variableList.get(i).getDataSerie().addOrUpdate(timestamp, variableList.get(i).getCategoryPosition(value));
+									else if(timestamp.compareTo(inicialTime) < 0) {
+										variableList.get(i).getDataSerie().addOrUpdate(inicialTime, variableList.get(i).getCategoryPosition(value));
+									}
+									variableList.get(i).getDataSerie().setNotify(true);
+									variableList.get(i).getDataSerie().setNotify(false);
+								}
+								if(tolerable)
+									variableList.get(i).getDataSerie().addOrUpdate(timestamp, variableList.get(i).getCategoryPosition(value));
+								else
+									variableList.get(i).getDataSerie().addOrUpdate(creationTime, variableList.get(i).getCategoryPosition(value));
+								if (variableList.get(i).getCategoryStrings().size() > 10) {
+									variableList.get(i).setVariableToIrregular();
+								}
 							}
 						}
 						else if(variableList.get(i).getType() == 'i') {
 							if(value.toUpperCase().equals("UNAVAILABLE")) {
 								variableList.get(i).getDataSerie().clear();
-								variableList.get(i).getDataSerie().add(timestamp, 0);
+								variableList.get(i).getDataSerie().add(creationTime, 0);
 								variableList.get(i).getCategoryStrings().clear();
 								variableList.get(i).getCategoryStrings().add(null);
 							}
 							else {
 								variableList.get(i).getDataSerie().clear();
-								variableList.get(i).getDataSerie().add(timestamp, 0);
+								variableList.get(i).getDataSerie().add(creationTime, 0);
 								variableList.get(i).getCategoryStrings().clear();
 								variableList.get(i).getCategoryStrings().add(value);
 							}
 						}
 						///////////////Discart medium value/////////////////
 						TimeSeries serie = variableList.get(i).getDataSerie();
-						if (serie.getItemCount() >= 3) {
-							if((serie.getValue(serie.getItemCount() - 1) == null)&&(serie.getValue(serie.getItemCount() - 2) == null)&&(serie.getValue(serie.getItemCount() - 3) == null))
+						if (serie.getItemCount() > 3) {
+							if((serie.getValue(serie.getItemCount() - 1) == null)&&(serie.getValue(serie.getItemCount() - 2) == null)&&(serie.getValue(serie.getItemCount() - 3) == null) && (serie.getValue(serie.getItemCount() - 4) == null))
 								serie.delete(serie.getItemCount()-2, serie.getItemCount()-2); /// deleta o penúltimo registro
 							else if (serie.getValue(serie.getItemCount() - 1) != null) {
-								if (serie.getValue(serie.getItemCount() - 1).equals(serie.getValue(serie.getItemCount() - 2)) && (serie.getValue(serie.getItemCount() - 1).equals(serie.getValue(serie.getItemCount() - 3))))
+								if (serie.getValue(serie.getItemCount() - 1).equals(serie.getValue(serie.getItemCount() - 2)) && (serie.getValue(serie.getItemCount() - 1).equals(serie.getValue(serie.getItemCount() - 3))) && (serie.getValue(serie.getItemCount() - 1).equals(serie.getValue(serie.getItemCount() - 4))))
 									serie.delete(serie.getItemCount()-2, serie.getItemCount()-2); /// deleta o penúltimo registro
 							}
 						}
 						//////////////discart old values////////////////////////
 						if (((variableList.get(i).getType() == '1') || (variableList.get(i).getType() == 'c'))&& (serie.getItemCount() > 1)) {
-							XMLGregorianCalendar iniTime = (XMLGregorianCalendar) currentObject.getHeader().getCreationTime().clone();
-							int second = iniTime.getSecond() - variableList.get(i).getTimeRange()[2];
-							int minute = iniTime.getMinute() - variableList.get(i).getTimeRange()[1];
-							int hour = iniTime.getHour() - variableList.get(i).getTimeRange()[0];
-							int day = iniTime.getDay();
-							int month = iniTime.getMonth();
-							int year = iniTime.getYear();
-							if (second < 0) {
-								second = second + 60;
-								minute--;
-							}
-							if (minute < 0) {
-								minute = minute + 60;
-								hour--;
-							}
-							if (hour < 0) {
-								hour = hour + 24;
-								day--;
-							}
-							if (day < 1) {
-								XMLGregorianCalendar correction = iniTime;
-								try {
-									correction.setMonth(iniTime.getMonth() - 1);
-								}
-								catch (IllegalArgumentException e) {
-									correction.setYear(iniTime.getYear() - 1);
-									correction.setMonth(1);
-								}
-								day = day + correction.toGregorianCalendar().getActualMaximum(Calendar.DAY_OF_MONTH);
-								month--;
-							}
-							if (month < 1) {
-								month = month + 12;
-								year--;
-							}
-							iniTime.setTime(hour, minute, second);
-							iniTime.setDay(day);
-							iniTime.setMonth(month);
-							iniTime.setYear(year);
-							Millisecond inicialTime = new Millisecond(iniTime.toGregorianCalendar().getTime());
 							for (int j = 0; j < serie.getItemCount() - 1;j++) {
 								if (inicialTime.compareTo(serie.getTimePeriod(j)) <= 0) {
 									break;
@@ -394,6 +413,9 @@ public class LoadExecution implements Runnable {
 						}
 						variableList.get(i).getDataSerie().setNotify(true);
 						variableList.get(i).getDataSerie().setNotify(false);
+					}
+					else {
+						variableList.get(i).getDataSerie().addOrUpdate(new Millisecond(variableList.get(i).getComponent().getDevice().getAgent().getCreationTime().toGregorianCalendar().getTime()).next(), null);
 					}
 				}
 			}

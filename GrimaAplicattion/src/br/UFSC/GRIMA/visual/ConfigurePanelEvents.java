@@ -256,9 +256,11 @@ public class ConfigurePanelEvents extends ConfigurePanelWindow implements Action
 					mainInterface.setMenuConfigurePanel();
 					return;
 				}
-				monitoringUnit.destroyPanelInstance();
-				monitoringUnit.getPanelMonitoringSystem().getMonitoringUnits().remove(monitoringUnit);
-				addPanel(monitoringUnit.getName(), true);				
+				boolean sucess = addPanel(monitoringUnit.getName(), true);
+				if (sucess) {
+					monitoringUnit.destroyPanelInstance();
+					monitoringUnit.getPanelMonitoringSystem().getMonitoringUnits().remove(monitoringUnit);
+				}
 			}
 			else {
 				addPanel(panelName, true);
@@ -344,7 +346,7 @@ public class ConfigurePanelEvents extends ConfigurePanelWindow implements Action
 		}
 		return defaultName;
 	}
-	public void addPanel(String name, boolean verify) {
+	public boolean addPanel(String name, boolean verify) {
 		boolean sucess = true;
 		if(verify) {
 			if(variables.isEmpty()) {
@@ -428,6 +430,7 @@ public class ConfigurePanelEvents extends ConfigurePanelWindow implements Action
 			mainInterface.setMenuConfigurePanel();
 			this.dispose();
 		}
+		return sucess;
 	}
 	public void setVariablesCombobox() {
 		DefaultComboBoxModel<String> deviceModel = new DefaultComboBoxModel<String>();
