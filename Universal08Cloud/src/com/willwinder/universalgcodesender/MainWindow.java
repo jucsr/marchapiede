@@ -1872,16 +1872,22 @@ implements KeyListener, ControllerListener, MainWindowAPI {
     	ip = ipRemoteTextField.getText();
 		port = Integer.parseInt(portRemoteTextField.getText());
 		try{
-		client = new Socket(ip,port);
-		BufferedReader entrada = new BufferedReader(new InputStreamReader(client.getInputStream()));
-		String msg = entrada.readLine().toString();
-//		JOptionPane.showMessageDialog(null,"Data recebida do servidor: " + msg.toString());
-        this.consoleTextArea.setText(consoleTextArea.getText() + "\n Response from server: " + msg.toString().toUpperCase());
-
-		//entrada.close();
-		//client.close();
-		hasConnection = true;
-		this.updateControlsForState(ControlState.COMM_REMOTE_IDLE);
+			client = new Socket(ip,port);
+			BufferedReader entrada = new BufferedReader(new InputStreamReader(client.getInputStream()));
+			String msg = entrada.readLine().toString();
+			if(msg.equals("Connected!"))
+			{
+				 this.consoleTextArea.setText(consoleTextArea.getText() + "\n Response from server: " + msg.toString().toUpperCase());
+				 hasConnection = true;
+				 this.updateControlsForState(ControlState.COMM_REMOTE_IDLE);
+			}
+			else if(msg.equals("ocupped"))
+			{
+				this.consoleTextArea.setText(consoleTextArea.getText() + "\n Response from server: " + msg.toString().toUpperCase());
+				hasConnection = false;
+				JOptionPane.showMessageDialog(null,"Sever is Ocupped");
+			}
+       
 		}
 		catch(IOException e){
 			JOptionPane.showMessageDialog(null,"No server available");
