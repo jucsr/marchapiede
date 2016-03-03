@@ -278,10 +278,12 @@ public abstract class MonitoringUnit implements ActionListener {
 		return visible;
 	}
 	public void setVisible(boolean visible) {
-		if(visible)
-			((GridBagLayout)panelMonitoringSystem.getController().getMainInterface().getPanelMonitoringPanel().panelSupport.getLayout()).columnWeights[panelMonitoringSystem.getMonitoringUnits().indexOf(this)] = 1.0;
-		else
-			((GridBagLayout)panelMonitoringSystem.getController().getMainInterface().getPanelMonitoringPanel().panelSupport.getLayout()).columnWeights[panelMonitoringSystem.getMonitoringUnits().indexOf(this)] = 0.0;
+		if(panelMonitoringSystem.getMonitoringUnits().indexOf(this) >= 0) {
+			if(visible)
+				((GridBagLayout)panelMonitoringSystem.getController().getMainInterface().getPanelMonitoringPanel().panelSupport.getLayout()).columnWeights[panelMonitoringSystem.getMonitoringUnits().indexOf(this)] = 1.0;
+			else
+				((GridBagLayout)panelMonitoringSystem.getController().getMainInterface().getPanelMonitoringPanel().panelSupport.getLayout()).columnWeights[panelMonitoringSystem.getMonitoringUnits().indexOf(this)] = 0.0;
+		}
 		this.visible = visible;
 	}
 	public JToggleButton getPlayPause() {

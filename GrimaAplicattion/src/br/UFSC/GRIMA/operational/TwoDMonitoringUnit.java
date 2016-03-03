@@ -92,7 +92,6 @@ public class TwoDMonitoringUnit extends MonitoringUnit implements SeriesChangeLi
 		/////////////////////////discart old values//////////////////////////////////////////////////////////////////
 		
 		if (((xSelected.getType() == '1') && (ySelected.getType() == '1')) && (valueRegister.getItemCount() > 1)) {
-			System.out.println(valueRegister.getX(valueRegister.getItemCount() - 1) + ", " + valueRegister.getY(valueRegister.getItemCount() - 1));
 			XMLGregorianCalendar iniTime =(XMLGregorianCalendar) xSelected.getComponent().getDevice().getAgent().getCreationTime().clone();
 			int second;
 			int minute;
@@ -339,7 +338,6 @@ public class TwoDMonitoringUnit extends MonitoringUnit implements SeriesChangeLi
 			}
 			valueRegister.add(xSelected.getDataSerie().getValue(xIndex), ySelected.getDataSerie().getValue(yIndex));
 			while((xIndex < xSelected.getDataSerie().getItemCount()) && (yIndex < ySelected.getDataSerie().getItemCount())) {
-				System.out.println(valueRegister.getX(valueRegister.getItemCount() - 1) + ", " + valueRegister.getY(valueRegister.getItemCount() - 1));
 				int comp = ((Millisecond)(xSelected.getDataSerie().getTimePeriod(xIndex))).compareTo(ySelected.getDataSerie().getTimePeriod(yIndex));
 				if(comp == 0) {
 					timeRegister.add(xSelected.getDataSerie().getTimePeriod(xIndex));

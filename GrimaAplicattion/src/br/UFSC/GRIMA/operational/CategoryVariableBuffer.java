@@ -41,7 +41,7 @@ public class CategoryVariableBuffer implements SeriesChangeListener, ActionListe
 		for(int i = 0; i < variable.getDataSerie().getItemCount(); i++) 
 			dataSerie.addOrUpdate(variable.getDataSerie().getDataItem(i));
 		for (int i = 0; i < dataSerie.getItemCount(); i++)
-			dataSerie.update(i, categoryMonitoringUnit.getCategoryStrings().indexOf(variable.getCategoryStrings().get(dataSerie.getValue(i).intValue())));
+			dataSerie.update(i, (double)categoryMonitoringUnit.getCategoryStrings().indexOf(variable.getCategoryStrings().get(dataSerie.getValue(i).intValue())));
 		variable.getDataSerie().addChangeListener(this);
 	}
 	@Override

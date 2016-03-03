@@ -86,11 +86,11 @@ public class MainInterface extends MainWindow implements ActionListener {
 		else if (e.getSource().equals(menuAddPanel)) {
 			this.setEnabled(false);
 			if (deviceInfoButton.isSelected())
-				new CreatePanelEvents(this, (ArrayList<Variable>) mainExecution.getNewMonitoringPanelList().clone());
+				new ConfigurePanelEvents(this, (ArrayList<Variable>) mainExecution.getNewMonitoringPanelList().clone());
 			else if (deviceMonitoringButton.isSelected())
-				new CreatePanelEvents(this, (ArrayList<Variable>) mainExecution.getDeviceMonitoringSystem().getSelectedVariables().clone());
+				new ConfigurePanelEvents(this, (ArrayList<Variable>) mainExecution.getDeviceMonitoringSystem().getSelectedVariables().clone());
 			else
-				new CreatePanelEvents(this, null);
+				new ConfigurePanelEvents(this, null);
 		}
 		else if (e.getSource().equals(menuAbout)) {
 			this.setEnabled(false);
