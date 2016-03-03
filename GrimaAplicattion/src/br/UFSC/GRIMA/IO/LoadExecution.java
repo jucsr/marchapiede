@@ -385,7 +385,8 @@ public class LoadExecution implements Runnable {
 							if (variableList.get(i).getType() == 'c') {
 								boolean[] existence = new boolean[variableList.get(i).getCategoryStrings().size()];
 								for (int j = 0; j < variableList.get(i).getDataSerie().getItemCount(); j++) {
-									existence[variableList.get(i).getDataSerie().getValue(j).intValue()] = true;
+									if(variableList.get(i).getDataSerie().getValue(j)!= null)
+										existence[variableList.get(i).getDataSerie().getValue(j).intValue()] = true;
 								}
 								boolean noChange = true;
 								for (int j = 0; j < existence.length; j++) {
@@ -406,8 +407,10 @@ public class LoadExecution implements Runnable {
 											
 									}
 									variableList.get(i).setCategoryStrings(newCategoryStrings);
-									for(int j = 0; j < variableList.get(i).getDataSerie().getItemCount(); j++) 
-										variableList.get(i).getDataSerie().update(j, variableList.get(i).getDataSerie().getValue(j).intValue() - correction[variableList.get(i).getDataSerie().getValue(j).intValue()]);
+									for(int j = 0; j < variableList.get(i).getDataSerie().getItemCount(); j++) {
+										if(variableList.get(i).getDataSerie().getValue(j) != null)
+											variableList.get(i).getDataSerie().update(j, variableList.get(i).getDataSerie().getValue(j).intValue() - correction[variableList.get(i).getDataSerie().getValue(j).intValue()]);
+									}
 								}
 							}
 						}

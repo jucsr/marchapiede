@@ -133,8 +133,10 @@ public class CategoryMonitoringUnit extends MonitoringUnit {
 		boolean[] existence = new boolean[categoryStrings.size()];
 		for(int i = 0; i < categoryVariableBuffers.size();i++) {
 			if (getVariables().get(i).getType() != 'i') {
-				for (int j = 0; j < categoryVariableBuffers.get(i).getDataSerie().getItemCount(); j++) 
-					existence[categoryVariableBuffers.get(i).getDataSerie().getValue(j).intValue()] = true;
+				for (int j = 0; j < categoryVariableBuffers.get(i).getDataSerie().getItemCount(); j++) {
+					if(categoryVariableBuffers.get(i).getDataSerie().getValue(j) != null)
+						existence[categoryVariableBuffers.get(i).getDataSerie().getValue(j).intValue()] = true;
+				}
 			}
 		}
 		boolean noChange = true;

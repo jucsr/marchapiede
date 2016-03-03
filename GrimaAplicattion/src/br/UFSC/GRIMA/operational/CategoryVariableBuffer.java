@@ -72,7 +72,10 @@ public class CategoryVariableBuffer implements SeriesChangeListener, ActionListe
 	public void addToSerie(TimeSeriesDataItem item) {
 		try {
 			TimeSeriesDataItem nItem = (TimeSeriesDataItem)item.clone();
-			dataSerie.addOrUpdate(nItem.getPeriod(), getCategoryPosition(variable.getCategoryStrings().get(nItem.getValue().intValue())));
+			if(nItem.getValue() != null)
+				dataSerie.addOrUpdate(nItem.getPeriod(), getCategoryPosition(variable.getCategoryStrings().get(nItem.getValue().intValue())));
+			else
+				dataSerie.addOrUpdate(nItem.getPeriod(), null);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -173,7 +176,8 @@ public class CategoryVariableBuffer implements SeriesChangeListener, ActionListe
 		if(variable.getType() != 'i') {
 			try {
 				for(int i = 0; i < dataSerie.getItemCount(); i++) {
-					dataSerie.update(i, (double) (dataSerie.getValue(i).intValue() - correction[dataSerie.getValue(i).intValue()]));
+					if(dataSerie.getValue(i) != null)
+						dataSerie.update(i, (double) (dataSerie.getValue(i).intValue() - correction[dataSerie.getValue(i).intValue()]));
 				}
 			}catch(Exception e) {
 				e.printStackTrace();
