@@ -103,7 +103,9 @@ public class ServerController extends MainWindowRemoteController {
 	            textPane1.setText(textPane1.getText() + "\nDisconnected from remote client");
 			}	        
 			try {
-				recebimento();
+				if(!client.isClosed()){				
+					recebimento();				
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 	            textPane1.setText(textPane1.getText() + "\nDisconnected from remote client");
@@ -147,9 +149,10 @@ public class ServerController extends MainWindowRemoteController {
 				}
 				
 				
-				if(msgS.equals("exit")){
+				if(msgS.equals("exit")){				
 					client.close();
-					tratador.interrupt();					
+					tratador.interrupt();
+					server.setSoTimeout(0);
 					break;
 				}
 			}

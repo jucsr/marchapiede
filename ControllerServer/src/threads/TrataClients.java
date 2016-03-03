@@ -24,8 +24,12 @@ public class TrataClients extends Thread
 		}
 		if(this.isInterrupted())
 		{
-			this.stop();
-			this.destroy();			
+			try {
+				this.finalize();
+			} catch (Throwable e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}					
 		}
 	}
 	
