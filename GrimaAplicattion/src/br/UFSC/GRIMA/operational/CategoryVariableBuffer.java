@@ -82,12 +82,12 @@ public class CategoryVariableBuffer implements SeriesChangeListener, ActionListe
 		}
 		///////////////Discart medium value/////////////////
 		TimeSeries serie = dataSerie;
-		if (serie.getItemCount() >= 3) {
-			if((serie.getValue(serie.getItemCount() - 1) == null)&&(serie.getValue(serie.getItemCount() - 2) == null)&&(serie.getValue(serie.getItemCount() - 3) == null))
-				serie.delete(serie.getItemCount()-2, serie.getItemCount()-2); /// deleta o penúltimo registro
+		if (serie.getItemCount() > 3) {
+			if((serie.getValue(serie.getItemCount() - 1) == null)&&(serie.getValue(serie.getItemCount() - 2) == null)&&(serie.getValue(serie.getItemCount() - 3) == null) && (serie.getValue(serie.getItemCount() - 4) == null))
+				serie.delete(serie.getItemCount()-3, serie.getItemCount()-3); /// deleta o penúltimo registro
 			else if (serie.getValue(serie.getItemCount() - 1) != null) {
-				if (serie.getValue(serie.getItemCount() - 1).equals(serie.getValue(serie.getItemCount() - 2)) && (serie.getValue(serie.getItemCount() - 1).equals(serie.getValue(serie.getItemCount() - 3))))
-					serie.delete(serie.getItemCount()-2, serie.getItemCount()-2); /// deleta o penúltimo registro
+				if (serie.getValue(serie.getItemCount() - 1).equals(serie.getValue(serie.getItemCount() - 2)) && (serie.getValue(serie.getItemCount() - 1).equals(serie.getValue(serie.getItemCount() - 3))) && (serie.getValue(serie.getItemCount() - 1).equals(serie.getValue(serie.getItemCount() - 4))))
+					serie.delete(serie.getItemCount()-3, serie.getItemCount()-3); /// deleta o penúltimo registro
 			}
 		}
 		//////////////discart old values////////////////////////
@@ -132,27 +132,28 @@ public class CategoryVariableBuffer implements SeriesChangeListener, ActionListe
 			iniTime.setMonth(month);
 			iniTime.setYear(year);
 			Millisecond inicialTime = new Millisecond(iniTime.toGregorianCalendar().getTime());
-			for (int j = 0; j < serie.getItemCount() - 1;j++) {
-				if (inicialTime.compareTo(serie.getTimePeriod(j)) <= 0) {
+			while(serie.getItemCount() > 2) {
+				if(inicialTime.compareTo(serie.getTimePeriod(0)) <= 0)
 					break;
-				}
-				else if (inicialTime.compareTo(serie.getTimePeriod(j+1)) < 0) {
-					if ((variable.getType() == '1') && (serie.getValue(j) != null) && (serie.getValue(j + 1) != null)) {
-						//faz uma aproximacao linear em t0
-						double y1 = serie.getValue(j).doubleValue();
-						double y2 = serie.getValue(j+1).doubleValue();
-						long x0 = inicialTime.getLastMillisecond();
-						long x1 = serie.getTimePeriod(j).getLastMillisecond();
-						long x2 = serie.getTimePeriod(j+1).getLastMillisecond();
-						double a =  (double) ((y2 - y1 )/(x2 - x1));
-						double b = (double) (y1 - a*x1);
-						double yn = a*x0 + b;
-						serie.addOrUpdate(inicialTime, yn);
+				if(inicialTime.compareTo(serie.getTimePeriod(0)) > 0) {
+					if (inicialTime.compareTo(serie.getTimePeriod(1)) < 0) {
+						if ((variable.getType() == '1') && (serie.getValue(0) != null) && (serie.getValue(1) != null)) {
+							//faz uma aproximacao linear em t0
+							double y1 = serie.getValue(0).doubleValue();
+							double y2 = serie.getValue(1).doubleValue();
+							long x0 = inicialTime.getLastMillisecond();
+							long x1 = serie.getTimePeriod(0).getLastMillisecond();
+							long x2 = serie.getTimePeriod(1).getLastMillisecond();
+							double a =  (double) ((y2 - y1 )/(x2 - x1));
+							double b = (double) (y1 - a*x1);
+							double yn = a*x0 + b;
+							serie.addOrUpdate(inicialTime, yn);
+						}
+						else {
+							serie.addOrUpdate(inicialTime, serie.getValue(0));
+						}
 					}
-					else {
-						serie.addOrUpdate(inicialTime, serie.getValue(j));
-					}
-					serie.delete(0, j);
+					serie.delete(0, 0);
 				}
 			}
 		}

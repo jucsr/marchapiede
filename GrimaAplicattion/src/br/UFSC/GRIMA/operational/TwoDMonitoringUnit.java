@@ -58,8 +58,13 @@ public class TwoDMonitoringUnit extends MonitoringUnit implements SeriesChangeLi
 	@Override
 	public void seriesChanged(SeriesChangeEvent e) {
 		// TODO Auto-generated method stub
+		
 		if(e.getSource().equals(xAxis.getDataSerie())) {
-			if(yLoad != null) {
+			if(xAxis.getDataSerie().getValue(xAxis.getDataSerie().getItemCount() - 1) == null) {
+				xLoad = null;
+				yLoad = null;
+			}
+			else if(yLoad != null) {
 				timeRegister.add(xAxis.getDataSerie().getTimePeriod((xAxis.getDataSerie().getItemCount() - 1)));
 				valueRegister.add(xAxis.getDataSerie().getValue(xAxis.getDataSerie().getItemCount() - 1), yLoad);
 				yLoad = null;
@@ -68,7 +73,11 @@ public class TwoDMonitoringUnit extends MonitoringUnit implements SeriesChangeLi
 				xLoad = xAxis.getDataSerie().getValue(xAxis.getDataSerie().getItemCount() - 1).doubleValue();
 		}
 		else if(e.getSource().equals(yAxis.getDataSerie())) {
-			if(xLoad != null) {
+			if(yAxis.getDataSerie().getValue(yAxis.getDataSerie().getItemCount() - 1) == null) {
+				xLoad = null;
+				yLoad = null;
+			}
+			else if(xLoad != null) {
 				timeRegister.add(yAxis.getDataSerie().getTimePeriod((yAxis.getDataSerie().getItemCount() - 1)));
 				valueRegister.add(xLoad, yAxis.getDataSerie().getValue(yAxis.getDataSerie().getItemCount() - 1));
 				xLoad = null;
@@ -135,14 +144,13 @@ public class TwoDMonitoringUnit extends MonitoringUnit implements SeriesChangeLi
 			iniTime.setMonth(month);
 			iniTime.setYear(year);
 			Millisecond inicialTime = new Millisecond(iniTime.toGregorianCalendar().getTime());
-			for (int j = 0; j < timeRegister.size() - 1;j++) {
-				if (inicialTime.compareTo(timeRegister.get(j)) <= 0) {
+			while(timeRegister.size() > 2) {
+				if(inicialTime.compareTo(timeRegister.get(0)) <= 0)
 					break;
-				}
-				else if (inicialTime.compareTo(timeRegister.get(j+1)) < 0) {
-					valueRegister.delete(0, j);
-					for(int i = 0; i <= j; i++)
-						timeRegister.remove(0);
+				if(inicialTime.compareTo(timeRegister.get(0)) > 0) {
+					timeRegister.remove(0);
+					valueRegister.remove(0);
+					break;
 				}
 			}
 		}
