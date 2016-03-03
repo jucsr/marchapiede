@@ -411,12 +411,12 @@ public class LoadExecution implements Runnable {
 								}
 							}
 						}
-						variableList.get(i).getDataSerie().setNotify(true);
-						variableList.get(i).getDataSerie().setNotify(false);
 					}
 					else {
 						variableList.get(i).getDataSerie().addOrUpdate(new Millisecond(variableList.get(i).getComponent().getDevice().getAgent().getCreationTime().toGregorianCalendar().getTime()).next(), null);
 					}
+					variableList.get(i).getDataSerie().setNotify(true);
+					variableList.get(i).getDataSerie().setNotify(false);
 				}
 			}
 			long loop = System.currentTimeMillis() - getLoopTime();
