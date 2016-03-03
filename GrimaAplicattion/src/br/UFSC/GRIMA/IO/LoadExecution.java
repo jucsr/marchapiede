@@ -27,6 +27,7 @@ public class LoadExecution implements Runnable {
 	private Thread thread;
 	private long loopTime;
 	private String lastError;
+	private boolean connected;
 ////////////////////////////////////Constructor/////////////////////////////////////////////////////////////
 	public LoadExecution(IOControl ioControl) {
 		setIoControl(ioControl);
@@ -231,9 +232,8 @@ public class LoadExecution implements Runnable {
 							value = currentObject.getStreams().getDeviceStream().get(devPosition).getComponentStream().get(comPosition).getCondition().getCondition().get(varPosition).getName().getLocalPart();
 							time = currentObject.getStreams().getDeviceStream().get(devPosition).getComponentStream().get(comPosition).getCondition().getCondition().get(varPosition).getValue().getTimestamp();
 						}
-						Millisecond timestamp = null;
 						time.setTimezone(currentObject.getHeader().getCreationTime().getTimezone());
-						timestamp = new Millisecond(time.toGregorianCalendar().getTime());
+						Millisecond timestamp = new Millisecond(time.toGregorianCalendar().getTime());
 						if(variableList.get(i).getType() == 'n') {
 							if(!value.toUpperCase().equals("UNAVAILABLE")) {
 								variableList.get(i).typeIdentification(value);
@@ -409,6 +409,12 @@ public class LoadExecution implements Runnable {
 			}
 			setLoopTime(System.currentTimeMillis());
 		}
+	}
+	public boolean isConnected() {
+		return connected;
+	}
+	public void setConnected(boolean connected) {
+		this.connected = connected;
 	}
 	
 	

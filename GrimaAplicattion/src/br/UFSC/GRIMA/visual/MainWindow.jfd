@@ -34,7 +34,7 @@ new FormModel {
 				} ) {
 					name: "panel2"
 					add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
-						"$columnSpecs": "1, 0:1.0, 0:1.0, 1"
+						"$columnSpecs": "0:1.0, 0:1.0"
 						"$rowSpecs": "0"
 						"$hGap": 5
 						"$vGap": 5
@@ -43,42 +43,96 @@ new FormModel {
 					} ) {
 						name: "panel4"
 						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
-							"$columnSpecs": "0:1.0, 0:1.0, 0:1.0"
-							"$rowSpecs": "0"
+							"$columnSpecs": "0:1.0"
+							"$rowSpecs": "0, 0"
 							"$hGap": 5
 							"$vGap": 5
 							"$alignLeft": true
 							"$alignTop": true
 						} ) {
-							name: "panel5"
-							add( new FormComponent( "javax.swing.JToggleButton" ) {
-								name: "deviceInfoButton"
-								"text": "Device Information"
-								auxiliary() {
-									"JavaCodeGenerator.variableModifiers": 4
-								}
+							name: "panel1"
+							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+								"$columnSpecs": "0, 0:1.0, 0, 0, 0:1.0"
+								"$rowSpecs": "0"
+								"$hGap": 5
+								"$vGap": 5
+								"$alignLeft": true
+								"$alignTop": true
+							} ) {
+								name: "panel3"
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label2"
+									"text": "Agent Communication:"
+								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+								add( new FormComponent( "javax.swing.JTextField" ) {
+									name: "textField1"
+									"enabled": false
+								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+									"gridx": 1
+								} )
+								add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+									"$columnSpecs": "0, 0"
+									"$rowSpecs": "0"
+									"$hGap": 5
+									"$vGap": 5
+									"$alignLeft": true
+									"$alignTop": true
+								} ) {
+									name: "panel8"
+								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+									"gridx": 2
+								} )
+								add( new FormComponent( "javax.swing.JLabel" ) {
+									name: "label3"
+									"text": "DataBase Communication:"
+								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+									"gridx": 3
+								} )
+								add( new FormComponent( "javax.swing.JTextField" ) {
+									name: "textField2"
+									"enabled": false
+								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+									"gridx": 4
+								} )
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
-							add( new FormComponent( "javax.swing.JToggleButton" ) {
-								name: "deviceMonitoringButton"
-								"text": "Device Monitoring"
-								auxiliary() {
-									"JavaCodeGenerator.variableModifiers": 1
-								}
+							add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
+								"$columnSpecs": "0:1.0, 0:1.0, 0:1.0"
+								"$rowSpecs": "0"
+								"$hGap": 5
+								"$vGap": 5
+								"$alignLeft": true
+								"$alignTop": true
+							} ) {
+								name: "panel5"
+								add( new FormComponent( "javax.swing.JToggleButton" ) {
+									name: "deviceInfoButton"
+									"text": "Device Information"
+									auxiliary() {
+										"JavaCodeGenerator.variableModifiers": 4
+									}
+								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
+								add( new FormComponent( "javax.swing.JToggleButton" ) {
+									name: "deviceMonitoringButton"
+									"text": "Device Monitoring"
+									auxiliary() {
+										"JavaCodeGenerator.variableModifiers": 1
+									}
+								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+									"gridx": 1
+								} )
+								add( new FormComponent( "javax.swing.JToggleButton" ) {
+									name: "panelMonitoringButton"
+									"text": "Panel Monitoring"
+									auxiliary() {
+										"JavaCodeGenerator.variableModifiers": 4
+									}
+								}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
+									"gridx": 2
+								} )
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-								"gridx": 1
+								"gridy": 1
 							} )
-							add( new FormComponent( "javax.swing.JToggleButton" ) {
-								name: "panelMonitoringButton"
-								"text": "Panel Monitoring"
-								auxiliary() {
-									"JavaCodeGenerator.variableModifiers": 4
-								}
-							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-								"gridx": 2
-							} )
-						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-							"gridx": 1
-						} )
+						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
 						add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class java.awt.GridBagLayout ) {
 							"$columnSpecs": "0, 0:1.0"
 							"$rowSpecs": "0, 0"
@@ -118,7 +172,7 @@ new FormModel {
 								"gridy": 1
 							} )
 						}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) {
-							"gridx": 2
+							"gridx": 1
 						} )
 					}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
 				}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )

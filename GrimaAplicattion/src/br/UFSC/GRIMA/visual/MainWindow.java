@@ -44,6 +44,13 @@ public class MainWindow extends JFrame {
 		panel7 = new JPanel();
 		panel2 = new JPanel();
 		panel4 = new JPanel();
+		panel1 = new JPanel();
+		panel3 = new JPanel();
+		label2 = new JLabel();
+		textField1 = new JTextField();
+		panel8 = new JPanel();
+		label3 = new JLabel();
+		textField2 = new JTextField();
 		panel5 = new JPanel();
 		deviceInfoButton = new JToggleButton();
 		deviceMonitoringButton = new JToggleButton();
@@ -238,38 +245,98 @@ public class MainWindow extends JFrame {
 				//======== panel4 ========
 				{
 					panel4.setLayout(new GridBagLayout());
-					((GridBagLayout)panel4.getLayout()).columnWidths = new int[] {6, 0, 0, 1, 0};
+					((GridBagLayout)panel4.getLayout()).columnWidths = new int[] {0, 0, 0};
 					((GridBagLayout)panel4.getLayout()).rowHeights = new int[] {0, 0};
-					((GridBagLayout)panel4.getLayout()).columnWeights = new double[] {0.0, 1.0, 1.0, 0.0, 1.0E-4};
+					((GridBagLayout)panel4.getLayout()).columnWeights = new double[] {1.0, 1.0, 1.0E-4};
 					((GridBagLayout)panel4.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
 
-					//======== panel5 ========
+					//======== panel1 ========
 					{
-						panel5.setLayout(new GridBagLayout());
-						((GridBagLayout)panel5.getLayout()).columnWidths = new int[] {0, 0, 0, 0};
-						((GridBagLayout)panel5.getLayout()).rowHeights = new int[] {0, 0};
-						((GridBagLayout)panel5.getLayout()).columnWeights = new double[] {1.0, 1.0, 1.0, 1.0E-4};
-						((GridBagLayout)panel5.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
+						panel1.setLayout(new GridBagLayout());
+						((GridBagLayout)panel1.getLayout()).columnWidths = new int[] {0, 0};
+						((GridBagLayout)panel1.getLayout()).rowHeights = new int[] {0, 0, 0};
+						((GridBagLayout)panel1.getLayout()).columnWeights = new double[] {1.0, 1.0E-4};
+						((GridBagLayout)panel1.getLayout()).rowWeights = new double[] {0.0, 0.0, 1.0E-4};
 
-						//---- deviceInfoButton ----
-						deviceInfoButton.setText("Device Information");
-						panel5.add(deviceInfoButton, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+						//======== panel3 ========
+						{
+							panel3.setLayout(new GridBagLayout());
+							((GridBagLayout)panel3.getLayout()).columnWidths = new int[] {0, 0, 0, 0, 0, 0};
+							((GridBagLayout)panel3.getLayout()).rowHeights = new int[] {0, 0};
+							((GridBagLayout)panel3.getLayout()).columnWeights = new double[] {0.0, 1.0, 0.0, 0.0, 1.0, 1.0E-4};
+							((GridBagLayout)panel3.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
+
+							//---- label2 ----
+							label2.setText("Agent Communication:");
+							panel3.add(label2, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+								GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+								new Insets(0, 0, 0, 5), 0, 0));
+
+							//---- textField1 ----
+							textField1.setEnabled(false);
+							panel3.add(textField1, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+								GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+								new Insets(0, 0, 0, 5), 0, 0));
+
+							//======== panel8 ========
+							{
+								panel8.setLayout(new GridBagLayout());
+								((GridBagLayout)panel8.getLayout()).columnWidths = new int[] {0, 0, 0};
+								((GridBagLayout)panel8.getLayout()).rowHeights = new int[] {0, 0};
+								((GridBagLayout)panel8.getLayout()).columnWeights = new double[] {0.0, 0.0, 1.0E-4};
+								((GridBagLayout)panel8.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
+							}
+							panel3.add(panel8, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
+								GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+								new Insets(0, 0, 0, 5), 0, 0));
+
+							//---- label3 ----
+							label3.setText("DataBase Communication:");
+							panel3.add(label3, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
+								GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+								new Insets(0, 0, 0, 5), 0, 0));
+
+							//---- textField2 ----
+							textField2.setEnabled(false);
+							panel3.add(textField2, new GridBagConstraints(4, 0, 1, 1, 0.0, 0.0,
+								GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+								new Insets(0, 0, 0, 0), 0, 0));
+						}
+						panel1.add(panel3, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
 							GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-							new Insets(0, 0, 0, 5), 0, 0));
+							new Insets(0, 0, 5, 0), 0, 0));
 
-						//---- deviceMonitoringButton ----
-						deviceMonitoringButton.setText("Device Monitoring");
-						panel5.add(deviceMonitoringButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
-							GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-							new Insets(0, 0, 0, 5), 0, 0));
+						//======== panel5 ========
+						{
+							panel5.setLayout(new GridBagLayout());
+							((GridBagLayout)panel5.getLayout()).columnWidths = new int[] {0, 0, 0, 0};
+							((GridBagLayout)panel5.getLayout()).rowHeights = new int[] {0, 0};
+							((GridBagLayout)panel5.getLayout()).columnWeights = new double[] {1.0, 1.0, 1.0, 1.0E-4};
+							((GridBagLayout)panel5.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
 
-						//---- panelMonitoringButton ----
-						panelMonitoringButton.setText("Panel Monitoring");
-						panel5.add(panelMonitoringButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
+							//---- deviceInfoButton ----
+							deviceInfoButton.setText("Device Information");
+							panel5.add(deviceInfoButton, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+								GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+								new Insets(0, 0, 0, 5), 0, 0));
+
+							//---- deviceMonitoringButton ----
+							deviceMonitoringButton.setText("Device Monitoring");
+							panel5.add(deviceMonitoringButton, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+								GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+								new Insets(0, 0, 0, 5), 0, 0));
+
+							//---- panelMonitoringButton ----
+							panelMonitoringButton.setText("Panel Monitoring");
+							panel5.add(panelMonitoringButton, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
+								GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+								new Insets(0, 0, 0, 0), 0, 0));
+						}
+						panel1.add(panel5, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0,
 							GridBagConstraints.CENTER, GridBagConstraints.BOTH,
 							new Insets(0, 0, 0, 0), 0, 0));
 					}
-					panel4.add(panel5, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
+					panel4.add(panel1, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
 						GridBagConstraints.CENTER, GridBagConstraints.BOTH,
 						new Insets(0, 0, 0, 5), 0, 0));
 
@@ -305,9 +372,9 @@ public class MainWindow extends JFrame {
 							GridBagConstraints.CENTER, GridBagConstraints.BOTH,
 							new Insets(0, 0, 0, 0), 0, 0));
 					}
-					panel4.add(panel6, new GridBagConstraints(2, 0, 1, 1, 0.0, 0.0,
+					panel4.add(panel6, new GridBagConstraints(1, 0, 1, 1, 0.0, 0.0,
 						GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-						new Insets(0, 0, 0, 5), 0, 0));
+						new Insets(0, 0, 0, 0), 0, 0));
 				}
 				panel2.add(panel4, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
 					GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -389,6 +456,13 @@ public class MainWindow extends JFrame {
 	private JPanel panel7;
 	private JPanel panel2;
 	private JPanel panel4;
+	private JPanel panel1;
+	private JPanel panel3;
+	private JLabel label2;
+	private JTextField textField1;
+	private JPanel panel8;
+	private JLabel label3;
+	private JTextField textField2;
 	private JPanel panel5;
 	protected JToggleButton deviceInfoButton;
 	public JToggleButton deviceMonitoringButton;
