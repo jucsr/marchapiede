@@ -2,6 +2,7 @@ package server;
 
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
+import threads.TrataClients;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,10 +44,8 @@ public class ServerController extends MainWindowRemoteController {
 	public AbstractController controller;
 	private Settings settings;
 	
-	private int size;
-	
 	public  ArrayList<String> commands = new ArrayList<String>();
-//	publi	c static Sender sending;
+	public TrataClients tratador;
 	
 	public ServerController(int porta) throws IOException{
 		this.setVisible(true);
@@ -96,13 +95,13 @@ public class ServerController extends MainWindowRemoteController {
 				saida.flush();
 				saida.println("Connected!");
 				textPane1.setText(textPane1.getText() + "\nConection with remote client: " +client.getInetAddress().getHostAddress() );
-			} catch (IOException e) {
+				tratador = new TrataClients(server);
+				tratador.start();
+			} 
+			catch (IOException e) {
 				e.printStackTrace();
 	            textPane1.setText(textPane1.getText() + "\nDisconnected from remote client");
-			}
-			//saida.close();
-			//client.close();
-	        
+			}	        
 			try {
 				recebimento();
 			} catch (Exception e) {
@@ -115,7 +114,6 @@ public class ServerController extends MainWindowRemoteController {
 	public void recebimento() throws Exception
 	{
 		while(true){
-			//client = server.accept();
 			BufferedReader entradaS = new BufferedReader(new InputStreamReader(client.getInputStream()));
 			if(entradaS.ready())
 			{
@@ -151,15 +149,10 @@ public class ServerController extends MainWindowRemoteController {
 				
 				if(msgS.equals("exit")){
 					client.close();
+					tratador.interrupt();					
 					break;
 				}
 			}
-//			if(!client.isConnected()){
-//				client.close();
-//				entradaS.close();
-//				System.out.println("sa�");
-//				break;
-//			}
 		}
 	}
 	
@@ -184,12 +177,6 @@ public class ServerController extends MainWindowRemoteController {
 	@SuppressWarnings("unchecked")
 	public void preparar_recebimento() throws IOException{
 			commands.removeAll(commands);
-			//BufferedReader entradaT = new BufferedReader(new InputStreamReader(client.getInputStream()));
-			//while(!entradaT.ready());
-			//String msgS = entradaT.readLine().toString();
-			//size = Integer.parseInt(msgS);
-			//autorizar_envio();
-			//System.out.println(size);
 			BufferedReader entrada = new BufferedReader(new InputStreamReader(client.getInputStream()));
 			while(!entrada.ready());
 			Object obj = (Object)entrada.readLine();
