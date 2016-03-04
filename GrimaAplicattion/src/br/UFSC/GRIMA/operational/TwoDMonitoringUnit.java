@@ -61,7 +61,8 @@ public class TwoDMonitoringUnit extends MonitoringUnit implements SeriesChangeLi
 		
 		if(e.getSource().equals(xAxis.getDataSerie())) {
 			if(xAxis.getDataSerie().getValue(xAxis.getDataSerie().getItemCount() - 1) == null) {
-				valueRegister.add(null, null);
+				timeRegister.add(xAxis.getDataSerie().getTimePeriod((xAxis.getDataSerie().getItemCount() - 1)));
+				valueRegister.add(0, null);
 				xLoad = null;
 				yLoad = null;
 			}
@@ -75,7 +76,8 @@ public class TwoDMonitoringUnit extends MonitoringUnit implements SeriesChangeLi
 		}
 		else if(e.getSource().equals(yAxis.getDataSerie())) {
 			if(yAxis.getDataSerie().getValue(yAxis.getDataSerie().getItemCount() - 1) == null) {
-				valueRegister.add(null, null);
+				timeRegister.add(yAxis.getDataSerie().getTimePeriod((yAxis.getDataSerie().getItemCount() - 1)));
+				valueRegister.add(0, null);
 				xLoad = null;
 				yLoad = null;
 			}
@@ -156,7 +158,6 @@ public class TwoDMonitoringUnit extends MonitoringUnit implements SeriesChangeLi
 				}
 			}
 		}
-		
 	}
 
 	@Override
@@ -358,7 +359,11 @@ public class TwoDMonitoringUnit extends MonitoringUnit implements SeriesChangeLi
 				int comp = ((Millisecond)(xSelected.getDataSerie().getTimePeriod(xIndex))).compareTo(ySelected.getDataSerie().getTimePeriod(yIndex));
 				if(comp == 0) {
 					timeRegister.add(xSelected.getDataSerie().getTimePeriod(xIndex));
-					valueRegister.add(xSelected.getDataSerie().getValue(xIndex), ySelected.getDataSerie().getValue(yIndex));
+					if((xSelected.getDataSerie().getValue(xIndex) == null) || (ySelected.getDataSerie().getValue(yIndex) == null)) {
+						valueRegister.add(0, null);
+					}
+					else
+						valueRegister.add(xSelected.getDataSerie().getValue(xIndex), ySelected.getDataSerie().getValue(yIndex));
 					if(xIndex < xSelected.getDataSerie().getItemCount())
 						xIndex++;
 					if(yIndex <  ySelected.getDataSerie().getItemCount())

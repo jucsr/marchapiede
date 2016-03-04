@@ -417,7 +417,8 @@ public class LoadExecution implements Runnable {
 						}
 					}
 					else {
-						variableList.get(i).getDataSerie().addOrUpdate(new Millisecond(variableList.get(i).getComponent().getDevice().getAgent().getCreationTime().toGregorianCalendar().getTime()).next(), null);
+						if(!variableList.get(i).getDataSerie().isEmpty())
+							variableList.get(i).getDataSerie().addOrUpdate(variableList.get(i).getDataSerie().getTimePeriod(variableList.get(i).getDataSerie().getItemCount() - 1).next(), null);
 					}
 					variableList.get(i).getDataSerie().setNotify(true);
 					variableList.get(i).getDataSerie().setNotify(false);

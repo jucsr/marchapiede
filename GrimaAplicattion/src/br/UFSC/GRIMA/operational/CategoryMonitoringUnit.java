@@ -124,12 +124,10 @@ public class CategoryMonitoringUnit extends MonitoringUnit {
 		setPlayPause(null);
 	}
 	public void categoryAdd(String str) {
-		System.out.println("categoryAdd init");
 		categoryStrings.add(str);
 		refreshChart();
 	}
 	public void categoryRemove() {
-		System.out.println("categoryRemove init");
 		boolean[] existence = new boolean[categoryStrings.size()];
 		for(int i = 0; i < categoryVariableBuffers.size();i++) {
 			if (getVariables().get(i).getType() != 'i') {
