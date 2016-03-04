@@ -98,6 +98,7 @@ import com.willwinder.universalgcodesender.visualizer.VisualizerWindow;
 import br.UFSC.GRIMA.acceptance.STEP_NCReader;
 import br.UFSC.GRIMA.cad.Generate3Dview;
 import br.UFSC.GRIMA.cad.visual.Progress3D;
+import br.UFSC.GRIMA.cad.visual.ProgressOpenFile;
 import br.UFSC.GRIMA.cam.GenerateGenericGCode;
 import br.UFSC.GRIMA.integracao.ProjectReader;
 import br.UFSC.GRIMA.util.projeto.Projeto;
@@ -1934,6 +1935,23 @@ implements KeyListener, ControllerListener, MainWindowAPI {
     		
     }
     
+	public void autorizar_envio() throws IOException{
+		PrintStream saida = new PrintStream(client.getOutputStream());
+		saida.flush();
+		saida.println("ok");
+	}
+	
+	public String receiveRemoteString() throws IOException
+	{
+		BufferedReader entradaS = new BufferedReader(new InputStreamReader(client.getInputStream()));
+		String msgS = "";
+		while(!entradaS.ready());
+		
+		msgS = entradaS.readLine().toString();
+		System.out.println(msgS);		
+		return msgS;
+	}
+    
     public void remoteDisconnect() throws NumberFormatException, UnknownHostException, IOException
     {
     	hasConnection = false;
@@ -2018,23 +2036,42 @@ implements KeyListener, ControllerListener, MainWindowAPI {
     private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) 
     {
     	this.openSTEPFile();
-//		GCodeGenerator gCodeGenerator = new GCodeGenerator(this.workingsteps, this.projeto);
-		GenerateGenericGCode gCodeGenerator = new GenerateGenericGCode(this.workingsteps, this.projeto);
-		gCodeString = gCodeGenerator.GenerateGCodeString();
-//		System.out.println(gCodeString);
-		Integer numRows = gCodeString.split("\n").length;
-		// Reset send context.
-		this.resetSentRowLabels(numRows);
-		List<String> linhas = new ArrayList<String>();
-		String [] cada_linha = gCodeString.split("\n");
-		for (int i = 0; i < cada_linha.length ; i++)
+		final ProgressOpenFile pOpen = new ProgressOpenFile(this);
+
+		pOpen.setVisible(true);
+
+		SwingWorker worker = new SwingWorker() 
 		{
-			 linhas.add(cada_linha[i]);
-		}
-		processedCommandLines = linhas;
-		this.updateControlsForState(ControlState.FILE_SELECTED); // Igor
-		if (hasConnection)
-			this.updateControlsForState(ControlState.REMOTE_FILE_SELECTED); //Igor
+			@Override
+			protected Object doInBackground() throws Exception 
+			{
+//				GCodeGenerator gCodeGenerator = new GCodeGenerator(this.workingsteps, this.projeto);
+				GenerateGenericGCode gCodeGenerator = new GenerateGenericGCode(workingsteps, projeto);
+				gCodeString = gCodeGenerator.GenerateGCodeString();
+//				System.out.println(gCodeString);
+				Integer numRows = gCodeString.split("\n").length;
+				// Reset send context.
+				resetSentRowLabels(numRows);
+				List<String> linhas = new ArrayList<String>();
+				String [] cada_linha = gCodeString.split("\n");
+				for (int i = 0; i < cada_linha.length ; i++)
+				{
+					 linhas.add(cada_linha[i]);
+				}
+				processedCommandLines = linhas;
+				updateControlsForState(ControlState.FILE_SELECTED); // Igor
+				if (hasConnection)
+					updateControlsForState(ControlState.REMOTE_FILE_SELECTED); //Igor
+				return null;
+			}
+			@Override
+			protected void done()
+			{				
+				pOpen.enableFrameOwner();
+				pOpen.dispose();
+			}
+		};
+		worker.execute();
 		 
     }
     
@@ -2272,9 +2309,19 @@ implements KeyListener, ControllerListener, MainWindowAPI {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
 			}
-    		try {
-    			Object obj = (Object)processedCommandLines;
-				sendRemoteObject(obj);
+    		try {    	
+				String msg = receiveRemoteString();
+				autorizar_envio();
+				if(msg.equals("The machine has start the commands!"))
+				{
+					Object obj = (Object)processedCommandLines;
+					sendRemoteObject(obj); 
+					this.consoleTextArea.setText(this.consoleTextArea.getText() + "\n" +  " "+ msg);
+				}
+				else
+				{
+					MainWindow.displayErrorDialog(msg);
+				}
 			} catch (NumberFormatException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
