@@ -26,7 +26,6 @@ import br.UFSC.GRIMA.operational.TwoDMonitoringUnit;
 public class ConfigurePanelEvents extends ConfigurePanelWindow implements ActionListener {
 	private MainInterface mainInterface;
 	private ArrayList<Variable> variables;
-	private String panelName;
 	private Device currentDevice;
 	private Component currentComponent;
 	private Variable currentVariable;
@@ -72,9 +71,8 @@ public class ConfigurePanelEvents extends ConfigurePanelWindow implements Action
 				}
 			}
 		});
-		String defaultName = makeDefaultName();
+		String defaultName = makeDefaultName("Panel");
 		nameField.setText(defaultName);
-		panelName = defaultName;
 		hourField.setValue(mainInterface.getMainExecution().getDefaultTimeRange()[0]);
 		minuteField.setValue(mainInterface.getMainExecution().getDefaultTimeRange()[1]);
 		secondField.setValue(mainInterface.getMainExecution().getDefaultTimeRange()[2]);
@@ -102,7 +100,6 @@ public class ConfigurePanelEvents extends ConfigurePanelWindow implements Action
 		setMainInterface(monitoringUnit.getPanelMonitoringSystem().getController().getMainInterface());
 		setVariables((ArrayList<Variable>)monitoringUnit.getVariables().clone());
 		this.setTitle("Configure " + monitoringUnit.getName());
-		setPanelName(monitoringUnit.getName());
 		nameField.setText(monitoringUnit.getName());
 		hourField.setValue(monitoringUnit.getTimeRange()[0]);
 		minuteField.setValue(monitoringUnit.getTimeRange()[1]);
@@ -157,7 +154,16 @@ public class ConfigurePanelEvents extends ConfigurePanelWindow implements Action
 		}
 		else
 			axisSelectPanel.setVisible(false);
-			
+		if(monitoringUnit.getChartType().equals("2DLineChart")) {
+			if(((TwoDMonitoringUnit)monitoringUnit).getxSelected().getName() != null)
+				xAxisCombobox.setSelectedItem(((TwoDMonitoringUnit)monitoringUnit).getxSelected().getName());
+			else
+				xAxisCombobox.setSelectedItem(((TwoDMonitoringUnit)monitoringUnit).getxSelected().getDataItemID());
+			if(((TwoDMonitoringUnit)monitoringUnit).getySelected().getName() != null)
+				yAxisCombobox.setSelectedItem(((TwoDMonitoringUnit)monitoringUnit).getySelected().getName());
+			else
+				yAxisCombobox.setSelectedItem(((TwoDMonitoringUnit)monitoringUnit).getySelected().getDataItemID());
+		}
 		chartTypeCombobox.addActionListener(this);
 		addVariableButton.addActionListener(this);
 		minimizeButton.addActionListener(this);
@@ -232,20 +238,39 @@ public class ConfigurePanelEvents extends ConfigurePanelWindow implements Action
 			this.dispose();
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		else if(e.getSource().equals(okButton)) {
-			if((monitoringUnit != null)) {
-				System.out.println(!variableChanged() + "-" +  monitoringUnit.getChartType().equals(chartTypeCombobox.getSelectedItem()));
-				if(!variableChanged() && monitoringUnit.getChartType().equals(chartTypeCombobox.getSelectedItem())) {
-					if(monitoringUnit.getChartType().equals("2DLineChart")) {
-						Variable xVar = ((TwoDMonitoringUnit)monitoringUnit).getVariableByName((String)xAxisCombobox.getSelectedItem());
-						Variable yVar = ((TwoDMonitoringUnit)monitoringUnit).getVariableByName((String)yAxisCombobox.getSelectedItem());
-						if(!xVar.equals(((TwoDMonitoringUnit)monitoringUnit).getxSelected()) || !yVar.equals(((TwoDMonitoringUnit)monitoringUnit).getySelected())) {
+			if(monitoringUnit == null) {
+				if(checkPanelInformation(true) && isNameOk(nameField.getText(), true)) {
+					if(chartTypeCombobox.getSelectedItem().equals("2DLineChart")) {
+						Variable xAxis = getVariableByName((String)xAxisCombobox.getSelectedItem());
+						Variable yAxis = getVariableByName((String)yAxisCombobox.getSelectedItem());
+						if((xAxis == null) || (yAxis == null)) {
+							JOptionPane.showMessageDialog(this, "Invalid variables, some of the variables in the axis are incorrect setted.", "Error", JOptionPane.ERROR_MESSAGE);
+						}
+						else if(xAxis.equals(yAxis)) {
+							JOptionPane.showMessageDialog(this, "Invalid variables, some of the variables in the axis are incorrect setted.", "Error", JOptionPane.ERROR_MESSAGE);
+						}
+						else {
+							addPanel(nameField.getText(), new int[]{(int)hourField.getValue(), (int)minuteField.getValue(), (int)secondField.getValue()}, (String)chartTypeCombobox.getSelectedItem(), variables, xAxis, yAxis);
+						}
+					}
+					else 
+						addPanel(nameField.getText(), new int[]{(int)hourField.getValue(), (int)minuteField.getValue(), (int)secondField.getValue()}, (String)chartTypeCombobox.getSelectedItem(), variables, null, null);
+				}
+			}
+			else if(!variableChanged() && chartTypeCombobox.getSelectedItem().equals(monitoringUnit.getChartType())) {
+				if(checkPanelInformation(false)) {
+					if(!nameField.getText().equals(monitoringUnit.getName())) {
+						if(!isNameOk(nameField.getText(), true)) {
 							return;
 						}
 					}
-					for(int i = 0; i < mainInterface.getMainExecution().getPanelMonitoringSystem().getMonitoringUnits().size(); i++) {
-						if (nameField.getText().equals(mainInterface.getMainExecution().getPanelMonitoringSystem().getMonitoringUnits().get(i).getName()) && !nameField.getText().equals(monitoringUnit.getName())) {
-							JOptionPane.showMessageDialog(this, "There is another panel with this name, please change it and try again.", "Error", JOptionPane.ERROR_MESSAGE);
+					if(chartTypeCombobox.getSelectedItem().equals("2DLineChart")) {
+						if(xAxisCombobox.getSelectedItem().equals(yAxisCombobox.getSelectedItem())) {
+							JOptionPane.showMessageDialog(this, "Invalid axis variables.", "Error", JOptionPane.ERROR_MESSAGE);
 							return;
+						} else {
+							((TwoDMonitoringUnit)monitoringUnit).setxSelected(getVariableByName((String)xAxisCombobox.getSelectedItem()));
+							((TwoDMonitoringUnit)monitoringUnit).setySelected(getVariableByName((String)yAxisCombobox.getSelectedItem()));
 						}
 					}
 					monitoringUnit.setName(nameField.getText());
@@ -253,17 +278,29 @@ public class ConfigurePanelEvents extends ConfigurePanelWindow implements Action
 					monitoringUnit.setMinimumWhidth((int)whidthField.getValue());
 					monitoringUnit.setMinimumHeight((int)heightField.getValue());
 					this.dispose();
-					mainInterface.setMenuConfigurePanel();
-					return;
-				}
-				boolean sucess = addPanel(monitoringUnit.getName(), true);
-				if (sucess) {
-					monitoringUnit.destroyPanelInstance();
-					monitoringUnit.getPanelMonitoringSystem().getMonitoringUnits().remove(monitoringUnit);
 				}
 			}
-			else {
-				addPanel(panelName, true);
+			else if(checkPanelInformation(true)) {
+				if(!nameField.getText().equals(monitoringUnit.getName())) {
+					if(!isNameOk(nameField.getText(), true)) {
+						return;
+					}
+				}
+				Variable xAxis = null;
+				Variable yAxis = null;
+				if(chartTypeCombobox.getSelectedItem().equals("2DLineChart")) {
+					if(xAxisCombobox.getSelectedItem().equals(yAxisCombobox.getSelectedItem())) {
+						JOptionPane.showMessageDialog(this, "Invalid axis variables.", "Error", JOptionPane.ERROR_MESSAGE);
+						return;
+					} else {
+						xAxis = getVariableByName((String)xAxisCombobox.getSelectedItem());
+						yAxis = getVariableByName((String)yAxisCombobox.getSelectedItem());
+					}
+				}
+				monitoringUnit.destroyPanelInstance();
+				monitoringUnit.getPanelMonitoringSystem().getMonitoringUnits().remove(monitoringUnit);
+				addPanel(nameField.getText(), new int[]{(int)hourField.getValue(), (int)minuteField.getValue(), (int)secondField.getValue()}, (String)chartTypeCombobox.getSelectedItem(), variables, xAxis, yAxis);
+				mainInterface.setMenuConfigurePanel();
 			}
 		}
 		if(minimizeButton != null) {
@@ -290,22 +327,10 @@ public class ConfigurePanelEvents extends ConfigurePanelWindow implements Action
 				this.dispose();
 			}
 			else if(e.getSource().equals(clonePanelButton)) {
-				String defaultName = null;
-				int i = 0;
-				while(defaultName == null) {
-					boolean create = true;
-					for (int j = 0; j < monitoringUnit.getPanelMonitoringSystem().getMonitoringUnits().size(); j++) {
-						if(monitoringUnit.getPanelMonitoringSystem().getMonitoringUnits().get(j).getName().equals( "Clone"+ i)) {
-							create = false;
-							break;
-						}
-					}
-					if (create) {
-						defaultName = ("Clone"+ i);
-					}
-					i++;
-				}
-				addPanel(defaultName, false);
+				if(monitoringUnit.getChartType() == "2DLineChart")
+					addPanel(makeDefaultName("Clone"), monitoringUnit.getTimeRange(), monitoringUnit.getChartType(), monitoringUnit.getVariables(), ((TwoDMonitoringUnit)monitoringUnit).getxSelected(), ((TwoDMonitoringUnit)monitoringUnit).getySelected());
+				else
+					addPanel(makeDefaultName("Clone"), monitoringUnit.getTimeRange(), monitoringUnit.getChartType(), monitoringUnit.getVariables(), null, null);
 			}
 		}
 		for (int i = 0; i < variables.size(); i++) {
@@ -328,109 +353,106 @@ public class ConfigurePanelEvents extends ConfigurePanelWindow implements Action
 		}
 		return false;
 	}
-	public String makeDefaultName() {
+	public boolean isNameOk(String s, boolean notify) {
+		for(int i = 0; i < mainInterface.getMainExecution().getPanelMonitoringSystem().getMonitoringUnits().size(); i++) {
+			if (s.equals(mainInterface.getMainExecution().getPanelMonitoringSystem().getMonitoringUnits().get(i).getName())) {
+				if(notify)
+					JOptionPane.showMessageDialog(this, "There is another panel with this name, please change it and try again.", "Error", JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+		}
+		return true;
+	}
+	public Variable getVariableByName(String name) {
+		for(int i = 0; i < variables.size(); i++) {
+			if(variables.get(i).getName() != null) {
+				if(variables.get(i).getName().equals(name)) 
+					return variables.get(i);
+			}
+			else {
+				if(variables.get(i).getDataItemID().equals(name)) {
+					return variables.get(i);
+				}
+			}
+		}
+		return null;
+	}
+	public String makeDefaultName(String begin) {
 		String defaultName = null;
 		int i = 0;
 		while(defaultName == null) {
 			boolean create = true;
 			for (int j = 0; j < mainInterface.getMainExecution().getPanelMonitoringSystem().getMonitoringUnits().size(); j++) {
-				if(mainInterface.getMainExecution().getPanelMonitoringSystem().getMonitoringUnits().get(j).getName().equals("Panel"+ i)) {
+				if(mainInterface.getMainExecution().getPanelMonitoringSystem().getMonitoringUnits().get(j).getName().equals(begin + i)) {
 					create = false;
 					break;
 				}
 			}
 			if (create) {
-				defaultName = ("Panel"+ i);
+				defaultName = (begin + i);
 			}
 			i++;
 		}
 		return defaultName;
 	}
-	public boolean addPanel(String name, boolean verify) {
-		boolean sucess = true;
-		if(verify) {
+	public void addPanel(String name, int[] timeRange, String chartType, ArrayList<Variable>variables, Variable xAxis, Variable yAxis) {
+		if(chartType.equals("LineChart") || chartType.equals("AreaChart"))
+			mainInterface.getMainExecution().getPanelMonitoringSystem().getMonitoringUnits().add(new NumericMonitoringUnit(name, mainInterface.getMainExecution().getPanelMonitoringSystem(), timeRange, chartType, variables, variables.get(0).getType()));
+		else if(chartType.equals("StepLineChart"))
+			mainInterface.getMainExecution().getPanelMonitoringSystem().getMonitoringUnits().add(new CategoryMonitoringUnit(name, mainInterface.getMainExecution().getPanelMonitoringSystem(), timeRange, chartType, variables, variables.get(0).getType()));
+		else if (chartType.equals("2DLineChart"))
+			mainInterface.getMainExecution().getPanelMonitoringSystem().getMonitoringUnits().add(new TwoDMonitoringUnit(name, mainInterface.getMainExecution().getPanelMonitoringSystem(), timeRange, chartType, variables, variables.get(0).getType(), xAxis, yAxis));
+		mainInterface.setMenuConfigurePanel();
+		this.dispose();
+	}
+	public boolean checkPanelInformation(boolean checkVariables) {
+		if(checkVariables) {
 			if(variables.isEmpty()) {
-				sucess = false;
 				JOptionPane.showMessageDialog(this, "Select at least one variable to create the panel.", "Error", JOptionPane.ERROR_MESSAGE);
+				return false;
 			}
 			for(int i = 0; i < variables.size(); i++) {
 				if(variables.get(i).getType() != variables.get(0).getType()) {
-					JOptionPane.showMessageDialog(this, "The type of the variables desn't mismatch, the panel can only be created from same type variables.", "Error", JOptionPane.ERROR_MESSAGE);
-					sucess = false;
-					break;
+					JOptionPane.showMessageDialog(this, "The type of the variables doesn't mismatch, the panel can only be created from same type variables.", "Error", JOptionPane.ERROR_MESSAGE);
+					return false;
 				}
 			}
-			if (nameField.equals("")) {
-				sucess = false;
-				JOptionPane.showMessageDialog(this, "You cannot create a new panel without a name.", "Error", JOptionPane.ERROR_MESSAGE);
+			if ((variables.get(0).getType() == 'i') || (variables.get(0).getType() == 'n')) {
+				JOptionPane.showMessageDialog(this, "The panel can only be created from categoric or numeric variables, any other type is not allowed.", "Error", JOptionPane.ERROR_MESSAGE);
+				return false;
 			}
-			for(int i = 0; i < mainInterface.getMainExecution().getPanelMonitoringSystem().getMonitoringUnits().size(); i++) {
-				if (nameField.getText().equals(mainInterface.getMainExecution().getPanelMonitoringSystem().getMonitoringUnits().get(i).getName())) {
-					sucess = false;
-					JOptionPane.showMessageDialog(this, "There is another panel with this name, please change it and try again.", "Error", JOptionPane.ERROR_MESSAGE);
-					break;
-				}
+		}
+		if (nameField.equals("")) {
+			JOptionPane.showMessageDialog(this, "You cannot create a new panel without a name.", "Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		if ((chartTypeCombobox.getSelectedItem().equals("LineChart")) || (chartTypeCombobox.getSelectedItem().equals("AreaChart")) || (chartTypeCombobox.getSelectedItem().equals("2DLineChart"))) {
+			if(variables.get(0).getType() == 'c') {
+				JOptionPane.showMessageDialog(this, "You cannot use this type of chart for categoric variables, please select the StepLineChart chartType.", "Error", JOptionPane.ERROR_MESSAGE);
+				return false;
 			}
-			if(sucess) {
-				if ((variables.get(0).getType() == 'i') || (variables.get(0).getType() == 'n')) {
-					JOptionPane.showMessageDialog(this, "The panel can only be created from categoric or numeric variables, any other type is not allowed.", "Error", JOptionPane.ERROR_MESSAGE);
-					sucess = false;
-				}
-				if ((chartTypeCombobox.getSelectedItem().equals("LineChart")) || (chartTypeCombobox.getSelectedItem().equals("AreaChart")) || (chartTypeCombobox.getSelectedItem().equals("2DLineChart"))) {
-					if(variables.get(0).getType() == 'c') {
-						JOptionPane.showMessageDialog(this, "You cannot use this type of chart for categoric variables, please select the StepLineChart chartType.", "Error", JOptionPane.ERROR_MESSAGE);
-						sucess = false;
-					}
-				}
-				else if (chartTypeCombobox.getSelectedItem().equals("StepLineChart")) {
-					if(variables.get(0).getType() == '1') {
-						JOptionPane.showMessageDialog(this, "You cannot use this type of chart for numeric variables, please select the LineChart or AreaChart chartType.", "Error", JOptionPane.ERROR_MESSAGE);
-						sucess = false;
-					}
-				}
-				else {
-					JOptionPane.showMessageDialog(this, "ChartType cannot be identified by the application.", "Error", JOptionPane.ERROR_MESSAGE);
-					sucess = false;
-				}
-			}
-			if(sucess) {
-				if ((secondField.getValue().equals(0))&&(minuteField.getValue().equals(0))&&(hourField.getValue().equals(0))) {
-					sucess = false;
-					JOptionPane.showMessageDialog(this, "Invalid Time Range, it cannot be zero.", "Error", JOptionPane.ERROR_MESSAGE);
-				}
-			}
-			if (chartTypeCombobox.getSelectedItem().equals("2DLineChart")) {
-				if((xAxisCombobox.getSelectedIndex() < 0) || (yAxisCombobox.getSelectedIndex() < 0) || (xAxisCombobox.getSelectedIndex() == yAxisCombobox.getSelectedIndex())) {
-					JOptionPane.showMessageDialog(this, "Invalid variable axis.", "Error", JOptionPane.ERROR_MESSAGE);
-					sucess = false;
-				}
+		}
+		else if (chartTypeCombobox.getSelectedItem().equals("StepLineChart")) {
+			if(variables.get(0).getType() == '1') {
+				JOptionPane.showMessageDialog(this, "You cannot use this type of chart for numeric variables, please select the LineChart or AreaChart chartType.", "Error", JOptionPane.ERROR_MESSAGE);
+				return false;
 			}
 		}
 		else {
-			hourField.setValue(monitoringUnit.getTimeRange()[0]);
-			minuteField.setValue(monitoringUnit.getTimeRange()[1]);
-			secondField.setValue(monitoringUnit.getTimeRange()[2]);
-			whidthField.setValue(monitoringUnit.getMinimumWhidth());
-			heightField.setValue(monitoringUnit.getMinimumHeight());
-			chartTypeCombobox.setSelectedItem(monitoringUnit.getChartType());
-			setVariables(monitoringUnit.getVariables());
-			if(chartTypeCombobox.getSelectedItem().equals("2DLineChart")) {
-				xAxisCombobox.setSelectedItem(((TwoDMonitoringUnit)monitoringUnit).getxSelected());
-				yAxisCombobox.setSelectedItem(((TwoDMonitoringUnit)monitoringUnit).getySelected());
+			JOptionPane.showMessageDialog(this, "ChartType cannot be identified by the application.", "Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		if ((secondField.getValue().equals(0))&&(minuteField.getValue().equals(0))&&(hourField.getValue().equals(0))) {
+			JOptionPane.showMessageDialog(this, "Invalid Time Range, it cannot be zero.", "Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		if (chartTypeCombobox.getSelectedItem().equals("2DLineChart")) {
+			if((xAxisCombobox.getSelectedIndex() < 0) || (yAxisCombobox.getSelectedIndex() < 0) || (xAxisCombobox.getSelectedIndex() == yAxisCombobox.getSelectedIndex())) {
+				JOptionPane.showMessageDialog(this, "Invalid variable axis.", "Error", JOptionPane.ERROR_MESSAGE);
+				return false;
 			}
 		}
-		if(sucess) {
-			int[] timeRange = new int[]{(int)hourField.getValue(), (int)minuteField.getValue(), (int)secondField.getValue()};
-			if((chartTypeCombobox.getSelectedItem().equals("LineChart")) || (chartTypeCombobox.getSelectedItem().equals("AreaChart")))
-				mainInterface.getMainExecution().getPanelMonitoringSystem().getMonitoringUnits().add(new NumericMonitoringUnit(name, mainInterface.getMainExecution().getPanelMonitoringSystem(), timeRange, (String) chartTypeCombobox.getSelectedItem(), variables, variables.get(0).getType()));
-			else if(chartTypeCombobox.getSelectedItem().equals("StepLineChart"))
-				mainInterface.getMainExecution().getPanelMonitoringSystem().getMonitoringUnits().add(new CategoryMonitoringUnit(name, mainInterface.getMainExecution().getPanelMonitoringSystem(), timeRange, (String) chartTypeCombobox.getSelectedItem(), variables, variables.get(0).getType()));
-			else if (chartTypeCombobox.getSelectedItem().equals("2DLineChart"))
-				mainInterface.getMainExecution().getPanelMonitoringSystem().getMonitoringUnits().add(new TwoDMonitoringUnit(name, mainInterface.getMainExecution().getPanelMonitoringSystem(), timeRange, (String) chartTypeCombobox.getSelectedItem(), variables, variables.get(0).getType(), variables.get(xAxisCombobox.getSelectedIndex()), variables.get(yAxisCombobox.getSelectedIndex())));
-			mainInterface.setMenuConfigurePanel();
-			this.dispose();
-		}
-		return sucess;
+		return true;
 	}
 	public void setVariablesCombobox() {
 		DefaultComboBoxModel<String> deviceModel = new DefaultComboBoxModel<String>();
@@ -580,12 +602,6 @@ public class ConfigurePanelEvents extends ConfigurePanelWindow implements Action
 	}
 	public void setMainInterface(MainInterface mainInterface) {
 		this.mainInterface = mainInterface;
-	}
-	public String getPanelName() {
-		return panelName;
-	}
-	public void setPanelName(String panelName) {
-		this.panelName = panelName;
 	}
 	public ArrayList<Variable> getVariables() {
 		return variables;

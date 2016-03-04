@@ -23,7 +23,7 @@ public class MainExecution extends JApplet{
 	
 ///////////////////////////Constructor//////////////////////////////////////////////////////////	
 	public MainExecution() {
-		int[] range = {0, 1, 0}; 
+		int[] range = {1, 0, 0}; 
 		setDefaultTimeRange(range);;
 		setDeviceMonitoringSystem(new DeviceMonitoringSystem(this));
 		setPanelMonitoringSystem(new PanelMonitoringSystem(this));

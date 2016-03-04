@@ -384,7 +384,7 @@ public class ConfigurePanelWindow extends JFrame {
 						((GridBagLayout)panel9.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
 
 						//---- label10 ----
-						label10.setText("X Axis ");
+						label10.setText("Abssice");
 						panel9.add(label10, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
 							GridBagConstraints.CENTER, GridBagConstraints.BOTH,
 							new Insets(0, 0, 0, 5), 0, 0));
@@ -405,7 +405,7 @@ public class ConfigurePanelWindow extends JFrame {
 						((GridBagLayout)panel10.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
 
 						//---- label11 ----
-						label11.setText("yAxis ");
+						label11.setText("Ordinate");
 						panel10.add(label11, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
 							GridBagConstraints.CENTER, GridBagConstraints.BOTH,
 							new Insets(0, 0, 0, 5), 0, 0));
@@ -426,7 +426,7 @@ public class ConfigurePanelWindow extends JFrame {
 						((GridBagLayout)zAxisPanel.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
 
 						//---- label12 ----
-						label12.setText("zAxis");
+						label12.setText("Applicate");
 						zAxisPanel.add(label12, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
 							GridBagConstraints.CENTER, GridBagConstraints.BOTH,
 							new Insets(0, 0, 0, 5), 0, 0));

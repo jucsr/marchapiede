@@ -359,7 +359,7 @@ new FormModel {
 							name: "panel9"
 							add( new FormComponent( "javax.swing.JLabel" ) {
 								name: "label10"
-								"text": "X Axis "
+								"text": "Abssice"
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
 							add( new FormComponent( "javax.swing.JComboBox" ) {
 								name: "xAxisCombobox"
@@ -381,7 +381,7 @@ new FormModel {
 							name: "panel10"
 							add( new FormComponent( "javax.swing.JLabel" ) {
 								name: "label11"
-								"text": "yAxis "
+								"text": "Ordinate"
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
 							add( new FormComponent( "javax.swing.JComboBox" ) {
 								name: "yAxisCombobox"
@@ -408,7 +408,7 @@ new FormModel {
 							}
 							add( new FormComponent( "javax.swing.JLabel" ) {
 								name: "label12"
-								"text": "zAxis"
+								"text": "Applicate"
 							}, new FormLayoutConstraints( class com.jformdesigner.runtime.GridBagConstraintsEx ) )
 							add( new FormComponent( "javax.swing.JComboBox" ) {
 								name: "zAxisCombobox"

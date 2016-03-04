@@ -61,6 +61,7 @@ public class TwoDMonitoringUnit extends MonitoringUnit implements SeriesChangeLi
 		
 		if(e.getSource().equals(xAxis.getDataSerie())) {
 			if(xAxis.getDataSerie().getValue(xAxis.getDataSerie().getItemCount() - 1) == null) {
+				valueRegister.add(null, null);
 				xLoad = null;
 				yLoad = null;
 			}
@@ -74,6 +75,7 @@ public class TwoDMonitoringUnit extends MonitoringUnit implements SeriesChangeLi
 		}
 		else if(e.getSource().equals(yAxis.getDataSerie())) {
 			if(yAxis.getDataSerie().getValue(yAxis.getDataSerie().getItemCount() - 1) == null) {
+				valueRegister.add(null, null);
 				xLoad = null;
 				yLoad = null;
 			}
@@ -183,8 +185,15 @@ public class TwoDMonitoringUnit extends MonitoringUnit implements SeriesChangeLi
 	}
 	public Variable getVariableByName(String name) {
 		for(int i = 0; i < getVariables().size(); i++) {
-			if (getVariables().get(i).getName().equals(name) || getVariables().get(i).getDataItemID().equals(name))
-				return getVariables().get(i);
+			if(getVariables().get(i).getName() != null) {
+				if(getVariables().get(i).getName().equals(name)) 
+					return getVariables().get(i);
+			}
+			else {
+				if(getVariables().get(i).getDataItemID().equals(name)) {
+					return getVariables().get(i);
+				}
+			}
 		}
 		return null;
 	}
