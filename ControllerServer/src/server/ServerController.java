@@ -71,7 +71,18 @@ public class ServerController extends MainWindowRemoteController {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				sendButtonActionPerformed(commands);
+				try {
+					sendButtonActionPerformed(commands);
+				} catch (UnknownHostException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		try
@@ -144,10 +155,21 @@ public class ServerController extends MainWindowRemoteController {
 				}
 				else if(msgS.equals("s")){
 					autorizar_envio();
-					preparar_recebimento();
-					sendButtonActionPerformed(commands);
+					try
+					{
+						if (!controller.isStreamingFile()){
+							sendRemoteString("The machine has start the commands!");
+							preparar_recebimento();
+							sendButtonActionPerformed(commands);
+						}
+						else
+							sendRemoteString("Controller is Ocupped!");
+					}					
+					catch (Exception error)
+					{
+						sendRemoteString("Controller is Ocupped! Or With Error");
+					}
 				}
-				
 				
 				if(msgS.equals("exit")){				
 					client.close();
@@ -178,7 +200,7 @@ public class ServerController extends MainWindowRemoteController {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void preparar_recebimento() throws IOException{
+	public void preparar_recebimento() throws Exception{
 			commands.removeAll(commands);
 			BufferedReader entrada = new BufferedReader(new InputStreamReader(client.getInputStream()));
 			while(!entrada.ready());
@@ -191,7 +213,7 @@ public class ServerController extends MainWindowRemoteController {
 			{
 				commands.add(tempList[i]);
 				System.out.println(tempList[i]);
-			}
+			}			
 	}
 	
 	private void opencloseButtonActionPerformed(java.awt.event.ActionEvent evt){
@@ -315,21 +337,39 @@ public class ServerController extends MainWindowRemoteController {
     }
     
     
-	 public void sendButtonActionPerformed(List<String> commands){
-		 try {
-			 	controller.isReadyToStreamFile();
-	            if (true) {
-	                controller.preprocessAndAppendGcodeCommand("G90");
-	            }
-	
-	            controller.appendGcodeCommands(commands, null);
-
-	            controller.beginStreaming();
-	        } catch (Exception e) {
-	       
-	                     e.printStackTrace();
-	           
-	        }
+	 public void sendButtonActionPerformed(List<String> commands) throws Exception{
+		 try
+		 {
+			 if(!controller.isStreamingFile())
+			 {
+				 try {		
+					 this.controller.isReadyToStreamFile();
+			            if (true) 
+			            {
+			                controller.preprocessAndAppendGcodeCommand("G90");
+			            }
+			
+			            controller.appendGcodeCommands(commands, null);	            
+			            
+			            controller.beginStreaming();	            		            
+			            
+			            
+			        } catch (Exception e) {
+			       
+			        	sendRemoteString("The machine is ocupped!3");         
+			        	e.printStackTrace();
+			           
+			        }
+			 }
+			 else
+			 {
+				 sendRemoteString("The machine is ocupped!4");
+			 }
+		 }
+		 catch(Exception errr)
+		 {
+			 sendRemoteString("The machine is ocupped!5");
+		 }
  	}
 	/**
 	 *  By Jc
@@ -349,6 +389,28 @@ public class ServerController extends MainWindowRemoteController {
 	   	myIp = ia.getHostAddress();
 	   	return myIp;
 	}
+	 
+	   public void sendRemoteString(String msg) throws UnknownHostException, IOException
+	    {			
+	    	PrintStream saidaC = new PrintStream(client.getOutputStream());
+			saidaC.flush();
+			saidaC.println(msg);
+			System.out.println(msg);
+			while(!autotizacao_envio());			
+	    }
+	   
+	    public boolean autotizacao_envio() throws IOException{
+	    	BufferedReader entrada = new BufferedReader(new InputStreamReader(client.getInputStream()));
+			while(!entrada.ready());
+	    	String msg = entrada.readLine().toString();
+	    	if(msg.equals("ok"))
+	    		return true;
+	    	else{
+	    		return false;
+	    	}
+	    		
+	    }
+	 
 	
 	public static void main(String[] args) throws Exception 
 	{
